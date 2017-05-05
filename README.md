@@ -1,2 +1,2 @@
-# ICS4U0-ISP
+# Amazing Maze
 Final project for ICS4U0.
