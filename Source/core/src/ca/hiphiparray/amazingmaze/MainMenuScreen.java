@@ -14,9 +14,10 @@ package ca.hiphiparray.amazingmaze;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -45,8 +46,8 @@ public class MainMenuScreen implements Screen {
 	/** Quit button. */
 	private TextButton quitButton;
 
-	/** Title of menu */
-	private Label menuTitle;
+	/** Title of menu. */
+	private Image menuTitle;
 
 	public MainMenuScreen(final AmazingMazeGame game) {
 		this.game = game;
@@ -58,21 +59,21 @@ public class MainMenuScreen implements Screen {
 		table.bottom();
 		menu.addActor(table);
 
-		menuTitle = new Label("Amazing Maze", game.skin);
+		menuTitle = new Image(this.game.assets.manager.get(Assets.MENU_IMAGE, Texture.class));
 
 		// Play
-		playButton = new TextButton("Play", game.skin);
+		playButton = new TextButton("Play", game.assets.skin);
 		playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (playButton.isPressed()) {
-					// INTRO OR GAME HERE
+					game.setScreen(new MazeScreen(game));
 				}
 			}
 		});
 
 		// Help
-		helpButton = new TextButton("Help", game.skin);
+		helpButton = new TextButton("Help", game.assets.skin);
 		helpButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -83,7 +84,7 @@ public class MainMenuScreen implements Screen {
 		});
 
 		// Quit
-		quitButton = new TextButton("Quit", game.skin);
+		quitButton = new TextButton("Quit", game.assets.skin);
 		quitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -104,7 +105,6 @@ public class MainMenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		layoutMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		menu.act(Gdx.graphics.getDeltaTime());
 		menu.draw();
@@ -112,13 +112,15 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		menu.getViewport().update(width, height, true);
+		layoutMenu(width, height);
 	}
 
 	private void layoutMenu(int width, int height) {
 		table.clear();
 
 		// Add title
-		table.add(menuTitle).minHeight(height / 6).maxHeight(height / 4).prefHeight(height / 8).expand();
+		table.add(menuTitle).expand();
 		table.row();
 
 		// Add buttons.
