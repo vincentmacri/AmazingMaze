@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="/amazing-maze-core"/>
+	<classpathentry kind="src" path="assets"/>
+	<classpathentry kind="lib" path="/libs/gdx-freetype-platform-1.9.6-natives-desktop.jar"/>
+	<classpathentry kind="lib" path="/libs/gdx-platform-1.9.6-natives-desktop.jar"/>
+	<classpathentry kind="lib" path="/libs/gdx-tools-1.9.6.jar" sourcepath="/libs/sources/gdx-tools-1.9.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/libs/docs/gdx-tools-1.9.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/libs/gdx-1.9.6.jar" sourcepath="/libs/sources/gdx-1.9.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/libs/docs/gdx-1.9.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/libs/gdx-freetype-1.9.6.jar" sourcepath="/libs/sources/gdx-freetype-1.9.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/libs/docs/gdx-freetype-1.9.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/libs/gdx-backend-lwjgl.jar" sourcepath="/libs/sources/gdx-backend-lwjgl-1.9.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/libs/docs/gdx-backend-lwjgl-1.9.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/libs/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
