@@ -19,11 +19,16 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+
+import ca.hiphiparray.amazingmaze.ElectricComponent.Status;
+import ca.hiphiparray.amazingmaze.Wire.Shape;
 
 /**
  * Class to procedurally generate maps.
@@ -40,8 +45,11 @@ public class MapFactory {
 	/** The random number generator used by this factory. */
 	private Random random;
 
-	/** Reference to an {@link Assets} instance to load images from. Should be {@link AmazingMazeGame#assets}. */
+	/** Reference to an {@link Assets} instance to get images from. Should be {@link AmazingMazeGame#assets}. */
 	private Assets assets;
+
+	/** List of columns that are halfway through a horizontal path. Wires go through these points vertically. */
+	List<Integer> splitPoints = new ArrayList<Integer>();
 
 	/**
 	 * Constructor for creation of a map factory.
@@ -60,30 +68,20 @@ public class MapFactory {
 		// TODO: Use final variables.
 	}
 
-	/** The possible tyoes of tiles in a maze. */
-	private enum TileType {
-		/** If this tile is a background tile. */
-		NONE,
-		/** If this tile is a path tile. */
-		PATH,
-		/** If this tile is a wire tile. */
-		WIRE
-	}
-
 	public TiledMap getMap() {
 		TiledMap map = new TiledMap();
 
-		TileType[][] path = generatePath();
+		boolean[][] path = generatePath();
 
 		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(this.width, this.height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
 
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
 				Cell ce = new Cell();
-				if (path[r][c] == TileType.NONE) {
-					ce.setTile(assets.backgroundTile);
-				} else {
+				if (path[r][c]) {
 					ce.setTile(assets.placeHolderTile);
+				} else {
+					ce.setTile(assets.backgroundTile);
 				}
 				backgroundLayer.setCell(c, r, ce);
 			}
@@ -91,12 +89,12 @@ public class MapFactory {
 		map.getLayers().add(backgroundLayer);
 
 		TiledMapTileLayer wireLayer = new TiledMapTileLayer(this.width, this.height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		path = generatePath();
+		path = generateWires();
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
-				if (path[r][c] == TileType.PATH) {
+				if (path[r][c]) {
 					Cell ce = new Cell();
-					ce.setTile(assets.wireTile);
+					ce.setTile(assets.getWireTile(Status.ON, Shape.VERTICAL));
 					wireLayer.setCell(c, r, ce);
 				}
 			}
@@ -106,13 +104,37 @@ public class MapFactory {
 		return map;
 	}
 
-	private TileType[][] generatePath() {
-		TileType[][] path = new TileType[height][width];
+	/**
+	 * Generate the placement of wires.
+	 *
+	 * @return A boolean array of where wires are to be placed.
+	 */
+	private boolean[][] generateWires() {
+		boolean[][] wires = new boolean[height][width];
+
+		for (int col : splitPoints) {
+			for (int r = 0; r < height; r++) {
+				wires[r][col] = true;
+			}
+		}
+
+		return wires;
+	}
+
+	/**
+	 * Generate the correct path.
+	 *
+	 * @return A boolean array of where the correct path is.
+	 */
+	private boolean[][] generatePath() {
+		boolean[][] path = new boolean[height][width];
+		/*
 		for (int r = 0; r < height; r++) {
 			for (int c = 0; c < width; c++) {
 				path[r][c] = TileType.NONE;
 			}
 		}
+		*/
 
 		int curCol = 0;
 		int curRow = randomInt(1, height - 1);
@@ -133,7 +155,10 @@ public class MapFactory {
 			}
 
 			for (int c = curCol; c < curCol + deltaCol; c++) {
-				path[curRow][c] = TileType.PATH;
+				path[curRow][c] = true;
+			}
+			if (deltaCol >= 4) {
+				splitPoints.add(curCol + deltaCol / 2);
 			}
 			curCol += deltaCol;
 
@@ -148,18 +173,17 @@ public class MapFactory {
 
 				if (random.nextBoolean()) {
 					for (int r = curRow; r < curRow + deltaRowUp; r++) {
-						path[r][curCol] = TileType.PATH;
+						path[r][curCol] = true;
 					}
 					curRow += deltaRowUp;
 				} else {
 					for (int r = curRow; r > curRow - deltaRowDown; r--) {
-						path[r][curCol] = TileType.PATH;
+						path[r][curCol] = true;
 					}
 					curRow -= deltaRowDown;
 				}
 			}
 		}
-
 		return path;
 	}
 

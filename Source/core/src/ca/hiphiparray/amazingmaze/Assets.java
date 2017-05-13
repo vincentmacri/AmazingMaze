@@ -19,6 +19,8 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
+import java.awt.Shape;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -30,6 +32,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -42,46 +45,6 @@ import com.badlogic.gdx.utils.Disposable;
  * @author Vincent Macri
  */
 public class Assets implements Disposable {
-
-	/** Possible states of electrical components. */
-	protected enum ElectricStatus {
-		/** An electrical component which is on. */
-		ON,
-		/** An electrical component which is off. */
-		OFF,
-		/** An electrical component which the player does not know the state of. */
-		UNKNOWN,
-		/** An electrical component which the player thinks is on. */
-		MAYBE_ON,
-		/** An electrical component which the player thinks is off. */
-		MAYBE_OFF
-	}
-
-	/** Possible different electrical components. */
-	protected enum Component {
-		/** A vertical wire. */
-		VERTICAL,
-		/** A horizontal wire. */
-		HORIZONTAL,
-		/** A cross shaped wire. */
-		CROSS,
-		/** An L wire that turns from up to right. */
-		UP_RIGHT_TURN,
-		/** An L wire that turns from down to right. */
-		DOWN_RIGHT_TURN,
-		/** An L wire that turns from down to left. */
-		UP_LEFT_TURN,
-		/** An L wire that turns from down to left. */
-		DOWN_LEFT_TURN,
-		/** A T wire that connects horizontally and up. */
-		HORIZONTAL_UP_T,
-		/** A T wire that connects horizontally and down. */
-		HORIZONTAL_DOWN_T,
-		/** A T wire that connects vertically and left. */
-		VERTICAL_LEFT_T,
-		/** A T wire that connects vertically and right. */
-		VERTICAL_RIGHT_T
-	}
 
 	/** Efficiently manages game assets. */
 	protected AssetManager manager;
@@ -128,11 +91,39 @@ public class Assets implements Disposable {
 	/** The font size for large text. */
 	protected static final int LARGE_FONT_SIZE = 128;
 
-	/** The tile for the background of the maps. */
-	protected StaticTiledMapTile backgroundTile;
-	protected StaticTiledMapTile wireTile; // TODO: Replace with methods for fetching electrical components.
-	/** A placeholder tile to be used when testing new features. */
-	protected StaticTiledMapTile placeHolderTile; // TODO: Remove
+	/** The atlas name of the background tile. */
+	private final String BACKGROUND = "empty";
+	/** The atlas name of the placeholder tile. */
+	private final String PLACEHOLDER = "placeholder"; // TODO: Remove
+
+	/** The atlas name of the on cross. */
+	private final String CROSS_ON = "cross-on";
+	/** The atlas name of the off cross. */
+	private final String CROSS_OFF = "cross-off";
+	/** The atlas name of the unknown cross. */
+	private final String CROSS_UNKNOWN = "cross-unknown";
+
+	/** The atlas name of the on turn. */
+	private final String TURN_ON = "l-on";
+	/** The atlas name of the off turn. */
+	private final String TURN_OFF = "l-off";
+	/** The atlas name of the unknown turn. */
+	private final String TURN_UNKNOWN = "l-unknown";
+
+	/** The atlas name of the on straight wire. */
+	private final String STRAIGHT_ON = "line-on";
+	/** The atlas name of the off straight wire. */
+	private final String STRAIGHT_OFF = "line-off";
+
+	/** The atlas name of the on T. */
+	private final String T_ON = "t-on";
+	/** The atlas name of the off T. */
+	private final String T_OFF = "t-off";
+	/** The atlas name of the unknown T. */
+	private final String T_UNKNOWN = "t-unknown";
+
+	/** The tiles used in our map. */
+	protected TiledMapTileSet tiles;
 
 	/**
 	 * {@link Assets} constructor.
@@ -158,9 +149,18 @@ public class Assets implements Disposable {
 	private void loadMapResources() {
 		manager.load(TILE_ATLAS_LOCATION, TextureAtlas.class);
 		manager.finishLoadingAsset(TILE_ATLAS_LOCATION);
-		this.backgroundTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion("empty"));
-		this.placeHolderTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion("placeholder"));
-		this.wireTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion("cross-unknown"));
+
+		tiles = new TiledMapTileSet();
+
+		StaticTiledMapTile backgroundTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BACKGROUND));
+		StaticTiledMapTile placeHolderTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(PLACEHOLDER));
+
+		tiles.putTile(TileIDs.computeID(TileIDs.BACKGROUND), backgroundTile);
+		tiles.putTile(TileIDs.computeID(TileIDs.PLACEHOLDER), placeHolderTile);
+
+		StaticTiledMapTile horizontalOn = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(STRAIGHT_ON));
+		StaticTiledMapTile horizontalOff = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(STRAIGHT_OFF));
+
 	}
 
 	/** Load the UI skin. */
@@ -175,36 +175,38 @@ public class Assets implements Disposable {
 	}
 
 	/**
-	 * Load a new font into {@link #manager}.
+	 * Return the given font, if it is loaded.
+	 * The font will be lazily loaded if it is not loaded already.
 	 *
-	 * @param fontName the name of the font in the fonts folder, without the .ttf extension.
-	 * @param fontSize the font size of the new font.
+	 * @param fontName the name of the font.
+	 * @param fontSize the size of the font.
+	 * @return the desired {@link BitmapFont}.
 	 */
-	private void loadFont(String fontName, int fontSize) {
+	protected BitmapFont getFont(String fontName, int fontSize) {
+		if (manager.containsAsset(fontName + fontSize + ".ttf")) {
+			return manager.get(fontName + fontSize + ".ttf");
+		}
 		FreeTypeFontLoaderParameter fontParams = new FreeTypeFontLoaderParameter();
 		fontParams.fontFileName = "fonts/" + fontName + ".ttf";
 		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity()); // Make sure font size scales correctly on different monitors.
 		manager.load(fontName + fontSize + ".ttf", BitmapFont.class, fontParams);
 		manager.finishLoadingAsset(fontName + fontSize + ".ttf");
-	}
-
-	/**
-	 * Return the given font.
-	 *
-	 * @param name the name of the font.
-	 * @param size the size of the font.
-	 * @return the desired BitMapFont.
-	 */
-	protected BitmapFont getFont(String name, int size) {
-		if (manager.containsAsset(name + size + ".ttf")) {
-			return manager.get(name + size + ".ttf");
-		}
-		loadFont(name, size);
-		return manager.get(name + size + ".ttf");
+		return manager.get(fontName + fontSize + ".ttf");
 	}
 
 	@Override
 	public void dispose() {
 		manager.dispose();
+	}
+
+	/**
+	 * Return the {@link StaticTiledMapTile} of the wire matching the given parameters.
+	 *
+	 * @param status the electric status of the tile.
+	 * @param shape the shape of the wire.
+	 * @return a {@link StaticTiledMapTile} instance.
+	 */
+	protected StaticTiledMapTile getWireTile(Status status, Shape shape) {
+		return wires.get(new Wire(status, shape));
 	}
 }
