@@ -19,8 +19,12 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -64,6 +68,7 @@ public class MapFactory {
 		map.getTileSets().addTileSet(assets.tiles);
 
 		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
+		backgroundLayer.setName("background");
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
 				Cell cell = new Cell();
@@ -73,44 +78,131 @@ public class MapFactory {
 		}
 		map.getLayers().add(backgroundLayer);
 
-		final int gateSpace = 3;
-		int[] splits = generateWireLocations();
+		final int gateSpace = 2;
+		final int extraRoom = 3;
+		List<Integer> splits = generateWireLocations();
 
 		TiledMapTileLayer objectLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		for (int split : splits) {
-			int barrierLoc = randomInt(gateSpace + 1, height - (gateSpace + 1));
+		objectLayer.setName("objects");
+		TiledMapTileLayer wireLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
+		wireLayer.setName("wires");
+		for (int col : splits) { // Place the middle barriers and the unknown wires.
+			int barrierLoc = randomInt(gateSpace + extraRoom, height - (gateSpace + extraRoom));
 			Cell cell = new Cell();
 			cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
-			objectLayer.setCell(split, barrierLoc, cell);
+			objectLayer.setCell(col, barrierLoc, cell);
 			for (int r = barrierLoc - 1; r >= gateSpace; r--) {
 				cell = new Cell();
 				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-				objectLayer.setCell(split, r, cell);
+				wireLayer.setCell(col, r, cell);
 			}
 			for (int r = barrierLoc + 1; r < height - gateSpace; r++) {
 				cell = new Cell();
 				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-				objectLayer.setCell(split, r, cell);
+				wireLayer.setCell(col, r, cell);
 
 			}
+
+			boolean target = random.nextBoolean();
+			Circuit upperGate = new Circuit(target, random);
+			Circuit lowerGate = new Circuit(!target, random);
+			Point highLocation = new Point(col, height - gateSpace);
+			Point lowLocation = new Point(col, gateSpace - 1);
+
+			placeUpperCircuit(objectLayer, upperGate, highLocation);
+			placeLowerCircuit(objectLayer, lowerGate, lowLocation);
+
 		}
+		for (int c = 0; c < width; c++) {
+			if (!splits.contains(c)) {
+				Cell cell = new Cell();
+				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
+				objectLayer.setCell(c, gateSpace, cell);
+				cell = new Cell();
+				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
+				objectLayer.setCell(c, height - gateSpace - 1, cell);
+			}
+		}
+
 		map.getLayers().add(objectLayer);
+		map.getLayers().add(wireLayer);
 
 		return map;
 	}
 
 	/**
+	 * Place the given circuit on the given layer.
+	 * It is placed at the top, facing down.
+	 *
+	 * @param layer the layer to place the circuit on.
+	 * @param circuit the circuit to use.
+	 * @param location the location of the gate being placed.
+	 */
+	private void placeUpperCircuit(TiledMapTileLayer layer, Circuit circuit, Point location) {
+		Cell gate = new Cell();
+		gate.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.GATE_RANGE, Circuit.getID(circuit.getGate()), TileIDs.UNKNOWN, TileIDs.DOWN_GATE)));
+		layer.setCell(location.x, location.y, gate);
+
+		Cell inputAStart = new Cell();
+		int inputAPowerID = circuit.isInputA() ? TileIDs.ON : TileIDs.OFF;
+		inputAStart.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, inputAPowerID)));
+		layer.setCell(location.x - 1, location.y + 1, inputAStart);
+		Cell inputATurn = new Cell();
+		inputATurn.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, inputAPowerID, TileIDs.UP_RIGHT)));
+		layer.setCell(location.x - 1, location.y, inputATurn);
+
+		Cell inputBStart = new Cell();
+		int inputBPowerID = circuit.isInputB() ? TileIDs.ON : TileIDs.OFF;
+		inputBStart.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, inputBPowerID)));
+		layer.setCell(location.x + 1, location.y + 1, inputBStart);
+		Cell inputBTurn = new Cell();
+		inputBTurn.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, inputBPowerID, TileIDs.UP_LEFT)));
+		layer.setCell(location.x + 1, location.y, inputBTurn);
+	}
+
+	/**
+	 * Place the given circuit on the given layer.
+	 * It is placed at the bottom, facing up.
+	 *
+	 * @param layer the layer to place the circuit on.
+	 * @param circuit the circuit to use.
+	 * @param location the location of the gate being placed.
+	 */
+	private void placeLowerCircuit(TiledMapTileLayer layer, Circuit circuit, Point location) {
+		Cell gate = new Cell();
+		gate.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.GATE_RANGE, Circuit.getID(circuit.getGate()), TileIDs.UNKNOWN, TileIDs.UP_GATE)));
+		layer.setCell(location.x, location.y, gate);
+
+		Cell inputAStart = new Cell();
+		int inputAPowerID = circuit.isInputA() ? TileIDs.ON : TileIDs.OFF;
+		inputAStart.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, inputAPowerID)));
+		layer.setCell(location.x - 1, location.y - 1, inputAStart);
+		Cell inputATurn = new Cell();
+		inputATurn.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, inputAPowerID, TileIDs.DOWN_RIGHT)));
+		layer.setCell(location.x - 1, location.y, inputATurn);
+
+		Cell inputBStart = new Cell();
+		int inputBPowerID = circuit.isInputB() ? TileIDs.ON : TileIDs.OFF;
+		inputBStart.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, inputBPowerID)));
+		layer.setCell(location.x + 1, location.y - 1, inputBStart);
+		Cell inputBTurn = new Cell();
+		inputBTurn.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, inputBPowerID, TileIDs.DOWN_LEFT)));
+		layer.setCell(location.x + 1, location.y, inputBTurn);
+	}
+
+	/**
 	 * Generate the placement of wires.
 	 *
-	 * @return A boolean array of where wires are to be placed.
+	 * @return a boolean array of where wires are to be placed.
 	 */
-	private int[] generateWireLocations() {
+	private List<Integer> generateWireLocations() {
 		final int wireDistance = 5;
 		final int startDistance = 3;
-		int[] wires = new int[width / wireDistance];
+		final int size = width / wireDistance;
+		List<Integer> wires = new ArrayList<Integer>(size);
 
-		for (int i = 0; i < wires.length; i++) {
-			wires[i] = startDistance + (i * wireDistance);
+		for (int i = 0; i < size; i++) {
+			wires.add(startDistance + (i * wireDistance));
 		}
 
 		return wires;
