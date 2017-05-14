@@ -19,8 +19,6 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
-import java.awt.Shape;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -92,7 +90,7 @@ public class Assets implements Disposable {
 	protected static final int LARGE_FONT_SIZE = 128;
 
 	/** The atlas name of the background tile. */
-	private final String BACKGROUND = "empty";
+	private final String BACKGROUND = "background";
 	/** The atlas name of the placeholder tile. */
 	private final String PLACEHOLDER = "placeholder"; // TODO: Remove
 
@@ -110,10 +108,8 @@ public class Assets implements Disposable {
 	/** The atlas name of the unknown turn. */
 	private final String TURN_UNKNOWN = "l-unknown";
 
-	/** The atlas name of the on straight wire. */
-	private final String STRAIGHT_ON = "line-on";
-	/** The atlas name of the off straight wire. */
-	private final String STRAIGHT_OFF = "line-off";
+	/** The atlas name of the unknown vertical wire. */
+	private final String VERTICAL_UNKNOWN = "vertical-unknown";
 
 	/** The atlas name of the on T. */
 	private final String T_ON = "t-on";
@@ -158,9 +154,8 @@ public class Assets implements Disposable {
 		tiles.putTile(TileIDs.computeID(TileIDs.BACKGROUND), backgroundTile);
 		tiles.putTile(TileIDs.computeID(TileIDs.PLACEHOLDER), placeHolderTile);
 
-		StaticTiledMapTile horizontalOn = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(STRAIGHT_ON));
-		StaticTiledMapTile horizontalOff = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(STRAIGHT_OFF));
-
+		StaticTiledMapTile verticalUnknown = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(VERTICAL_UNKNOWN));
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN), verticalUnknown);
 	}
 
 	/** Load the UI skin. */
@@ -197,16 +192,5 @@ public class Assets implements Disposable {
 	@Override
 	public void dispose() {
 		manager.dispose();
-	}
-
-	/**
-	 * Return the {@link StaticTiledMapTile} of the wire matching the given parameters.
-	 *
-	 * @param status the electric status of the tile.
-	 * @param shape the shape of the wire.
-	 * @return a {@link StaticTiledMapTile} instance.
-	 */
-	protected StaticTiledMapTile getWireTile(Status status, Shape shape) {
-		return wires.get(new Wire(status, shape));
 	}
 }

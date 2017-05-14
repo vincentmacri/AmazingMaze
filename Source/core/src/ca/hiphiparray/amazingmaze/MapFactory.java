@@ -27,9 +27,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
-import ca.hiphiparray.amazingmaze.ElectricComponent.Status;
-import ca.hiphiparray.amazingmaze.Wire.Shape;
-
 /**
  * Class to procedurally generate maps.
  *
@@ -79,9 +76,9 @@ public class MapFactory {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
 				Cell ce = new Cell();
 				if (path[r][c]) {
-					ce.setTile(assets.placeHolderTile);
+					ce.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.PLACEHOLDER)));
 				} else {
-					ce.setTile(assets.backgroundTile);
+					ce.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BACKGROUND)));
 				}
 				backgroundLayer.setCell(c, r, ce);
 			}
@@ -94,7 +91,7 @@ public class MapFactory {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
 				if (path[r][c]) {
 					Cell ce = new Cell();
-					ce.setTile(assets.getWireTile(Status.ON, Shape.VERTICAL));
+					ce.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
 					wireLayer.setCell(c, r, ce);
 				}
 			}
