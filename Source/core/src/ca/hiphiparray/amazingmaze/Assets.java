@@ -91,29 +91,10 @@ public class Assets implements Disposable {
 
 	/** The atlas name of the background tile. */
 	private final String BACKGROUND = "background";
+	/** The atlas name of the barrier tile. */
+	private final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
-	private final String PLACEHOLDER = "placeholder"; // TODO: Remove
-
-	/** The atlas name of the on cross. */
-	private final String CROSS_ON = "cross-on";
-	/** The atlas name of the off cross. */
-	private final String CROSS_OFF = "cross-off";
-	/** The atlas name of the unknown cross. */
-	private final String CROSS_UNKNOWN = "cross-unknown";
-
-	/** The atlas name of the on turn. */
-	private final String TURN_ON = "l-on";
-	/** The atlas name of the off turn. */
-	private final String TURN_OFF = "l-off";
-	/** The atlas name of the unknown turn. */
-	private final String TURN_UNKNOWN = "l-unknown";
-
-	/** The atlas name of the on horizontal wire. */
-	private final String HORIZONTAL_ON = "horizontal-on";
-	/** The atlas name of the off horizontal wire. */
-	private final String HORIZONTAL_OFF = "horizontal-off";
-	/** The atlas name of the unknown horizontal wire. */
-	private final String HORIZONTAL_UNKNOWN = "horizontal-unknown";
+	private final String PLACEHOLDER = "placeholder";
 
 	/** The atlas name of the on vertical wire. */
 	private final String VERTICAL_ON = "vertical-on";
@@ -121,13 +102,6 @@ public class Assets implements Disposable {
 	private final String VERTICAL_OFF = "vertical-off";
 	/** The atlas name of the unknown vertical wire. */
 	private final String VERTICAL_UNKNOWN = "vertical-unknown";
-
-	/** The atlas name of the on T. */
-	private final String T_ON = "t-on";
-	/** The atlas name of the off T. */
-	private final String T_OFF = "t-off";
-	/** The atlas name of the unknown T. */
-	private final String T_UNKNOWN = "t-unknown";
 
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
@@ -160,13 +134,15 @@ public class Assets implements Disposable {
 		tiles = new TiledMapTileSet();
 
 		StaticTiledMapTile background = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BACKGROUND));
+		StaticTiledMapTile barrier = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BARRIER));
 		StaticTiledMapTile placeHolder = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(PLACEHOLDER));
 
 		tiles.putTile(TileIDs.computeID(TileIDs.BACKGROUND), background);
+		tiles.putTile(TileIDs.computeID(TileIDs.BARRIER), barrier);
 		tiles.putTile(TileIDs.computeID(TileIDs.PLACEHOLDER), placeHolder);
 
-		StaticTiledMapTile horizontalUnknown = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(VERTICAL_UNKNOWN));
-		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN), horizontalUnknown);
+		StaticTiledMapTile verticalUnknown = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(VERTICAL_UNKNOWN));
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN), verticalUnknown);
 	}
 
 	/** Load the UI skin. */

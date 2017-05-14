@@ -33,6 +33,8 @@ public final class TileIDs {
 	public static final int PLACEHOLDER = 0;
 	/** The background tile ID. */
 	public static final int BACKGROUND = 1;
+	/** The barrier tile ID. */
+	public static final int BARRIER = 2;
 
 	/** The first digit in the ID of power-up tiles. */
 	public static final int POWERUP_RANGE = 10;
