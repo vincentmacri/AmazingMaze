@@ -61,6 +61,7 @@ public class MapFactory {
 
 	public TiledMap getMap() {
 		TiledMap map = new TiledMap();
+		map.getTileSets().addTileSet(assets.tiles);
 
 		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
