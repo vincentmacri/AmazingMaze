@@ -96,12 +96,37 @@ public class Assets implements Disposable {
 	/** The atlas name of the placeholder tile. */
 	private final String PLACEHOLDER = "placeholder";
 
-	/** The atlas name of the on vertical wire. */
-	private final String VERTICAL_ON = "vertical-on";
-	/** The atlas name of the off vertical wire. */
-	private final String VERTICAL_OFF = "vertical-off";
-	/** The atlas name of the unknown vertical wire. */
-	private final String VERTICAL_UNKNOWN = "vertical-unknown";
+	/** The string appended to the end of atlas names for their on variation. */
+	private final String ON_MODIFIER = "-on";
+	/** The string appended to the end of atlas names for their off variation. */
+	private final String OFF_MODIFIER = "-off";
+	/** The string appended to the end of atlas names for their unknown variation. */
+	private final String UNKNOWN_MODIFIER = "-unknown";
+
+	/** The string appended to the end of atlas names for their up variation. */
+	private final String UP_MODIFIER = "-up";
+	/** The string appended to the end of atlas names for their down variation. */
+	private final String DOWN_MODIFIER = "-down";
+	/** The string appended to the end of atlas names for their left variation. */
+	private final String LEFT_MODIFIER = "-left";
+	/** The string appended to the end of atlas names for their right variation. */
+	private final String RIGHT_MODIFIER = "-right";
+
+	/** The atlas base name of the vertical wire. */
+	private final String VERTICAL = "vertical";
+	/** The atlas base name of the turn wire. */
+	private final String TURN = "turn";
+
+	/** The atlas base name of the AND gate. */
+	private final String AND_GATE = "and";
+	/** The atlas base name of the NAND gate. */
+	private final String NAND_GATE = "nand";
+	/** The atlas base name of the OR gate. */
+	private final String OR_GATE = "or";
+	/** The atlas base name of the NOR gate. */
+	private final String NOR_GATE = "nor";
+	/** The atlas base name of the XOR gate. */
+	private final String XOR_GATE = "xor";
 
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
@@ -130,19 +155,63 @@ public class Assets implements Disposable {
 	private void loadMapResources() {
 		manager.load(TILE_ATLAS_LOCATION, TextureAtlas.class);
 		manager.finishLoadingAsset(TILE_ATLAS_LOCATION);
+		TextureAtlas atlas = manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 
 		tiles = new TiledMapTileSet();
 
-		StaticTiledMapTile background = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BACKGROUND));
-		StaticTiledMapTile barrier = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BARRIER));
-		StaticTiledMapTile placeHolder = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(PLACEHOLDER));
+		StaticTiledMapTile background = new StaticTiledMapTile(atlas.findRegion(BACKGROUND));
+		StaticTiledMapTile barrier = new StaticTiledMapTile(atlas.findRegion(BARRIER));
+		StaticTiledMapTile placeHolder = new StaticTiledMapTile(atlas.findRegion(PLACEHOLDER));
 
 		tiles.putTile(TileIDs.computeID(TileIDs.BACKGROUND), background);
 		tiles.putTile(TileIDs.computeID(TileIDs.BARRIER), barrier);
 		tiles.putTile(TileIDs.computeID(TileIDs.PLACEHOLDER), placeHolder);
 
-		StaticTiledMapTile verticalUnknown = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(VERTICAL_UNKNOWN));
+		StaticTiledMapTile verticalOn = new StaticTiledMapTile(atlas.findRegion(VERTICAL + ON_MODIFIER));
+		StaticTiledMapTile verticalOff = new StaticTiledMapTile(atlas.findRegion(VERTICAL + OFF_MODIFIER));
+		StaticTiledMapTile verticalUnknown = new StaticTiledMapTile(atlas.findRegion(VERTICAL + UNKNOWN_MODIFIER));
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.ON), verticalOn);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.OFF), verticalOff);
 		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN), verticalUnknown);
+
+		StaticTiledMapTile andUnknownUp = new StaticTiledMapTile(atlas.findRegion(AND_GATE + UNKNOWN_MODIFIER + UP_MODIFIER));
+		StaticTiledMapTile nandUnknownUp = new StaticTiledMapTile(atlas.findRegion(NAND_GATE + UNKNOWN_MODIFIER + UP_MODIFIER));
+		StaticTiledMapTile orUnknownUp = new StaticTiledMapTile(atlas.findRegion(OR_GATE + UNKNOWN_MODIFIER + UP_MODIFIER));
+		StaticTiledMapTile norUnknownUp = new StaticTiledMapTile(atlas.findRegion(NOR_GATE + UNKNOWN_MODIFIER + UP_MODIFIER));
+		StaticTiledMapTile xorUnknownUp = new StaticTiledMapTile(atlas.findRegion(XOR_GATE + UNKNOWN_MODIFIER + UP_MODIFIER));
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.AND_GATE, TileIDs.UP_GATE, TileIDs.UNKNOWN), andUnknownUp);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.NAND_GATE, TileIDs.UP_GATE, TileIDs.UNKNOWN), nandUnknownUp);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.OR_GATE, TileIDs.UP_GATE, TileIDs.UNKNOWN), orUnknownUp);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.NOR_GATE, TileIDs.UP_GATE, TileIDs.UNKNOWN), norUnknownUp);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.XOR_GATE, TileIDs.UP_GATE, TileIDs.UNKNOWN), xorUnknownUp);
+
+		StaticTiledMapTile andUnknownDown = new StaticTiledMapTile(atlas.findRegion(AND_GATE + UNKNOWN_MODIFIER + DOWN_MODIFIER));
+		StaticTiledMapTile nandUnknownDown = new StaticTiledMapTile(atlas.findRegion(NAND_GATE + UNKNOWN_MODIFIER + DOWN_MODIFIER));
+		StaticTiledMapTile orUnknownDown = new StaticTiledMapTile(atlas.findRegion(OR_GATE + UNKNOWN_MODIFIER + DOWN_MODIFIER));
+		StaticTiledMapTile norUnknownDown = new StaticTiledMapTile(atlas.findRegion(NOR_GATE + UNKNOWN_MODIFIER + DOWN_MODIFIER));
+		StaticTiledMapTile xorUnknownDown = new StaticTiledMapTile(atlas.findRegion(XOR_GATE + UNKNOWN_MODIFIER + DOWN_MODIFIER));
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.AND_GATE, TileIDs.DOWN_GATE, TileIDs.UNKNOWN), andUnknownDown);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.NAND_GATE, TileIDs.DOWN_GATE, TileIDs.UNKNOWN), nandUnknownDown);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.OR_GATE, TileIDs.DOWN_GATE, TileIDs.UNKNOWN), orUnknownDown);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.NOR_GATE, TileIDs.DOWN_GATE, TileIDs.UNKNOWN), norUnknownDown);
+		tiles.putTile(TileIDs.computeID(TileIDs.GATE_RANGE, TileIDs.XOR_GATE, TileIDs.DOWN_GATE, TileIDs.UNKNOWN), xorUnknownDown);
+
+		StaticTiledMapTile turnOnUpLeft = new StaticTiledMapTile(atlas.findRegion(TURN + ON_MODIFIER + UP_MODIFIER + LEFT_MODIFIER));
+		StaticTiledMapTile turnOffUpLeft = new StaticTiledMapTile(atlas.findRegion(TURN + OFF_MODIFIER + UP_MODIFIER + LEFT_MODIFIER));
+		StaticTiledMapTile turnOnUpRight = new StaticTiledMapTile(atlas.findRegion(TURN + ON_MODIFIER + UP_MODIFIER + RIGHT_MODIFIER));
+		StaticTiledMapTile turnOffUpRight = new StaticTiledMapTile(atlas.findRegion(TURN + OFF_MODIFIER + UP_MODIFIER + RIGHT_MODIFIER));
+		StaticTiledMapTile turnOnDownLeft = new StaticTiledMapTile(atlas.findRegion(TURN + ON_MODIFIER + DOWN_MODIFIER + LEFT_MODIFIER));
+		StaticTiledMapTile turnOffDownLeft = new StaticTiledMapTile(atlas.findRegion(TURN + OFF_MODIFIER + DOWN_MODIFIER + LEFT_MODIFIER));
+		StaticTiledMapTile turnOnDownRight = new StaticTiledMapTile(atlas.findRegion(TURN + ON_MODIFIER + DOWN_MODIFIER + RIGHT_MODIFIER));
+		StaticTiledMapTile turnOffDownRight = new StaticTiledMapTile(atlas.findRegion(TURN + OFF_MODIFIER + DOWN_MODIFIER + RIGHT_MODIFIER));
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.ON, TileIDs.UP_LEFT), turnOnUpLeft);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.OFF, TileIDs.UP_LEFT), turnOffUpLeft);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.ON, TileIDs.UP_RIGHT), turnOnUpRight);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.OFF, TileIDs.UP_RIGHT), turnOffUpRight);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.ON, TileIDs.DOWN_LEFT), turnOnDownLeft);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.OFF, TileIDs.DOWN_LEFT), turnOffDownLeft);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.ON, TileIDs.DOWN_RIGHT), turnOnDownRight);
+		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.TURN, TileIDs.OFF, TileIDs.DOWN_RIGHT), turnOffDownRight);
 	}
 
 	/** Load the UI skin. */

@@ -39,21 +39,48 @@ public final class TileIDs {
 	/** The first digit in the ID of power-up tiles. */
 	public static final int POWERUP_RANGE = 10;
 	/** The first digit in the ID of wire tiles. */
-	public static final int WIRE_RANGE = 100;
+	public static final int WIRE_RANGE = 1000;
 	/** The first digit in the ID of logic gate tiles. */
-	public static final int GATE_RANGE = 1000;
+	public static final int GATE_RANGE = 2000;
 
 	/** The value of the vertical wire property. */
-	public static final int VERTICAL = 10;
+	public static final int VERTICAL = 1;
 	/** The value of the horizontal wire property. */
-	public static final int HORIZONTAL = 20;
+	public static final int HORIZONTAL = 2;
+	/** The value of the up left wire property. */
+	public static final int UP_LEFT = 3;
+	/** The value of the up right wire property. */
+	public static final int UP_RIGHT = 4;
+	/** The value of the down left wire property. */
+	public static final int DOWN_LEFT = 5;
+	/** The value of the down right wire property. */
+	public static final int DOWN_RIGHT = 6;
+
+	/** The value of the turn wire property. */
+	public static final int TURN = 100;
 
 	/** The value of the property for on electrical components. */
-	public static final int ON = 1;
+	public static final int ON = 10;
 	/** The value of the property for off electrical components. */
-	public static final int OFF = 2;
+	public static final int OFF = 20;
 	/** The value of the property for unknown electrical components. */
-	public static final int UNKNOWN = 3;
+	public static final int UNKNOWN = 30;
+
+	/** The value of the property for an AND gate. */
+	public static final int AND_GATE = 100;
+	/** The value of the property for an NAND gate. */
+	public static final int NAND_GATE = 200;
+	/** The value of the property for an OR gate. */
+	public static final int OR_GATE = 300;
+	/** The value of the property for a NOR gate. */
+	public static final int NOR_GATE = 400;
+	/** The value of the property for an XOR gate. */
+	public static final int XOR_GATE = 500;
+
+	/** The value of the property for a gate facing up. */
+	public static final int UP_GATE = 1;
+	/** The value of the property for a gate facing down. */
+	public static final int DOWN_GATE = 2;
 
 	/** Compute and return the ID of the tile with the given property. */
 	public static int computeID(int... ids) {

@@ -73,7 +73,7 @@ public class MazeScreen implements Screen {
 
 		viewport = new FitViewport(this.mapWidth, this.mapHeight, camera);
 
-		MapFactory m = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
+		MapFactory m = new MapFactory(game, 0, this.mapWidth, this.mapHeight, TILE_SIZE);
 		map = m.getMap();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(map, MAP_SCALE);
