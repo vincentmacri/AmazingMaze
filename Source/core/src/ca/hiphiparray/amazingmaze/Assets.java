@@ -91,15 +91,10 @@ public class Assets implements Disposable {
 
 	/** The atlas name of the background tile. */
 	private final String BACKGROUND = "background";
+	/** The atlas name of the barrier tile. */
+	private final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
 	private final String PLACEHOLDER = "placeholder"; // TODO: Remove
-
-	/** The atlas name of the on cross. */
-	private final String CROSS_ON = "cross-on";
-	/** The atlas name of the off cross. */
-	private final String CROSS_OFF = "cross-off";
-	/** The atlas name of the unknown cross. */
-	private final String CROSS_UNKNOWN = "cross-unknown";
 
 	/** The atlas name of the on turn. */
 	private final String TURN_ON = "l-on";
@@ -110,13 +105,6 @@ public class Assets implements Disposable {
 
 	/** The atlas name of the unknown vertical wire. */
 	private final String VERTICAL_UNKNOWN = "vertical-unknown";
-
-	/** The atlas name of the on T. */
-	private final String T_ON = "t-on";
-	/** The atlas name of the off T. */
-	private final String T_OFF = "t-off";
-	/** The atlas name of the unknown T. */
-	private final String T_UNKNOWN = "t-unknown";
 
 	/** The tiles used in our map. */
 	protected TiledMapTileSet tiles;
@@ -150,9 +138,11 @@ public class Assets implements Disposable {
 
 		StaticTiledMapTile backgroundTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BACKGROUND));
 		StaticTiledMapTile placeHolderTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(PLACEHOLDER));
+		StaticTiledMapTile barrierTile = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(BARRIER));
 
 		tiles.putTile(TileIDs.computeID(TileIDs.BACKGROUND), backgroundTile);
 		tiles.putTile(TileIDs.computeID(TileIDs.PLACEHOLDER), placeHolderTile);
+		tiles.putTile(TileIDs.computeID(TileIDs.BARRIER), barrierTile);
 
 		StaticTiledMapTile verticalUnknown = new StaticTiledMapTile(manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class).findRegion(VERTICAL_UNKNOWN));
 		tiles.putTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN), verticalUnknown);
