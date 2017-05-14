@@ -19,8 +19,6 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -40,13 +38,10 @@ public class MapFactory {
 	private final int height;
 
 	/** The random number generator used by this factory. */
-	private Random random;
+	private final Random random;
 
 	/** Reference to an {@link Assets} instance to get images from. Should be {@link AmazingMazeGame#assets}. */
-	private Assets assets;
-
-	/** List of columns that are halfway through a horizontal path. Wires go through these points vertically. */
-	List<Integer> splitPoints = new ArrayList<Integer>();
+	private final Assets assets;
 
 	/**
 	 * Constructor for creation of a map factory.
@@ -62,41 +57,43 @@ public class MapFactory {
 		this.random = new Random(seed);
 		this.width = width;
 		this.height = height;
-		// TODO: Use final variables.
 	}
 
 	public TiledMap getMap() {
 		TiledMap map = new TiledMap();
 
-		boolean[][] path = generatePath();
-
-		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(this.width, this.height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-
+		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
-				Cell ce = new Cell();
-				if (path[r][c]) {
-					ce.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.PLACEHOLDER)));
-				} else {
-					ce.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BACKGROUND)));
-				}
-				backgroundLayer.setCell(c, r, ce);
+				Cell cell = new Cell();
+				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BACKGROUND)));
+				backgroundLayer.setCell(c, r, cell);
 			}
 		}
 		map.getLayers().add(backgroundLayer);
 
-		TiledMapTileLayer wireLayer = new TiledMapTileLayer(this.width, this.height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		path = generateWires();
-		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
-			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
-				if (path[r][c]) {
-					Cell ce = new Cell();
-					ce.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-					wireLayer.setCell(c, r, ce);
-				}
+		final int gateSpace = 3;
+		int[] splits = generateWireLocations();
+
+		TiledMapTileLayer objectLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
+		for (int split : splits) {
+			int barrierLoc = randomInt(gateSpace + 1, height - (gateSpace + 1));
+			Cell cell = new Cell();
+			cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
+			objectLayer.setCell(split, barrierLoc, cell);
+			for (int r = barrierLoc - 1; r >= gateSpace; r--) {
+				cell = new Cell();
+				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
+				objectLayer.setCell(split, r, cell);
+			}
+			for (int r = barrierLoc + 1; r < height - gateSpace; r++) {
+				cell = new Cell();
+				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
+				objectLayer.setCell(split, r, cell);
+
 			}
 		}
-		map.getLayers().add(wireLayer);
+		map.getLayers().add(objectLayer);
 
 		return map;
 	}
@@ -106,82 +103,16 @@ public class MapFactory {
 	 *
 	 * @return A boolean array of where wires are to be placed.
 	 */
-	private boolean[][] generateWires() {
-		boolean[][] wires = new boolean[height][width];
+	private int[] generateWireLocations() {
+		final int wireDistance = 5;
+		final int startDistance = 3;
+		int[] wires = new int[width / wireDistance];
 
-		for (int col : splitPoints) {
-			for (int r = 0; r < height; r++) {
-				wires[r][col] = true;
-			}
+		for (int i = 0; i < wires.length; i++) {
+			wires[i] = startDistance + (i * wireDistance);
 		}
 
 		return wires;
-	}
-
-	/**
-	 * Generate the correct path.
-	 *
-	 * @return A boolean array of where the correct path is.
-	 */
-	private boolean[][] generatePath() {
-		boolean[][] path = new boolean[height][width];
-		/*
-		for (int r = 0; r < height; r++) {
-			for (int c = 0; c < width; c++) {
-				path[r][c] = TileType.NONE;
-			}
-		}
-		*/
-
-		int curCol = 0;
-		int curRow = randomInt(1, height - 1);
-
-		int remainingCols = width - 1;
-		// Generate path until we have one that reaches the end of the level.
-		while (remainingCols >= 0) {
-			remainingCols = width - curCol - 1;
-
-			// First move right.
-			int deltaCol = randomInt(4, remainingCols / 8);
-
-			if (deltaCol < 4) {
-				deltaCol = 4;
-			}
-			if (deltaCol > remainingCols) {
-				deltaCol = Math.max(1, remainingCols);
-			}
-
-			for (int c = curCol; c < curCol + deltaCol; c++) {
-				path[curRow][c] = true;
-			}
-			if (deltaCol >= 4) {
-				splitPoints.add(curCol + deltaCol / 2);
-			}
-			curCol += deltaCol;
-
-			remainingCols = width - curCol - 1;
-			if (remainingCols > 0) { // Generate vertically if we haven't reached the end yet.
-				int remainingRowsUp = height - curRow - 2;
-				int remainingRowsDown = curRow - 1;
-
-				// TODO: Make values less dramatic.
-				int deltaRowUp = remainingRowsUp <= 6 ? remainingRowsUp : randomInt(6, remainingRowsUp);
-				int deltaRowDown = remainingRowsDown <= 6 ? remainingRowsDown : randomInt(6, remainingRowsDown);
-
-				if (random.nextBoolean()) {
-					for (int r = curRow; r < curRow + deltaRowUp; r++) {
-						path[r][curCol] = true;
-					}
-					curRow += deltaRowUp;
-				} else {
-					for (int r = curRow; r > curRow - deltaRowDown; r--) {
-						path[r][curCol] = true;
-					}
-					curRow -= deltaRowDown;
-				}
-			}
-		}
-		return path;
 	}
 
 	/**
