@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -46,6 +45,11 @@ public class MapFactory {
 
 	/** Reference to an {@link Assets} instance to get images from. Should be {@link AmazingMazeGame#assets}. */
 	private final Assets assets;
+
+	/** The name of the object layer. */
+	public static final String OBJECT_LAYER = "objects";
+	/** The name of the wire layer. */
+	public static final String WIRE_LAYER = "wires";
 
 	/**
 	 * Constructor for creation of a map factory.
