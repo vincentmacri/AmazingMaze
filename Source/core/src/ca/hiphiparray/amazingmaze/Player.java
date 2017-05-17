@@ -20,11 +20,13 @@
 
 package ca.hiphiparray.amazingmaze;
 
+import java.awt.geom.Point2D;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * The player class.
@@ -61,14 +63,14 @@ public class Player extends Sprite {
 	/** The current vertical movement of the player. */
 	private VerticalDirection verticalDir;
 
-	/** A 2D vector representing the direction the player is moving in. */
+	/** A 2D vector representing the direction and magnitude the player is moving with. */
 	private Vector2 direction;
 
 	/** The {@link MazeScreen} managing this player. */
 	private final MazeScreen maze;
 
 	/** The side length of the player's bounding box. */
-	private static final int PLAYER_SIZE = 1;
+	protected static final int PLAYER_SIZE = 1;
 
 	/**
 	 * Create the player.
@@ -91,20 +93,39 @@ public class Player extends Sprite {
 	 *
 	 * @param obstacleBoxes the rectangles that the player can collide with.
 	 */
-	protected void update(float deltaTime, Array<Rectangle> obstacleBoxes) {
-		float deltaX = direction.x * deltaTime;
-		float deltaY = direction.y * deltaTime;
-		float newX = getX() + deltaX;
-		float newY = getY() + deltaY;
+	protected void update(float deltaTime) {
+		Point2D.Float newPos = doObjectCollision(new Vector2(direction).scl(deltaTime));
+		setPosition(newPos.x, newPos.y);
+		handleDeath();
+	}
 
-		Vector2 nextTilePos = new Vector2(newX, newY);
+	/** Handle the player dying. */
+	private void handleDeath() {
+		Rectangle thisBox = getBoundingRectangle();
+		for (Rectangle wire : maze.wireBoxes) {
+			if (thisBox.overlaps(wire)) {
+				Gdx.app.exit();
+			}
+		}
+	}
+
+	/**
+	 * Return where the player should be after handling object collision.
+	 *
+	 * @param deltaPos the change in position since the last position update.
+	 * @return the new position, as a {@link Point2D.Float}.
+	 */
+	private Point2D.Float doObjectCollision(Vector2 deltaPos) {
+		float newX = getX() + deltaPos.x;
+		float newY = getY() + deltaPos.y;
+		Point2D.Float nextTilePos = new Point2D.Float(newX, newY);
 
 		Rectangle nextBoundingBox = new Rectangle(nextTilePos.x, nextTilePos.y, PLAYER_SIZE, PLAYER_SIZE);
 		float nextStartX = nextBoundingBox.getX();
 		float nextEndX = nextStartX + nextBoundingBox.getWidth();
 		float nextStartY = nextBoundingBox.getY();
 		float nextEndY = nextStartY + nextBoundingBox.getHeight();
-		for (Rectangle obstacle : obstacleBoxes) {
+		for (Rectangle obstacle : maze.obstacleBoxes) {
 			if (nextBoundingBox.overlaps(obstacle)) {
 				float objectStartX = obstacle.getX();
 				float objectEndX = objectStartX + obstacle.getWidth();
@@ -128,8 +149,8 @@ public class Player extends Sprite {
 		}
 		newX = Math.max(newX, 0);
 		newX = Math.min(newX, maze.mapWidth - PLAYER_SIZE);
-
-		setPosition(newX, newY);
+		nextTilePos.setLocation(newX, newY);
+		return nextTilePos;
 	}
 
 	/**

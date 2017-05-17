@@ -73,7 +73,10 @@ public class MazeScreen implements Screen, InputProcessor {
 	private Player player;
 
 	/** Array of bounding boxes for collision with objects. */
-	private Array<Rectangle> obstacleBoxes;
+	protected Array<Rectangle> obstacleBoxes;
+
+	/** Array of bounding boxes for collision with electrified wires. */
+	protected Array<Rectangle> wireBoxes;
 
 	/**
 	 * Constructor for the maze screen.
@@ -91,6 +94,7 @@ public class MazeScreen implements Screen, InputProcessor {
 
 		viewport = new FitViewport(this.mapWidth, this.mapHeight, camera);
 
+		// TODO: Use current level from settings as seed.
 		MapFactory m = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
 		map = m.getMap();
 		createBoundingBoxes();
@@ -103,12 +107,22 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Create the bounding boxes for collision detection. */
 	private void createBoundingBoxes() {
 		obstacleBoxes = new Array<Rectangle>(false, 16);
+		wireBoxes = new Array<Rectangle>(false, 16);
 		TiledMapTileLayer objects = (TiledMapTileLayer) map.getLayers().get(MapFactory.OBJECT_LAYER);
 		for (int r = 0; r < mapHeight; r++) {
 			for (int c = 0; c < mapWidth; c++) {
 				Cell cell = objects.getCell(c, r);
 				if (cell != null) {
 					obstacleBoxes.add(new Rectangle(c, r, 1, 1));
+				}
+			}
+		}
+		TiledMapTileLayer wires = (TiledMapTileLayer) map.getLayers().get(MapFactory.WIRE_LAYER);
+		for (int r = 0; r < mapHeight; r++) {
+			for (int c = 0; c < mapWidth; c++) {
+				WireCell wire = (WireCell) wires.getCell(c, r);
+				if (wire != null && wire.isOn()) {
+					wireBoxes.add(new Rectangle(c, r, 1, 1));
 				}
 			}
 		}
@@ -144,7 +158,11 @@ public class MazeScreen implements Screen, InputProcessor {
 	 * @param delta the time passed since the last frame.
 	 */
 	private void update(float delta) {
-		player.update(delta, obstacleBoxes);
+		player.update(delta);
+
+		if (player.getX() + 2 * Player.PLAYER_SIZE >= mapWidth) {
+			game.setScreen(game.menuScreen);
+		}
 	}
 
 	@Override
@@ -162,6 +180,7 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
+		dispose();
 	}
 
 	@Override

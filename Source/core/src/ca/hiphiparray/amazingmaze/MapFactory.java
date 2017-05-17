@@ -46,6 +46,8 @@ public class MapFactory {
 	/** Reference to an {@link Assets} instance to get images from. Should be {@link AmazingMazeGame#assets}. */
 	private final Assets assets;
 
+	/** The name of the background layer. */
+	public static final String BACKGROUND_LAYER = "background";
 	/** The name of the object layer. */
 	public static final String OBJECT_LAYER = "objects";
 	/** The name of the wire layer. */
@@ -72,7 +74,7 @@ public class MapFactory {
 		map.getTileSets().addTileSet(assets.tiles);
 
 		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		backgroundLayer.setName("background");
+		backgroundLayer.setName(BACKGROUND_LAYER);
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
 				Cell cell = new Cell();
@@ -87,35 +89,32 @@ public class MapFactory {
 		List<Integer> splits = generateWireLocations();
 
 		TiledMapTileLayer objectLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		objectLayer.setName("objects");
+		objectLayer.setName(OBJECT_LAYER);
 		TiledMapTileLayer wireLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		wireLayer.setName("wires");
+		wireLayer.setName(WIRE_LAYER);
 		for (int col : splits) { // Place the middle barriers and the unknown wires.
-			int barrierLoc = randomInt(gateSpace + extraRoom, height - (gateSpace + extraRoom));
-			Cell cell = new Cell();
-			cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
-			objectLayer.setCell(col, barrierLoc, cell);
-			for (int r = barrierLoc - 1; r >= gateSpace; r--) {
-				cell = new Cell();
-				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-				wireLayer.setCell(col, r, cell);
-			}
-			for (int r = barrierLoc + 1; r < height - gateSpace; r++) {
-				cell = new Cell();
-				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-				wireLayer.setCell(col, r, cell);
-
-			}
-
-			boolean target = random.nextBoolean();
-			Circuit upperGate = new Circuit(target, random);
-			Circuit lowerGate = new Circuit(!target, random);
+			boolean upperOutput = random.nextBoolean();
+			Circuit upperGate = new Circuit(upperOutput, random);
+			Circuit lowerGate = new Circuit(!upperOutput, random);
 			Point highLocation = new Point(col, height - gateSpace);
 			Point lowLocation = new Point(col, gateSpace - 1);
 
 			placeUpperCircuit(objectLayer, upperGate, highLocation);
 			placeLowerCircuit(objectLayer, lowerGate, lowLocation);
-
+			int barrierLoc = randomInt(gateSpace + extraRoom, height - (gateSpace + extraRoom));
+			Cell cell = new Cell();
+			cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
+			objectLayer.setCell(col, barrierLoc, cell);
+			for (int r = barrierLoc - 1; r >= gateSpace; r--) { // Place the lower wires.
+				WireCell wire = new WireCell(!upperOutput);
+				wire.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
+				wireLayer.setCell(col, r, wire);
+			}
+			for (int r = barrierLoc + 1; r < height - gateSpace; r++) { // Place the upper wires.
+				WireCell wire = new WireCell(upperOutput);
+				wire.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
+				wireLayer.setCell(col, r, wire);
+			}
 		}
 		for (int c = 0; c < width; c++) {
 			if (!splits.contains(c)) {
