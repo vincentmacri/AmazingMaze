@@ -1,21 +1,13 @@
 /********************************************************************************
- * Amazing Maze is an educational game created in Java with the libGDX library.
- * Copyright (C) 2017 Hip Hip Array
+ * Amazing Maze is an educational game created in Java with the libGDX library. Copyright (C) 2017 Hip Hip Array
  *
  * This file is part of Amazing Maze.
  *
- * Amazing Maze is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Amazing Maze is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  *
- * Amazing Maze is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * Amazing Maze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
@@ -53,10 +45,17 @@ public class MainMenuScreen implements Screen {
 	private TextButton helpButton;
 	/** Quit button. */
 	private TextButton quitButton;
+	/** Settings button. */
+	private TextButton settingsButton;
 
 	/** Title of menu. */
 	private Image menuTitle;
 
+	/**
+	 * Creates the main menu.
+	 *
+	 * @param game The instance for the AmazingMazeGame used.
+	 */
 	public MainMenuScreen(final AmazingMazeGame game) {
 		this.game = game;
 		menu = new Stage(new ScreenViewport(), this.game.batch);
@@ -87,6 +86,17 @@ public class MainMenuScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				if (helpButton.isPressed()) {
 					// HELP HERE
+				}
+			}
+		});
+
+		// Settings
+		settingsButton = new TextButton("Settings", game.assets.skin);
+		settingsButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (settingsButton.isPressed()) {
+					game.setScreen(game.settingsScreen);
 				}
 			}
 		});
@@ -124,6 +134,12 @@ public class MainMenuScreen implements Screen {
 		layoutMenu(width, height);
 	}
 
+	/**
+	 * Adds buttons and the title as well as set layout for the menu.
+	 * 
+	 * @param width The width of the screen.
+	 * @param height The height of the screen.
+	 */
 	private void layoutMenu(int width, int height) {
 		table.clear();
 
@@ -135,6 +151,8 @@ public class MainMenuScreen implements Screen {
 		table.add(playButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
 		table.add(helpButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.row();
+		table.add(settingsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
 		table.add(quitButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 	}
