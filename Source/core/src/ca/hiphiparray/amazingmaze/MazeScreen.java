@@ -95,8 +95,8 @@ public class MazeScreen implements Screen, InputProcessor {
 		viewport = new FitViewport(this.mapWidth, this.mapHeight, camera);
 
 		// TODO: Use current level from settings as seed.
-		MapFactory m = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
-		map = m.getMap();
+		MapFactory factory = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
+		map = factory.getMap();
 		createBoundingBoxes();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(map, MAP_SCALE, game.batch);
@@ -268,25 +268,21 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
