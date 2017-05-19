@@ -49,6 +49,7 @@ public class Assets implements Disposable {
 
 	/** The UI skin. */
 	protected Skin skin;
+
 	/** The location of the tile atlas. */
 	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
 
@@ -81,6 +82,8 @@ public class Assets implements Disposable {
 
 	/** The menu image. */
 	protected static final String MENU_IMAGE = "menu/title.png";
+	/** The life HUD image. */
+	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
 
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;
@@ -161,6 +164,7 @@ public class Assets implements Disposable {
 		loadSkin();
 		loadMapResources();
 		manager.load(MENU_IMAGE, Texture.class);
+		manager.load(LIFE_HUD_IMAGE, Texture.class);
 
 		manager.finishLoading();
 	}
@@ -171,7 +175,6 @@ public class Assets implements Disposable {
 		manager.finishLoadingAsset(TILE_ATLAS_LOCATION);
 		TextureAtlas atlas = manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 
-		// TODO: Use more helper methods.
 		tiles = new TiledMapTileSet();
 
 		StaticTiledMapTile background = new StaticTiledMapTile(atlas.findRegion(BACKGROUND));

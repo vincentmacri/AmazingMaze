@@ -86,6 +86,9 @@ public class Player extends Sprite {
 	/** How many orange fish have been collected. */
 	protected int orangeCollected;
 
+	/** How many lives the player has left. */
+	protected int lives;
+
 	/**
 	 * Create the player.
 	 *
@@ -100,6 +103,7 @@ public class Player extends Sprite {
 		this.direction = new Vector2(0, 0);
 		this.horizontalDir = HorizontalDirection.NONE;
 		this.verticalDir = VerticalDirection.NONE;
+		this.lives = 3;
 	}
 
 	/**
@@ -153,7 +157,13 @@ public class Player extends Sprite {
 		Rectangle thisBox = getBoundingRectangle();
 		for (Rectangle wire : maze.wireBoxes) {
 			if (thisBox.overlaps(wire)) {
-				Gdx.app.exit();
+				lives--;
+				if (lives <= 0) {
+					Gdx.app.exit();
+				}
+				setPosition(0, maze.mapHeight / 2);
+				maze.loseLife();
+				break;
 			}
 		}
 	}

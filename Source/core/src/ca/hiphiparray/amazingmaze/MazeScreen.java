@@ -28,6 +28,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -35,8 +36,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import ca.hiphiparray.amazingmaze.Player.HorizontalDirection;
 import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
@@ -50,6 +55,9 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	/** The {@link AmazingMazeGame} instance that is managing this screen. */
 	private final AmazingMazeGame game;
+
+	/** The game HUD. */
+	private Stage hud;
 
 	/** How big the tiles are, in pixels. */
 	protected static final int TILE_SIZE = 16;
@@ -87,6 +95,12 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
 
+	/** The HUD container showing how many lives are left. */
+	protected HorizontalGroup lives;
+
+	/** Images to show how many lives are left. */
+	private Array<Image> lifeImages;
+
 	/**
 	 * Constructor for the maze screen.
 	 *
@@ -112,6 +126,27 @@ public class MazeScreen implements Screen, InputProcessor {
 		mapRenderer = new OrthogonalTiledMapRenderer(map, MAP_SCALE, game.batch);
 		player = new Player(game.assets.manager.get("tiles/tiles.atlas", TextureAtlas.class).findRegion("placeholder"), this);
 		player.setScale(MAP_SCALE);
+
+		setupHud();
+	}
+
+	/** Create the game HUD. */
+	private void setupHud() {
+		hud = new Stage(new ScreenViewport());
+
+		lives = new HorizontalGroup();
+		lives.setFillParent(true);
+		lives.top().left();
+		hud.addActor(lives);
+
+		lifeImages = new Array<Image>(false, 8);
+		// TODO: Use static var for max lives.
+		for (int i = 0; i < 3; i++) {
+			lifeImages.add(new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class)));
+		}
+		for (Image image : lifeImages) {
+			lives.addActor(image);
+		}
 	}
 
 	/** Create the bounding boxes for collision detection. */
@@ -158,6 +193,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	public void render(float delta) {
 		// Update the game state
 		update(delta);
+		hud.act();
 
 		// Do the rendering.
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -175,6 +211,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		game.batch.begin();
 		player.draw(game.batch);
 		game.batch.end();
+		hud.draw();
 	}
 
 	/**
@@ -193,6 +230,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height);
+		hud.getViewport().update(width, height);
 	}
 
 	@Override
@@ -360,6 +398,11 @@ public class MazeScreen implements Screen, InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	/** Update the HUD to show one less life. */
+	public void loseLife() {
+		lives.removeActor(lifeImages.removeIndex(0));
 	}
 
 }
