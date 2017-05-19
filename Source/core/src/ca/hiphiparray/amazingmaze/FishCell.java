@@ -17,44 +17,54 @@
  * You should have received a copy of the GNU General Public License
  * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
+
 package ca.hiphiparray.amazingmaze;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
 /**
- * Main game class. Manages program flow.
+ * A simple class for fish cells that allows us to keep track of the fish types.
  *
  * @author Vincent Macri
  */
-public class AmazingMazeGame extends Game {
+public class FishCell extends Cell {
 
-	/** The SpriteBatch to use for drawing. */
-	protected SpriteBatch batch;
-	/** The {@link Assets} instance used for loading assets into and from. */
-	protected Assets assets;
-
-	/** The main menu screen. */
-	protected MainMenuScreen menuScreen;
-
-	@Override
-	public void create() {
-		batch = new SpriteBatch();
-		assets = new Assets();
-
-		menuScreen = new MainMenuScreen(this);
-		this.setScreen(menuScreen);
+	/** The possible colours of the fish. */
+	public enum FishColour {
+		/** A blue fish. */
+		BLUE,
+		/** A purple fish. */
+		PURPLE,
+		/** A green fish. */
+		GREEN,
+		/** A red fish. */
+		RED,
+		/** A orange fish. */
+		ORANGE
 	}
 
-	@Override
-	public void render() {
-		super.render();
+	/** The colour of this fish. */
+	private final FishColour colour;
+
+	/**
+	 * Constructor for {@link FishCell}.
+	 *
+	 * @param tile the tile to use for this cell.
+	 * @param colour the colour of the new fish.
+	 */
+	public FishCell(TiledMapTile tile, FishColour colour) {
+		setTile(tile);
+		this.colour = colour;
 	}
 
-	@Override
-	public void dispose() {
-		batch.dispose();
-		assets.dispose();
-		super.dispose();
+	/**
+	 * Getter for {@link #colour}.
+	 *
+	 * @return the colour of the fish.
+	 */
+	public FishColour getColour() {
+		return colour;
 	}
+
 }

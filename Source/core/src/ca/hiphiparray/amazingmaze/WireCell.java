@@ -17,44 +17,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
+
 package ca.hiphiparray.amazingmaze;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
 /**
- * Main game class. Manages program flow.
+ * A simple class that adds an on/off property to {@link Cell} for use in wire cells.
  *
  * @author Vincent Macri
  */
-public class AmazingMazeGame extends Game {
+public class WireCell extends Cell {
 
-	/** The SpriteBatch to use for drawing. */
-	protected SpriteBatch batch;
-	/** The {@link Assets} instance used for loading assets into and from. */
-	protected Assets assets;
+	/** If the cell is on. */
+	private final boolean on;
 
-	/** The main menu screen. */
-	protected MainMenuScreen menuScreen;
-
-	@Override
-	public void create() {
-		batch = new SpriteBatch();
-		assets = new Assets();
-
-		menuScreen = new MainMenuScreen(this);
-		this.setScreen(menuScreen);
+	/**
+	 * Create a new wire cell.
+	 *
+	 * @param onindex
+	 */
+	public WireCell(boolean on) {
+		this.on = on;
 	}
 
-	@Override
-	public void render() {
-		super.render();
-	}
-
-	@Override
-	public void dispose() {
-		batch.dispose();
-		assets.dispose();
-		super.dispose();
+	/**
+	 * @return if the wire is electrified or not.
+	 */
+	public boolean isOn() {
+		return on;
 	}
 }

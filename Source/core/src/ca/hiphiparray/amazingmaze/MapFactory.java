@@ -24,10 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.utils.Array;
+
+import ca.hiphiparray.amazingmaze.FishCell.FishColour;
 
 /**
  * Class to procedurally generate maps.
@@ -44,8 +46,23 @@ public class MapFactory {
 	/** The random number generator used by this factory. */
 	private final Random random;
 
-	/** Reference to an {@link Assets} instance to get images from. Should be {@link AmazingMazeGame#assets}. */
+	/**
+	 * Reference to an {@link Assets} instance to get images from.
+	 * Essentially, this is a reference to {@link AmazingMazeGame#assets}.
+	 */
 	private final Assets assets;
+
+	/** The name of the background layer. */
+	public static final String BACKGROUND_LAYER = "background";
+	/** The name of the object layer. */
+	public static final String OBJECT_LAYER = "objects";
+	/** The name of the wire layer. */
+	public static final String WIRE_LAYER = "wires";
+	/** The name of the power-up layer. */
+	public static final String POWER_LAYER = "powers";
+
+	/** Array of locations of the gates. */
+	private Array<Point> gateLocations;
 
 	/**
 	 * Constructor for creation of a map factory.
@@ -61,14 +78,20 @@ public class MapFactory {
 		this.random = new Random(seed);
 		this.width = width;
 		this.height = height;
+		this.gateLocations = new Array<Point>();
 	}
 
-	public TiledMap getMap() {
+	/**
+	 * Return a map generated with the {@link MapFactory}'s parameters.
+	 *
+	 * @return a tiled map.
+	 */
+	public TiledMap generateMap() {
 		TiledMap map = new TiledMap();
 		map.getTileSets().addTileSet(assets.tiles);
 
 		TiledMapTileLayer backgroundLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		backgroundLayer.setName("background");
+		backgroundLayer.setName(BACKGROUND_LAYER);
 		for (int c = 0; c < backgroundLayer.getWidth(); c++) {
 			for (int r = 0; r < backgroundLayer.getHeight(); r++) {
 				Cell cell = new Cell();
@@ -83,35 +106,32 @@ public class MapFactory {
 		List<Integer> splits = generateWireLocations();
 
 		TiledMapTileLayer objectLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		objectLayer.setName("objects");
+		objectLayer.setName(OBJECT_LAYER);
 		TiledMapTileLayer wireLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		wireLayer.setName("wires");
+		wireLayer.setName(WIRE_LAYER);
 		for (int col : splits) { // Place the middle barriers and the unknown wires.
-			int barrierLoc = randomInt(gateSpace + extraRoom, height - (gateSpace + extraRoom));
-			Cell cell = new Cell();
-			cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
-			objectLayer.setCell(col, barrierLoc, cell);
-			for (int r = barrierLoc - 1; r >= gateSpace; r--) {
-				cell = new Cell();
-				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-				wireLayer.setCell(col, r, cell);
-			}
-			for (int r = barrierLoc + 1; r < height - gateSpace; r++) {
-				cell = new Cell();
-				cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
-				wireLayer.setCell(col, r, cell);
-
-			}
-
-			boolean target = random.nextBoolean();
-			Circuit upperGate = new Circuit(target, random);
-			Circuit lowerGate = new Circuit(!target, random);
+			boolean upperOutput = random.nextBoolean();
+			Circuit upperGate = new Circuit(upperOutput, random);
+			Circuit lowerGate = new Circuit(!upperOutput, random);
 			Point highLocation = new Point(col, height - gateSpace);
 			Point lowLocation = new Point(col, gateSpace - 1);
 
 			placeUpperCircuit(objectLayer, upperGate, highLocation);
 			placeLowerCircuit(objectLayer, lowerGate, lowLocation);
-
+			int barrierLoc = randomInt(gateSpace + extraRoom, height - (gateSpace + extraRoom));
+			Cell cell = new Cell();
+			cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.BARRIER)));
+			objectLayer.setCell(col, barrierLoc, cell);
+			for (int r = barrierLoc - 1; r >= gateSpace; r--) { // Place the lower wires.
+				WireCell wire = new WireCell(!upperOutput);
+				wire.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
+				wireLayer.setCell(col, r, wire);
+			}
+			for (int r = barrierLoc + 1; r < height - gateSpace; r++) { // Place the upper wires.
+				WireCell wire = new WireCell(upperOutput);
+				wire.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.WIRE_RANGE, TileIDs.VERTICAL, TileIDs.UNKNOWN)));
+				wireLayer.setCell(col, r, wire);
+			}
 		}
 		for (int c = 0; c < width; c++) {
 			if (!splits.contains(c)) {
@@ -127,7 +147,43 @@ public class MapFactory {
 		map.getLayers().add(objectLayer);
 		map.getLayers().add(wireLayer);
 
+		TiledMapTileLayer powerUpLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
+		powerUpLayer.setName(POWER_LAYER);
+		for (int c = 0; c < width; c++) {
+			if (!splits.contains(c) && random.nextDouble() <= 0.25) {
+				placeFish(powerUpLayer, c, gateSpace);
+				c++;
+			}
+		}
+		map.getLayers().add(powerUpLayer);
+
 		return map;
+	}
+
+	/**
+	 * Place a fish on the map.
+	 *
+	 * @param layer the layer to add the fish to.
+	 * @param col the column to place the fish on.
+	 * @param gateSpace how much space to leave for gates.
+	 */
+	private void placeFish(TiledMapTileLayer layer, int col, int gateSpace) {
+		FishCell fish;
+		double r = random.nextDouble();
+		if (r <= 0.2) {
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.BLUE)), FishColour.BLUE);
+		} else if (r <= 0.4) {
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.PURPLE)), FishColour.PURPLE);
+		} else if (r <= 0.6) {
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.GREEN)), FishColour.GREEN);
+		} else if (r <= 0.8) {
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.RED)), FishColour.RED);
+		} else {
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.ORANGE)), FishColour.ORANGE);
+		}
+
+		int row = randomInt(gateSpace + 1, height - gateSpace - 1);
+		layer.setCell(col, row, fish);
 	}
 
 	/**
@@ -142,6 +198,7 @@ public class MapFactory {
 		Cell gate = new Cell();
 		gate.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.GATE_RANGE, Circuit.getID(circuit.getGate()), TileIDs.UNKNOWN, TileIDs.DOWN_GATE)));
 		layer.setCell(location.x, location.y, gate);
+		gateLocations.add(new Point(location));
 
 		Cell inputAStart = new Cell();
 		int inputAPowerID = circuit.isInputA() ? TileIDs.ON : TileIDs.OFF;
@@ -172,6 +229,7 @@ public class MapFactory {
 		Cell gate = new Cell();
 		gate.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.GATE_RANGE, Circuit.getID(circuit.getGate()), TileIDs.UNKNOWN, TileIDs.UP_GATE)));
 		layer.setCell(location.x, location.y, gate);
+		gateLocations.add(new Point(location));
 
 		Cell inputAStart = new Cell();
 		int inputAPowerID = circuit.isInputA() ? TileIDs.ON : TileIDs.OFF;
@@ -206,6 +264,15 @@ public class MapFactory {
 		}
 
 		return wires;
+	}
+
+	/**
+	 * Get the {@link Array} of gate locations.
+	 *
+	 * @return the gate locations.
+	 */
+	public Array<Point> getGateLocations() {
+		return gateLocations;
 	}
 
 	/**
