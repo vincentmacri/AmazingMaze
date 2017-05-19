@@ -42,7 +42,7 @@ public class WireCell extends Cell {
 	}
 
 	/**
-	 * @return if the wire is electified or not.
+	 * @return if the wire is electrified or not.
 	 */
 	public boolean isOn() {
 		return on;

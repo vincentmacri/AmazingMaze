@@ -36,12 +36,15 @@ public final class TileIDs {
 	/** The barrier tile ID. */
 	public static final int BARRIER = 2;
 
-	/** The first digit in the ID of power-up tiles. */
-	public static final int POWERUP_RANGE = 10;
 	/** The first digit in the ID of wire tiles. */
 	public static final int WIRE_RANGE = 1000;
 	/** The first digit in the ID of logic gate tiles. */
 	public static final int GATE_RANGE = 2000;
+	/** The first digit in the ID of power-up tiles. */
+	public static final int POWERUP_RANGE = 3000;
+
+	/** The ID modifier of the fish. */
+	public static final int FISH = 100;
 
 	/** The value of the vertical wire property. */
 	public static final int VERTICAL = 1;
@@ -82,6 +85,17 @@ public final class TileIDs {
 	/** The value of the property for a gate facing down. */
 	public static final int DOWN_GATE = 2;
 
+	/** The value of the property for the blue fish. */
+	public static final int BLUE = 10;
+	/** The value of the property for the purple fish. */
+	public static final int PURPLE = 20;
+	/** The value of the property for the green fish. */
+	public static final int GREEN = 30;
+	/** The value of the property for the red fish. */
+	public static final int RED = 40;
+	/** The value of the property for the orange fish. */
+	public static final int ORANGE = 50;
+
 	/** Compute and return the ID of the tile with the given property. */
 	public static int computeID(int... ids) {
 		int sum = 0;
@@ -89,6 +103,20 @@ public final class TileIDs {
 			sum += i;
 		}
 		return sum;
+	}
+
+	/**
+	 * Remove the electric status property from the given ID.
+	 *
+	 * @param currentID the ID of the electrical component.
+	 * @return the given ID, without the electric state.
+	 */
+	public static int stripElectricState(int currentID) {
+		int ones = currentID % 10;
+		currentID /= 100;
+		currentID *= 100;
+		currentID += ones;
+		return currentID;
 	}
 
 	/** Prevent the {@link TileIDs} class from being instantiated. */

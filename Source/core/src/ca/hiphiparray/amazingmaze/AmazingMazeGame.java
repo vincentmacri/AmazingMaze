@@ -57,5 +57,4 @@ public class AmazingMazeGame extends Game {
 		assets.dispose();
 		super.dispose();
 	}
-
 }

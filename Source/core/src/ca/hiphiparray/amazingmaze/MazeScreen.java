@@ -19,6 +19,8 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
+import java.awt.Point;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -32,8 +34,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import ca.hiphiparray.amazingmaze.Player.HorizontalDirection;
 import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
@@ -67,7 +70,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** The camera. */
 	private OrthographicCamera camera;
 	/** The viewport. */
-	private FitViewport viewport;
+	private ExtendViewport viewport;
 
 	/** The player. */
 	private Player player;
@@ -77,6 +80,9 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	/** Array of bounding boxes for collision with electrified wires. */
 	protected Array<Rectangle> wireBoxes;
+
+	/** Array of locations of the gates. */
+	private Array<Point> gateLocations;
 
 	/**
 	 * Constructor for the maze screen.
@@ -92,11 +98,12 @@ public class MazeScreen implements Screen, InputProcessor {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, this.mapWidth, this.mapHeight);
 
-		viewport = new FitViewport(this.mapWidth, this.mapHeight, camera);
+		viewport = new ExtendViewport(0, this.mapHeight, this.mapWidth, this.mapHeight, camera);
 
 		// TODO: Use current level from settings as seed.
 		MapFactory factory = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
-		map = factory.getMap();
+		map = factory.generateMap();
+		gateLocations = factory.getGateLocations();
 		createBoundingBoxes();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(map, MAP_SCALE, game.batch);
@@ -143,6 +150,11 @@ public class MazeScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		Vector3 target = new Vector3(player.getX(), mapHeight / 2, 0);
+		target.x = Math.min(player.getX(), mapWidth - viewport.getWorldWidth() / 2);
+		target.x = Math.max(viewport.getWorldWidth() / 2, target.x);
+
+		camera.position.lerp(target, 0.25f);
 		camera.update();
 		mapRenderer.setView(camera);
 
@@ -256,14 +268,65 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (button == Buttons.LEFT) {
-			return true;
-		} else if (button == Buttons.RIGHT) {
-			return true;
-		} else if (button == Buttons.MIDDLE) {
-			return true;
+		Vector3 worldClickPos = viewport.getCamera().unproject(new Vector3(screenX, screenY, 0));
+		int x = (int) worldClickPos.x;
+		int y = (int) worldClickPos.y;
+
+		TiledMapTileLayer objects = (TiledMapTileLayer) map.getLayers().get(MapFactory.OBJECT_LAYER);
+		Cell gate;
+		int newID;
+		for (Point point : gateLocations) {
+			if (point.x == x && point.y == y) {
+				gate = objects.getCell(x, y);
+				newID = TileIDs.computeID(TileIDs.stripElectricState(gate.getTile().getId()));
+				if (button == Buttons.LEFT) {
+					newID = TileIDs.computeID(newID, TileIDs.ON);
+					updateWires(x, y, TileIDs.ON);
+				} else if (button == Buttons.RIGHT) {
+					newID = TileIDs.computeID(newID, TileIDs.OFF);
+					updateWires(x, y, TileIDs.OFF);
+				} else if (button == Buttons.MIDDLE) {
+					newID = TileIDs.computeID(newID, TileIDs.UNKNOWN);
+					updateWires(x, y, TileIDs.UNKNOWN);
+				} else {
+					return true;
+				}
+				gate.setTile(game.assets.tiles.getTile(newID));
+				break;
+			}
 		}
-		return false;
+		return true;
+	}
+
+	/**
+	 * Update the wires connected to the gate at (x, y).
+	 *
+	 * @param x the x position of the gate being updated.
+	 * @param y the y position of the gate being updated.
+	 * @param state the new state of the wires.
+	 */
+	private void updateWires(int x, int y, int state) {
+		TiledMapTileLayer wires = (TiledMapTileLayer) map.getLayers().get(MapFactory.WIRE_LAYER);
+		for (int r = y + 1; r < mapHeight; r++) {
+			if (wires.getCell(x, r) != null) {
+				Cell cell = wires.getCell(x, r);
+				int newID = TileIDs.stripElectricState(cell.getTile().getId());
+				newID = TileIDs.computeID(newID, state);
+				cell.setTile(game.assets.tiles.getTile(newID));
+			} else {
+				break;
+			}
+		}
+		for (int r = y - 1; r >= 0; r--) {
+			if (wires.getCell(x, r) != null) {
+				Cell cell = wires.getCell(x, r);
+				int newID = TileIDs.stripElectricState(cell.getTile().getId());
+				newID = TileIDs.computeID(newID, state);
+				cell.setTile(game.assets.tiles.getTile(newID));
+			} else {
+				break;
+			}
+		}
 	}
 
 	@Override

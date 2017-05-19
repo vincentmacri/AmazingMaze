@@ -33,6 +33,7 @@ public class DesktopLauncher {
 		config.setFromDisplayMode(displayMode);
 		config.title = "Amazing Maze";
 		config.vSyncEnabled = true;
+		config.foregroundFPS = 0;
 
 		new LwjglApplication(new AmazingMazeGame(), config);
 	}
