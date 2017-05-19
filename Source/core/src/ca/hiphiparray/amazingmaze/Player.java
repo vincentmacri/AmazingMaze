@@ -25,8 +25,11 @@ import java.awt.geom.Point2D;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import ca.hiphiparray.amazingmaze.FishCell.FishColour;
 
 /**
  * The player class.
@@ -56,7 +59,7 @@ public class Player extends Sprite {
 	}
 
 	/** The speed of the player. */
-	private float SPEED = 10;
+	private float SPEED = 10f;
 
 	/** The current horizontal movement of the player. */
 	private HorizontalDirection horizontalDir;
@@ -71,6 +74,17 @@ public class Player extends Sprite {
 
 	/** The side length of the player's bounding box. */
 	protected static final int PLAYER_SIZE = 1;
+
+	/** How many blue fish have been collected. */
+	protected int blueCollected;
+	/** How many purple fish have been collected. */
+	protected int purpleCollected;
+	/** How many green fish have been collected. */
+	protected int greenCollected;
+	/** How many red fish have been collected. */
+	protected int redCollected;
+	/** How many orange fish have been collected. */
+	protected int orangeCollected;
 
 	/**
 	 * Create the player.
@@ -97,6 +111,41 @@ public class Player extends Sprite {
 		Point2D.Float newPos = doObjectCollision(new Vector2(direction).scl(deltaTime));
 		setPosition(newPos.x, newPos.y);
 		handleDeath();
+		collectFish();
+	}
+
+	/** Handle the player collecting fish. */
+	private void collectFish() {
+		Rectangle thisBox = getBoundingRectangle();
+		for (int i = 0; i < maze.fishBoxes.size; i++) {
+			if (thisBox.overlaps(maze.fishBoxes.get(i))) {
+				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.POWER_LAYER);
+				int x = (int) maze.fishBoxes.get(i).x;
+				int y = (int) maze.fishBoxes.get(i).y;
+				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();
+				layer.setCell(x, y, null);
+				maze.fishBoxes.removeIndex(i);
+
+				switch (colour) {
+					case BLUE:
+						blueCollected++;
+						break;
+					case PURPLE:
+						purpleCollected++;
+						break;
+					case GREEN:
+						greenCollected++;
+						break;
+					case RED:
+						redCollected++;
+						break;
+					case ORANGE:
+						orangeCollected++;
+						break;
+				}
+				break;
+			}
+		}
 	}
 
 	/** Handle the player dying. */

@@ -62,7 +62,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	protected final int mapHeight;
 
 	/** The level's map. */
-	private TiledMap map;
+	protected TiledMap map;
 
 	/** The renderer for the map. */
 	private OrthogonalTiledMapRenderer mapRenderer;
@@ -80,6 +80,9 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	/** Array of bounding boxes for collision with electrified wires. */
 	protected Array<Rectangle> wireBoxes;
+
+	/** Array of bounding boxes for collision with fish. */
+	protected Array<Rectangle> fishBoxes;
 
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
@@ -114,7 +117,6 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Create the bounding boxes for collision detection. */
 	private void createBoundingBoxes() {
 		obstacleBoxes = new Array<Rectangle>(false, 16);
-		wireBoxes = new Array<Rectangle>(false, 16);
 		TiledMapTileLayer objects = (TiledMapTileLayer) map.getLayers().get(MapFactory.OBJECT_LAYER);
 		for (int r = 0; r < mapHeight; r++) {
 			for (int c = 0; c < mapWidth; c++) {
@@ -124,12 +126,23 @@ public class MazeScreen implements Screen, InputProcessor {
 				}
 			}
 		}
+		wireBoxes = new Array<Rectangle>(false, 16);
 		TiledMapTileLayer wires = (TiledMapTileLayer) map.getLayers().get(MapFactory.WIRE_LAYER);
 		for (int r = 0; r < mapHeight; r++) {
 			for (int c = 0; c < mapWidth; c++) {
 				WireCell wire = (WireCell) wires.getCell(c, r);
 				if (wire != null && wire.isOn()) {
-					wireBoxes.add(new Rectangle(c, r, 1, 1));
+					wireBoxes.add(new Rectangle(c + 5f / 16f, r, 6f / 16f, 1));
+				}
+			}
+		}
+		fishBoxes = new Array<Rectangle>(false, 16);
+		TiledMapTileLayer fishes = (TiledMapTileLayer) map.getLayers().get(MapFactory.POWER_LAYER);
+		for (int r = 0; r < mapHeight; r++) {
+			for (int c = 0; c < mapWidth; c++) {
+				FishCell fish = (FishCell) fishes.getCell(c, r);
+				if (fish != null) {
+					fishBoxes.add(new Rectangle(c, r, 1, 1));
 				}
 			}
 		}

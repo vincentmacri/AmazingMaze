@@ -20,31 +20,51 @@
 
 package ca.hiphiparray.amazingmaze;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
 /**
- * A simple class that adds an on/off property to {@link Cell} for use in wire cells.
+ * A simple class for fish cells that allows us to keep track of the fish types.
  *
  * @author Vincent Macri
  */
-public class WireCell extends Cell {
+public class FishCell extends Cell {
 
-	/** If the cell is on. */
-	private final boolean on;
+	/** The possible colours of the fish. */
+	public enum FishColour {
+		/** A blue fish. */
+		BLUE,
+		/** A purple fish. */
+		PURPLE,
+		/** A green fish. */
+		GREEN,
+		/** A red fish. */
+		RED,
+		/** A orange fish. */
+		ORANGE
+	}
+
+	/** The colour of this fish. */
+	private final FishColour colour;
 
 	/**
-	 * Create a new wire cell.
+	 * Constructor for {@link FishCell}.
 	 *
-	 * @param onindex
+	 * @param tile the tile to use for this cell.
+	 * @param colour the colour of the new fish.
 	 */
-	public WireCell(boolean on) {
-		this.on = on;
+	public FishCell(TiledMapTile tile, FishColour colour) {
+		setTile(tile);
+		this.colour = colour;
 	}
 
 	/**
-	 * @return if the wire is electrified or not.
+	 * Getter for {@link #colour}.
+	 *
+	 * @return the colour of the fish.
 	 */
-	public boolean isOn() {
-		return on;
+	public FishColour getColour() {
+		return colour;
 	}
+
 }

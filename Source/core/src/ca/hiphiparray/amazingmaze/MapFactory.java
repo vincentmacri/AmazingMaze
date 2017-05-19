@@ -29,6 +29,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.utils.Array;
 
+import ca.hiphiparray.amazingmaze.FishCell.FishColour;
+
 /**
  * Class to procedurally generate maps.
  *
@@ -166,23 +168,22 @@ public class MapFactory {
 	 * @param gateSpace how much space to leave for gates.
 	 */
 	private void placeFish(TiledMapTileLayer layer, int col, int gateSpace) {
-		Cell cell = new Cell();
+		FishCell fish;
 		double r = random.nextDouble();
-		int colour;
 		if (r <= 0.2) {
-			colour = TileIDs.BLUE;
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.BLUE)), FishColour.BLUE);
 		} else if (r <= 0.4) {
-			colour = TileIDs.PURPLE;
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.PURPLE)), FishColour.PURPLE);
 		} else if (r <= 0.6) {
-			colour = TileIDs.GREEN;
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.GREEN)), FishColour.GREEN);
 		} else if (r <= 0.8) {
-			colour = TileIDs.RED;
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.RED)), FishColour.RED);
 		} else {
-			colour = TileIDs.ORANGE;
+			fish = new FishCell(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, TileIDs.ORANGE)), FishColour.ORANGE);
 		}
 
-		cell.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.FISH, colour)));
-		layer.setCell(col, randomInt(gateSpace + 1, height - gateSpace - 1), cell);
+		int row = randomInt(gateSpace + 1, height - gateSpace - 1);
+		layer.setCell(col, row, fish);
 	}
 
 	/**
