@@ -33,6 +33,8 @@ public class AmazingMazeGame extends Game {
 	protected SpriteBatch batch;
 	/** The {@link Assets} instance used for loading assets into and from. */
 	protected Assets assets;
+	/** Manages the game's music. */
+	protected MusicManager music;
 
 	/** The main menu screen. */
 	protected MainMenuScreen menuScreen;
@@ -41,6 +43,7 @@ public class AmazingMazeGame extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		assets = new Assets();
+		music = new MusicManager(assets);
 
 		menuScreen = new MainMenuScreen(this);
 		this.setScreen(menuScreen);

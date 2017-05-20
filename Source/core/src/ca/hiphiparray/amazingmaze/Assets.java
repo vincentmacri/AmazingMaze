@@ -23,6 +23,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -91,6 +92,13 @@ public class Assets implements Disposable {
 	protected static final int REGULAR_FONT_SIZE = 64;
 	/** The font size for large text. */
 	protected static final int LARGE_FONT_SIZE = 128;
+
+	/** The file name of the song that plays on the menu screen. */
+	protected static final String MENU_SONG = "music/HalfBit.mp3";
+	/** The file name of the song that plays in the maze. */
+	protected static final String MAZE_SONG = "music/ExitThePremises.mp3";
+	/** The file name of the song that plays during the credits. */
+	protected static final String CREDITS_SONG = "music/BitShift.mp3";
 
 	/** The atlas name of the background tile. */
 	private final String BACKGROUND = "background";
@@ -165,8 +173,16 @@ public class Assets implements Disposable {
 		loadMapResources();
 		manager.load(MENU_IMAGE, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
+		loadMusic();
 
 		manager.finishLoading();
+	}
+
+	/** Helper method to load the game's music. */
+	private void loadMusic() {
+		manager.load(MENU_SONG, Music.class);
+		manager.load(MAZE_SONG, Music.class);
+		manager.load(CREDITS_SONG, Music.class);
 	}
 
 	/** Helper method for loading the map resources. */
