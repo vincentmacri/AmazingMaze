@@ -43,6 +43,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import ca.hiphiparray.amazingmaze.MusicManager.Song;
 import ca.hiphiparray.amazingmaze.Player.HorizontalDirection;
 import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
 
@@ -187,6 +188,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	public void show() {
 		Gdx.input.setCursorCatched(false);
 		Gdx.input.setInputProcessor(this);
+		game.music.setSong(Song.MAZE);
 	}
 
 	@Override

@@ -31,6 +31,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import ca.hiphiparray.amazingmaze.MusicManager.Song;
+
 /**
  * The menu screen for the game.
  *
@@ -107,6 +109,7 @@ public class MainMenuScreen implements Screen {
 	public void show() {
 		Gdx.input.setInputProcessor(menu);
 		Gdx.input.setCursorCatched(false);
+		game.music.setSong(Song.MENU);
 	}
 
 	@Override
