@@ -24,6 +24,7 @@ import java.awt.Point;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -36,9 +37,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -57,8 +62,13 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** The {@link AmazingMazeGame} instance that is managing this screen. */
 	private final AmazingMazeGame game;
 
+	/** Handle passing input around to different components. */
+	private InputMultiplexer input;
+
 	/** The game HUD. */
 	private Stage hud;
+	/** The pause menu. */
+	private Stage pauseMenu;
 
 	/** How big the tiles are, in pixels. */
 	protected static final int TILE_SIZE = 16;
@@ -102,6 +112,9 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Images to show how many lives are left. */
 	private Array<Image> lifeImages;
 
+	/** If the game is paused. */
+	private boolean paused;
+
 	/**
 	 * Constructor for the maze screen.
 	 *
@@ -110,8 +123,9 @@ public class MazeScreen implements Screen, InputProcessor {
 	public MazeScreen(final AmazingMazeGame game) {
 		final int mapSize = 2;
 		this.game = game;
-		this.mapWidth = 16 * mapSize;
+		this.mapWidth = 16 * mapSize * 10;
 		this.mapHeight = 9 * mapSize;
+		this.paused = false;
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, this.mapWidth, this.mapHeight);
@@ -129,6 +143,37 @@ public class MazeScreen implements Screen, InputProcessor {
 		player.setScale(MAP_SCALE);
 
 		setupHud();
+		setupPauseMenu();
+		input = new InputMultiplexer(pauseMenu, this);
+	}
+
+	/** Create the pause menu. */
+	private void setupPauseMenu() {
+		pauseMenu = new Stage(new ScreenViewport());
+
+		Table table = new Table();
+		table.setFillParent(true);
+		table.center();
+		pauseMenu.addActor(table);
+
+		TextButton resumeButton = new TextButton("Resume", game.assets.skin);
+		resumeButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				paused = false;
+			}
+		});
+		table.add(resumeButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
+		table.row();
+
+		TextButton quitButton = new TextButton("Quit", game.assets.skin);
+		quitButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(game.menuScreen);
+			}
+		});
+		table.add(quitButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
 	}
 
 	/** Create the game HUD. */
@@ -187,15 +232,19 @@ public class MazeScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 		Gdx.input.setCursorCatched(false);
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(input);
 		game.music.setSong(Song.MAZE);
 	}
 
 	@Override
 	public void render(float delta) {
 		// Update the game state
-		update(delta);
-		hud.act();
+		if (!paused) {
+			update(delta);
+			hud.act();
+		} else {
+			pauseMenu.act();
+		}
 
 		// Do the rendering.
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -214,6 +263,10 @@ public class MazeScreen implements Screen, InputProcessor {
 		player.draw(game.batch);
 		game.batch.end();
 		hud.draw();
+
+		if (paused) {
+			pauseMenu.draw();
+		}
 	}
 
 	/**
@@ -264,6 +317,8 @@ public class MazeScreen implements Screen, InputProcessor {
 			player.setVerticalDir(VerticalDirection.UP);
 		} else if (keycode == Keys.DOWN) {
 			player.setVerticalDir(VerticalDirection.DOWN);
+		} else if (keycode == Keys.ESCAPE) {
+			paused = !paused;
 		}
 		return true;
 	}
