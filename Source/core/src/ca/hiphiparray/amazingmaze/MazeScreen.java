@@ -123,7 +123,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	public MazeScreen(final AmazingMazeGame game) {
 		final int mapSize = 2;
 		this.game = game;
-		this.mapWidth = 16 * mapSize;
+		this.mapWidth = 16 * mapSize * 3;
 		this.mapHeight = 9 * mapSize;
 		this.paused = false;
 

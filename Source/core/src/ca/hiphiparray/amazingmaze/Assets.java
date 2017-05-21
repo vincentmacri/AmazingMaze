@@ -94,11 +94,11 @@ public class Assets implements Disposable {
 	protected static final int LARGE_FONT_SIZE = 128;
 
 	/** The file name of the song that plays on the menu screen. */
-	protected static final String MENU_SONG = "music/HalfBit.mp3";
+	protected static final String MENU_SONG = "music/BitShift.mp3";
 	/** The file name of the song that plays in the maze. */
 	protected static final String MAZE_SONG = "music/ExitThePremises.mp3";
 	/** The file name of the song that plays during the credits. */
-	protected static final String CREDITS_SONG = "music/BitShift.mp3";
+	protected static final String CREDITS_SONG = "music/HalfBit.mp3";
 
 	/** The atlas name of the background tile. */
 	private final String BACKGROUND = "background";
