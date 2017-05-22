@@ -51,6 +51,13 @@ public class Assets implements Disposable {
 	/** The UI skin. */
 	protected Skin skin;
 
+	/** The name of the credits header style in the UI skin. */
+	protected static final String CREDITS_HEADER_STYLE = "header";
+	/** The name of the credits contents style in the UI skin. */
+	protected static final String CREDITS_CONTENTS_STYLE = "contents";
+	/** The name of the credits small contents style in the UI skin. */
+	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
+
 	/** The location of the tile atlas. */
 	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
 
@@ -81,8 +88,10 @@ public class Assets implements Disposable {
 	/** The bold italic serif font. */
 	protected static final String SERIF_BOLD_ITALIC = "LiberationSerif-BoldItalic";
 
-	/** The menu image. */
-	protected static final String MENU_IMAGE = "menu/title.png";
+	/** The game logo. */
+	protected static final String GAME_LOGO = "logos/game.png";
+	/** The company logo. */
+	protected static final String COMPANY_LOGO = "logos/company.png";
 	/** The life HUD image. */
 	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
 
@@ -171,7 +180,8 @@ public class Assets implements Disposable {
 
 		loadSkin();
 		loadMapResources();
-		manager.load(MENU_IMAGE, Texture.class);
+		manager.load(GAME_LOGO, Texture.class);
+		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
 		loadMusic();
 
@@ -302,13 +312,17 @@ public class Assets implements Disposable {
 
 	/** Load the UI skin. */
 	private void loadSkin() {
-		manager.load("menu/uiskin.json", Skin.class);
-		manager.finishLoadingAsset("menu/uiskin.json"); // Make sure the skin is loaded before continuing.
-		skin = manager.get("menu/uiskin.json", Skin.class); // Retrieve the skin.
+		manager.load("ui/uiskin.json", Skin.class);
+		manager.finishLoadingAsset("ui/uiskin.json"); // Make sure the skin is loaded before continuing.
+		skin = manager.get("ui/uiskin.json", Skin.class); // Retrieve the skin.
 
 		// Set the fonts. This is not done in the .json in order to allow easier adjusting of font sizes.
 		skin.get(LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextButtonStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
+
+		skin.get(CREDITS_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
+		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
+		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 	}
 
 	/**

@@ -69,7 +69,7 @@ public class MainMenuScreen implements Screen {
 		table.bottom();
 		menu.addActor(table);
 
-		menuTitle = new Image(this.game.assets.manager.get(Assets.MENU_IMAGE, Texture.class));
+		menuTitle = new Image(this.game.assets.manager.get(Assets.GAME_LOGO, Texture.class));
 
 		// Play
 		playButton = new TextButton("Play", game.assets.skin);

@@ -43,7 +43,10 @@
 		default-vertical: { background: default-slider, knob: default-round-large }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-		default: { fontColor: black }
+		default: { fontColor: black },
+		header: { fontColor: black },
+		contents: { fontColor: black},
+		small-contents: {fontColor: black}
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		default: { selection: selection, background: textfield, fontColor: white, cursor: cursor }

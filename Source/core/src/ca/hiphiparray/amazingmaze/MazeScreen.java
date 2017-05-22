@@ -305,6 +305,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	public void dispose() {
 		mapRenderer.dispose();
 		map.dispose();
+		hud.dispose();
 	}
 
 	@Override

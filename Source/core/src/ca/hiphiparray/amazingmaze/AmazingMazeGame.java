@@ -46,7 +46,9 @@ public class AmazingMazeGame extends Game {
 		music = new MusicManager(assets);
 
 		menuScreen = new MainMenuScreen(this);
-		this.setScreen(menuScreen);
+		// this.setScreen(menuScreen);
+		CreditsScreen credits = new CreditsScreen(this);
+		setScreen(credits);
 	}
 
 	@Override
