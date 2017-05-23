@@ -46,13 +46,14 @@
 		default: { fontColor: black },
 		header: { fontColor: black },
 		contents: { fontColor: black},
-		small-contents: {fontColor: black}
+		small-contents: {fontColor: black},
+		tutorial: {fontColor: white)
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		default: { selection: selection, background: textfield, fontColor: white, cursor: cursor }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-		default: { checkboxOn: check-on, checkboxOff: check-off, fontColor: white }
+		default: { checkboxOn: check-on, checkboxOff: check-off, fontColor: black }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 		default: { fontColorUnselected: white, selection: selection, fontColorSelected: white}
