@@ -1,21 +1,13 @@
 /********************************************************************************
- * Amazing Maze is an educational game created in Java with the libGDX library.
- * Copyright (C) 2017 Hip Hip Array
+ * Amazing Maze is an educational game created in Java with the libGDX library. Copyright (C) 2017 Hip Hip Array
  *
  * This file is part of Amazing Maze.
  *
- * Amazing Maze is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Amazing Maze is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  *
- * Amazing Maze is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * Amazing Maze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
@@ -33,6 +25,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -42,6 +35,7 @@ import com.badlogic.gdx.utils.Disposable;
  * Class to easily manage assets, furthering the capabilities of an {@link AssetManager};
  *
  * @author Vincent Macri
+ * @author Chloe Nguyen
  */
 public class Assets implements Disposable {
 
@@ -166,9 +160,7 @@ public class Assets implements Disposable {
 	protected TiledMapTileSet tiles;
 
 	/**
-	 * {@link Assets} constructor.
-	 * Calling this constructor loads in all of the game assets.
-	 * As such, only one {@link Assets} instance should ever be created.
+	 * {@link Assets} constructor. Calling this constructor loads in all of the game assets. As such, only one {@link Assets} instance should ever be created.
 	 */
 	public Assets() {
 		manager = new AssetManager();
@@ -316,18 +308,18 @@ public class Assets implements Disposable {
 		manager.finishLoadingAsset("ui/uiskin.json"); // Make sure the skin is loaded before continuing.
 		skin = manager.get("ui/uiskin.json", Skin.class); // Retrieve the skin.
 
-		// Set the fonts. This is not done in the .json in order to allow easier adjusting of font sizes.
+		// Set the fonts. This is not done in the .json in order to allow easier adjusting of font size
 		skin.get(LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextButtonStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 
 		skin.get(CREDITS_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
 		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 	}
 
 	/**
-	 * Return the given font, if it is loaded.
-	 * The font will be lazily loaded if it is not loaded already.
+	 * Return the given font, if it is loaded. The font will be lazily loaded if it is not loaded already.
 	 *
 	 * @param fontName the name of the font.
 	 * @param fontSize the size of the font.
