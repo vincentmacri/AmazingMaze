@@ -129,9 +129,9 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		controlsHeader = new Label("Controls", game.assets.skin);
 
-		actions = new Label[] { new Label("Up", game.assets.skin), new Label("Right", game.assets.skin), new Label("Left", game.assets.skin), new Label("Down", game.assets.skin), };
+		actions = new Label[] {new Label("Up", game.assets.skin), new Label("Right", game.assets.skin), new Label("Left", game.assets.skin), new Label("Down", game.assets.skin),};
 
-		actionControls = new TextButton[] { new TextButton(Keys.toString(game.set.getUpButton()), skin), new TextButton(Keys.toString(game.set.getRightButton()), skin), new TextButton(Keys.toString(game.set.getLeftButton()), skin), new TextButton(Keys.toString(game.set.getDownButton()), skin), };
+		actionControls = new TextButton[] {new TextButton(Keys.toString(game.set.getUpButton()), skin), new TextButton(Keys.toString(game.set.getRightButton()), skin), new TextButton(Keys.toString(game.set.getLeftButton()), skin), new TextButton(Keys.toString(game.set.getDownButton()), skin),};
 
 		actionControls[0].addListener(new ChangeListener() {
 
@@ -306,24 +306,24 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 			switch (actionBeingSet) {
 
-			case 0: // Up.
-				game.set.setUpButton(keycode);
-				break;
+				case 0: // Up.
+					game.set.setUpButton(keycode);
+					break;
 
-			case 1: // Right
-				game.set.setRightButton(keycode);
-				break;
+				case 1: // Right
+					game.set.setRightButton(keycode);
+					break;
 
-			case 2: // Left
-				game.set.setLeftButton(keycode);
-				break;
+				case 2: // Left
+					game.set.setLeftButton(keycode);
+					break;
 
-			case 3: // Down
-				game.set.setDownButton(keycode);
-				break;
+				case 3: // Down
+					game.set.setDownButton(keycode);
+					break;
 
-			default:
-				break;
+				default:
+					break;
 
 			}
 			actionControls[actionBeingSet].setText(Keys.toString(keycode));
