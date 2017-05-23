@@ -59,19 +59,6 @@ public class CreditsScreen implements Screen {
 	/** The {@link Label} explaining the role of the people currently on the screen. */
 	private Label header;
 
-	/*
-	/** The {@link Label} showing who coded the game.
-	private Label codeLabel;
-	/** The {@link Label} showing who did the art.
-	private Label artLabel;
-	/** The {@link Label} showing who wrote the story.
-	private Label storyLabel;
-	/** The {@link Label} showing who did the music.
-	private Label musicLabel;
-	/** The {@link Label} showing who to thank.
-	private Label thanksLabel;
-	*/
-
 	/** Vertical grouping of who coded the game */
 	private VerticalGroup codeGroup;
 	/** Vertical grouping of who did the art */
@@ -172,7 +159,6 @@ public class CreditsScreen implements Screen {
 		thanksGroup = createVerticalGroup(THANKS, Assets.CREDITS_CONTENTS_STYLE);
 
 		companyLogo = new Image(assets.manager.get(Assets.COMPANY_LOGO, Texture.class));
-
 	}
 
 	/**
