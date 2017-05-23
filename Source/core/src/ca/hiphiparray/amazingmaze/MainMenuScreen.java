@@ -45,10 +45,12 @@ public class MainMenuScreen implements Screen {
 	private TextButton playButton;
 	/** Help button. */
 	private TextButton helpButton;
-	/** Quit button. */
-	private TextButton quitButton;
 	/** Settings button. */
 	private TextButton settingsButton;
+	/** Credits button. */
+	private TextButton creditsButton;
+	/** Quit button. */
+	private TextButton quitButton;
 
 	/** Title of menu. */
 	private Image menuTitle;
@@ -103,6 +105,17 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
+		// Credits
+		creditsButton = new TextButton("Credits", game.assets.skin);
+		creditsButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (creditsButton.isPressed()) {
+					game.setScreen(new CreditsScreen(game));
+				}
+			}
+		});
+
 		// Quit
 		quitButton = new TextButton("Quit", game.assets.skin);
 		quitButton.addListener(new ChangeListener() {
@@ -113,6 +126,7 @@ public class MainMenuScreen implements Screen {
 				}
 			}
 		});
+
 	}
 
 	@Override
@@ -139,7 +153,7 @@ public class MainMenuScreen implements Screen {
 
 	/**
 	 * Adds buttons and the title as well as set layout for the menu.
-	 * 
+	 *
 	 * @param width The width of the screen.
 	 * @param height The height of the screen.
 	 */
@@ -156,6 +170,8 @@ public class MainMenuScreen implements Screen {
 		table.add(helpButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
 		table.add(settingsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.row();
+		table.add(creditsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
 		table.add(quitButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 	}
