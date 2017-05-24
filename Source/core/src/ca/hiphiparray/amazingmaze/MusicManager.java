@@ -22,6 +22,7 @@ package ca.hiphiparray.amazingmaze;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Manages the game's music.
@@ -39,9 +40,6 @@ public class MusicManager {
 		/** The credits song. */
 		CREDITS
 	}
-
-	/** The currently playing song. */
-	private Song currentSong;
 
 	/** The music that plays on the menu. */
 	private Music menuMusic;
@@ -88,6 +86,19 @@ public class MusicManager {
 				creditsMusic.play();
 				break;
 		}
+	}
+
+	/**
+	 * Set the music volume.
+	 * The volume level is clamped to be in the range [0, 1].
+	 *
+	 * @param level the new volume level.
+	 */
+	public void setVolume(float value) {
+		value = MathUtils.clamp(value, 0, 1);
+		menuMusic.setVolume(value);
+		mazeMusic.setVolume(value);
+		creditsMusic.setVolume(value);
 	}
 
 }

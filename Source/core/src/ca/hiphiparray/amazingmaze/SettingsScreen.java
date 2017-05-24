@@ -99,7 +99,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 		musicSlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// SettingsScreen.this.game.music.setVolume(musicSlider.getValue());
+				SettingsScreen.this.game.music.setVolume(musicSlider.getValue());
 			}
 		});
 		musicSliderLabel = new Label("Music Volume", game.assets.skin);
