@@ -142,7 +142,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		player = new Player(game.assets.manager.get("tiles/tiles.atlas", TextureAtlas.class).findRegion("placeholder"), this);
 		player.setScale(MAP_SCALE);
 
-		setupHud();
+		setupHUD();
 		setupPauseMenu();
 		input = new InputMultiplexer(pauseMenu, this);
 	}
@@ -177,7 +177,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	}
 
 	/** Create the game HUD. */
-	private void setupHud() {
+	private void setupHUD() {
 		hud = new Stage(new ScreenViewport());
 
 		lives = new HorizontalGroup();
