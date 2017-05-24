@@ -99,7 +99,8 @@ public class SettingsScreen implements Screen, InputProcessor {
 		musicSlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				SettingsScreen.this.game.music.setVolume(musicSlider.getValue());
+				game.music.setVolume(musicSlider.getValue());
+				game.set.setMusicLevel(game.music.getVolume());
 			}
 		});
 		musicSliderLabel = new Label("Music Volume", game.assets.skin);
@@ -293,6 +294,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 	public void hide() {
 		System.out.println("Hiding SettingsScreen.");
 		actionBeingSet = -1;
+		game.set.writeSettings();
 	}
 
 	@Override
@@ -313,7 +315,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 				case 1: // Right
 					game.set.setRightButton(keycode);
 					break;
-
 				case 2: // Left
 					game.set.setLeftButton(keycode);
 					break;

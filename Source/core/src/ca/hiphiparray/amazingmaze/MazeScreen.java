@@ -123,7 +123,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	public MazeScreen(final AmazingMazeGame game) {
 		final int mapSize = 2;
 		this.game = game;
-		this.mapWidth = 16 * mapSize * 3;
+		this.mapWidth = 16 * mapSize;
 		this.mapHeight = 9 * mapSize;
 		this.paused = false;
 
@@ -133,7 +133,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		viewport = new ExtendViewport(0, this.mapHeight, this.mapWidth, this.mapHeight, camera);
 
 		// TODO: Use current level from settings as seed.
-		MapFactory factory = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
+		MapFactory factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
 		map = factory.generateMap();
 		gateLocations = factory.getGateLocations();
 		createBoundingBoxes();
@@ -278,6 +278,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		player.update(delta);
 
 		if (player.getX() + 2 * Player.PLAYER_SIZE >= mapWidth) {
+			game.set.setLevel(game.set.getLevel() + 1);
 			game.setScreen(game.menuScreen);
 		}
 	}

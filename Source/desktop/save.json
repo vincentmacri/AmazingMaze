@@ -3,6 +3,6 @@ upButton: 19
 rightButton: 22
 leftButton: 21
 downButton: 20
-musicLevel: 1
+musicLevel: 0
 fullscreen: true
 }
