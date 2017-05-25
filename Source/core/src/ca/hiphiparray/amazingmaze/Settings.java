@@ -9,8 +9,12 @@ import com.badlogic.gdx.utils.Json;
  * This class holds the settings for the game settings.
  *
  * @author Chloe Nguyen
+ * @author Vincent Macri
  */
 public class Settings {
+
+	/** The name of the save file. */
+	private static final String SAVE_FILE = "save.json";
 
 	/** For when the user moves up. */
 	private int upButton;
@@ -20,6 +24,8 @@ public class Settings {
 	private int leftButton;
 	/** For when the user moves down. */
 	private int downButton;
+	/** The button for when the player pauses the game. */
+	private int pauseButton;
 
 	/** The volume of the game music, in the range [0, 1]. */
 	private float musicLevel;
@@ -41,6 +47,7 @@ public class Settings {
 		this.rightButton = Keys.RIGHT;
 		this.leftButton = Keys.LEFT;
 		this.downButton = Keys.DOWN;
+		this.pauseButton = Keys.ESCAPE;
 
 		this.musicLevel = 1f;
 		this.fullscreen = true;
@@ -119,6 +126,24 @@ public class Settings {
 	}
 
 	/**
+	 * Get the keycode for the pause button.
+	 *
+	 * @return the pause button keycode.
+	 */
+	public int getPauseButton() {
+		return pauseButton;
+	}
+
+	/**
+	 * Set the keycode for the pause button.
+	 *
+	 * @param pauseButton the new keycode for the pause button.
+	 */
+	public void setPauseButton(int pauseButton) {
+		this.pauseButton = pauseButton;
+	}
+
+	/**
 	 * Gets the musicLevel.
 	 *
 	 * @return musicLevel
@@ -174,6 +199,7 @@ public class Settings {
 		rightButton = savedSettings.rightButton;
 		leftButton = savedSettings.leftButton;
 		downButton = savedSettings.downButton;
+		pauseButton = savedSettings.pauseButton;
 
 		musicLevel = savedSettings.musicLevel;
 		fullscreen = savedSettings.fullscreen;
@@ -183,7 +209,7 @@ public class Settings {
 	 * Write settings to Settings.json.
 	 */
 	public void writeSettings() {
-		FileHandle f = Gdx.files.local("Settings.json");
+		FileHandle f = Gdx.files.local(SAVE_FILE);
 
 		Json json = new Json();
 		json.setUsePrototypes(false);
