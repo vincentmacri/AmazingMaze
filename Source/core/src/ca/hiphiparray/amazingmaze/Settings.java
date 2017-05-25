@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
+// TODO: Rename to Save.java
 /**
  * This class holds the settings for the game settings.
  *
@@ -33,10 +34,20 @@ public class Settings {
 	/** If the game is in fullscreen mode. */
 	private boolean fullscreen;
 
-	/**
-	 * Default constructor.
-	 */
+	/** The level the player is currently on. */
+	private int level;
+
+	/** Default constructor to be used by JSON parser. */
 	public Settings() {
+	}
+
+	public Settings(boolean readFromFile) {
+		if (readFromFile) {
+			readSettings();
+		} else {
+			resetSettings();
+			writeSettings();
+		}
 	}
 
 	/**
@@ -51,6 +62,8 @@ public class Settings {
 
 		this.musicLevel = 1f;
 		this.fullscreen = true;
+
+		this.level = 1;
 	}
 
 	/**
@@ -162,18 +175,18 @@ public class Settings {
 	}
 
 	/**
-	 * Gets the fullscreen.
+	 * If the game's settings are set to fullscreen mode.
 	 *
-	 * @return fullscreen
+	 * @return if the game should be in fullscreen mode.
 	 */
 	public boolean isFullscreen() {
 		return fullscreen;
 	}
 
 	/**
-	 * Sets whether the game is in fullscreen or not.
+	 * Sets whether the game should be in fullscreen or not.
 	 *
-	 * @param fullscreen The new value of fullscreen.
+	 * @param fullscreen the new value of fullscreen.
 	 */
 	public void setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
@@ -183,7 +196,7 @@ public class Settings {
 	 * Reads from file for the values for the settings. If they're valid, use them, if not, reset the settings.
 	 */
 	public void readSettings() {
-		FileHandle f = Gdx.files.local("Settings.json");
+		FileHandle f = Gdx.files.local(SAVE_FILE);
 		Json json = new Json();
 		Settings savedSettings;
 		try {
@@ -203,6 +216,8 @@ public class Settings {
 
 		musicLevel = savedSettings.musicLevel;
 		fullscreen = savedSettings.fullscreen;
+
+		level = savedSettings.level;
 	}
 
 	/**
@@ -218,14 +233,20 @@ public class Settings {
 	}
 
 	/**
-	 * Create new Settings instance.
+	 * Get the current level.
 	 *
-	 * @param readFromFile Whether or not the values of the settings should be read from the file.
+	 * @return the current level.
 	 */
-	public Settings(boolean readFromFile) {
-		if (readFromFile) {
-			readSettings();
-		}
+	public int getLevel() {
+		return level;
 	}
 
+	/**
+	 * Set the current level.
+	 *
+	 * @param level the level to be set to.
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }

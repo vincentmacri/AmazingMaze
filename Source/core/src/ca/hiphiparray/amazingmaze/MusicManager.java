@@ -20,7 +20,6 @@
 
 package ca.hiphiparray.amazingmaze;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -48,19 +47,24 @@ public class MusicManager {
 	/** The music that plays during the credits. */
 	private Music creditsMusic;
 
+	/** The current game volume. */
+	private float volume;
+
 	/**
 	 * Create a new {@link MusicManager}.
 	 *
-	 * @param assets the {@link AssetManager} to load music from.
+	 * @param game the {@link AmazingMazeGame} managing this object.
 	 */
-	public MusicManager(Assets assets) {
-		menuMusic = assets.manager.get(Assets.MENU_SONG, Music.class);
-		mazeMusic = assets.manager.get(Assets.MAZE_SONG, Music.class);
-		creditsMusic = assets.manager.get(Assets.CREDITS_SONG, Music.class);
+	public MusicManager(AmazingMazeGame game) {
+		menuMusic = game.assets.manager.get(Assets.MENU_SONG, Music.class);
+		mazeMusic = game.assets.manager.get(Assets.MAZE_SONG, Music.class);
+		creditsMusic = game.assets.manager.get(Assets.CREDITS_SONG, Music.class);
 
 		menuMusic.setLooping(true);
 		mazeMusic.setLooping(true);
 		creditsMusic.setLooping(true);
+
+		setVolume(game.set.getMusicLevel());
 	}
 
 	/**
@@ -95,10 +99,19 @@ public class MusicManager {
 	 * @param level the new volume level.
 	 */
 	public void setVolume(float value) {
-		value = MathUtils.clamp(value, 0, 1);
-		menuMusic.setVolume(value);
-		mazeMusic.setVolume(value);
-		creditsMusic.setVolume(value);
+		volume = MathUtils.clamp(value, 0, 1);
+		menuMusic.setVolume(volume);
+		mazeMusic.setVolume(volume);
+		creditsMusic.setVolume(volume);
+	}
+
+	/**
+	 * Get the music volume.
+	 *
+	 * @return the current value of {@link #volume}.
+	 */
+	public float getVolume() {
+		return volume;
 	}
 
 }

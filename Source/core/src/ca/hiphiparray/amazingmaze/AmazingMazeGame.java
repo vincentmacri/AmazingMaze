@@ -43,9 +43,9 @@ public class AmazingMazeGame extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		assets = new Assets();
-		music = new MusicManager(assets);
-
 		set = new Settings(true);
+		music = new MusicManager(this);
+
 		settingsScreen = new SettingsScreen(this);
 		menuScreen = new MainMenuScreen(this);
 		if (!set.isFullscreen()) {

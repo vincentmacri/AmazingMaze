@@ -132,7 +132,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		viewport = new ExtendViewport(0, this.mapHeight, this.mapWidth, this.mapHeight, camera);
 
 		// TODO: Use current level from settings as seed.
-		MapFactory factory = new MapFactory(game, 1, this.mapWidth, this.mapHeight, TILE_SIZE);
+		MapFactory factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
 		map = factory.generateMap();
 		gateLocations = factory.getGateLocations();
 		createBoundingBoxes();
@@ -141,7 +141,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		player = new Player(game.assets.manager.get("tiles/tiles.atlas", TextureAtlas.class).findRegion("placeholder"), this);
 		player.setScale(MAP_SCALE);
 
-		setupHud();
+		setupHUD();
 		setupPauseMenu();
 		input = new InputMultiplexer(pauseMenu, this);
 	}
@@ -176,7 +176,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	}
 
 	/** Create the game HUD. */
-	private void setupHud() {
+	private void setupHUD() {
 		hud = new Stage(new ScreenViewport());
 
 		lives = new HorizontalGroup();
@@ -277,6 +277,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		player.update(delta);
 
 		if (player.getX() + 2 * Player.PLAYER_SIZE >= mapWidth) {
+			game.set.setLevel(game.set.getLevel() + 1);
 			game.setScreen(game.menuScreen);
 		}
 	}
