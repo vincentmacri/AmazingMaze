@@ -306,13 +306,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		fishTable.add(answerField).minWidth(150).padLeft(150);
 		fishTable.add(checkButton).pad(10).size(64);
 		fishTable.row();
-
-		/*
-		 * fishTable.add(new Label("Values: ", labelStyle)).pad(30).center();
-		 * fishTable.add(); for (int i = 0; i < 5; i++) { fishTable.add(new
-		 * Label(fishValue[i] + "", labelStyle)).pad(30).right(); }
-		 * fishTable.row();
-		 */
+		
 		for (int i = 0; i < 5; i++) {
 			fishTable.add(new Label(fishNumber[i] + "", labelStyle)).pad(30).center();
 		}
