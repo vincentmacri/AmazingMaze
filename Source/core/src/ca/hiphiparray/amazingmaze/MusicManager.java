@@ -34,14 +34,22 @@ public class MusicManager {
 	public enum Song {
 		/** The menu song. */
 		MENU,
+		/** The story song. */
+		STORY,
 		/** The maze song. */
 		MAZE,
+		/** The math song. */
+		MATH,
 		/** The credits song. */
-		CREDITS
+		CREDITS,
 	}
 
 	/** The music that plays on the menu. */
 	private Music menuMusic;
+	/** The music that plays on the story screen. */
+	private Music storyMusic;
+	/** The music that plays on the math screen. */
+	private Music mathMusic;
 	/** The music that plays in the maze. */
 	private Music mazeMusic;
 	/** The music that plays during the credits. */
@@ -57,11 +65,15 @@ public class MusicManager {
 	 */
 	public MusicManager(AmazingMazeGame game) {
 		menuMusic = game.assets.manager.get(Assets.MENU_SONG, Music.class);
+		storyMusic = game.assets.manager.get(Assets.STORY_SONG, Music.class);
+		mathMusic = game.assets.manager.get(Assets.MATH_SONG, Music.class);
 		mazeMusic = game.assets.manager.get(Assets.MAZE_SONG, Music.class);
 		creditsMusic = game.assets.manager.get(Assets.CREDITS_SONG, Music.class);
 
 		menuMusic.setLooping(true);
+		// Story music intentionally not looping.
 		mazeMusic.setLooping(true);
+		mathMusic.setLooping(true);
 		creditsMusic.setLooping(true);
 
 		setVolume(game.set.getMusicLevel());
@@ -73,20 +85,45 @@ public class MusicManager {
 	 * @param song the song to change to.
 	 */
 	public void setSong(Song song) {
+		menuMusic.stop();
+		storyMusic.stop();
+		mazeMusic.stop();
+		mathMusic.stop();
+		creditsMusic.stop();
 		switch (song) {
 			case MENU:
+				storyMusic.stop();
 				mazeMusic.stop();
+				mathMusic.stop();
 				creditsMusic.stop();
 				menuMusic.play();
 				break;
+			case STORY:
+				menuMusic.stop();
+				mazeMusic.stop();
+				mathMusic.stop();
+				creditsMusic.stop();
+				storyMusic.play();
+				break;
 			case MAZE:
 				menuMusic.stop();
+				storyMusic.stop();
+				mathMusic.stop();
 				creditsMusic.stop();
 				mazeMusic.play();
 				break;
+			case MATH:
+				menuMusic.stop();
+				storyMusic.stop();
+				mazeMusic.stop();
+				creditsMusic.stop();
+				mathMusic.play();
+				break;
 			case CREDITS:
 				menuMusic.stop();
+				storyMusic.stop();
 				mazeMusic.stop();
+				mathMusic.stop();
 				creditsMusic.play();
 				break;
 		}

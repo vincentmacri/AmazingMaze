@@ -43,6 +43,9 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  */
 public class CreditsScreen implements Screen {
 
+	/** How long to wait between credits items. */
+	private static final float ITEM_DELAY = 5f;
+
 	/** The {@link AmazingMazeGame} instance that is managing this screen. */
 	private final AmazingMazeGame game;
 
@@ -99,10 +102,10 @@ public class CreditsScreen implements Screen {
 	};
 	/** Who did the music. */
 	private static final String[] MUSIC = {
-			"\"Bit Shift\", \"Exit the Premises\", \"Half Bit\"",
+			"\"Babylon\", \"Digital Lemonade\", \"Lightless Dawn\", \"Secrets of the Schoolyard\", \"Vanes\"",
 			"Kevin MacLeod (incompetech.com)",
 			"Licensed under Creative Commons: By Attribution 3.0",
-			"http://creativecommons.org/licenses/by/3.0/"
+			"http://creativecommons.org/licenses/by/3.0/",
 	};
 
 	/** Who to thank. */
@@ -129,13 +132,13 @@ public class CreditsScreen implements Screen {
 
 	/** Create the actions of the credits actors. */
 	private void createActions() {
-		gameLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		codeGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		artGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		storyGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		musicGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		thanksGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		companyLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
+		gameLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		codeGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		artGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		storyGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		musicGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		thanksGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		companyLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
 	}
 
 	/**
@@ -209,7 +212,7 @@ public class CreditsScreen implements Screen {
 	private void updateComponents() {
 		table.clear();
 		header.setText(HEADERS[currentComponentIndex]);
-		header.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
+		header.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
 		table.add(header);
 		table.row();
 		table.add(components[currentComponentIndex]).expand();

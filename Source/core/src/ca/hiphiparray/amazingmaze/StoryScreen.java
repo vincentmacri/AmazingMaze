@@ -31,6 +31,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import ca.hiphiparray.amazingmaze.MusicManager.Song;
+
 /**
  * The screen that tells the background story.
  *
@@ -127,6 +129,7 @@ public class StoryScreen implements Screen {
 
 	@Override
 	public void hide() {
+		game.music.setSong(Song.STORY);
 	}
 
 	@Override

@@ -101,11 +101,15 @@ public class Assets implements Disposable {
 	protected static final int LARGE_FONT_SIZE = 128;
 
 	/** The file name of the song that plays on the menu screen. */
-	protected static final String MENU_SONG = "music/BitShift.mp3";
+	protected static final String MENU_SONG = "music/SecretsOfTheSchoolyard.mp3";
+	/** The file name of the song that plays on the story screen. */
+	protected static final String STORY_SONG = "music/Vanes.mp3";
 	/** The file name of the song that plays in the maze. */
-	protected static final String MAZE_SONG = "music/ExitThePremises.mp3";
+	protected static final String MAZE_SONG = "music/LightlessDawn.mp3";
+	/** The file name of the song that plays on the math screen. */
+	protected static final String MATH_SONG = "music/Babylon.mp3";
 	/** The file name of the song that plays during the credits. */
-	protected static final String CREDITS_SONG = "music/HalfBit.mp3";
+	protected static final String CREDITS_SONG = "music/DigitalLemonade.mp3";
 
 	/** The atlas name of the background tile. */
 	private final String BACKGROUND = "background";
@@ -187,7 +191,9 @@ public class Assets implements Disposable {
 	/** Helper method to load the game's music. */
 	private void loadMusic() {
 		manager.load(MENU_SONG, Music.class);
+		manager.load(STORY_SONG, Music.class);
 		manager.load(MAZE_SONG, Music.class);
+		manager.load(MATH_SONG, Music.class);
 		manager.load(CREDITS_SONG, Music.class);
 	}
 
