@@ -33,6 +33,17 @@ public class HighScore implements Comparable<HighScore> {
 	private final int score;
 
 	/**
+	 * The default high score constructor, to be used for empty entries.
+	 *
+	 * Sets the name to an empty string.
+	 * Sets the score to -1.
+	 */
+	public HighScore() {
+		this.name = "";
+		this.score = -1;
+	}
+
+	/**
 	 * Create a new high score entry.
 	 *
 	 * @param name the name of the player who got this score.
@@ -47,4 +58,23 @@ public class HighScore implements Comparable<HighScore> {
 	public int compareTo(HighScore o) {
 		return this.score - o.score;
 	}
+
+	/**
+	 * Get the name of this high score entry.
+	 *
+	 * @return the name.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Get the score of this high score entry.
+	 *
+	 * @return the score.
+	 */
+	public int getScore() {
+		return score;
+	}
+
 }

@@ -5,14 +5,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
-// TODO: Rename to Save.java
 /**
- * This class holds the settings for the game settings.
+ * This class saves the game state.
  *
  * @author Chloe Nguyen
  * @author Vincent Macri
  */
-public class Settings {
+public class Save {
 
 	/** The name of the save file. */
 	private static final String SAVE_FILE = "save.json";
@@ -37,11 +36,14 @@ public class Settings {
 	/** The level the player is currently on. */
 	private int level;
 
+	/** The array of high scores. */
+	private HighScore[] highScores;
+
 	/** Default constructor to be used by JSON parser. */
-	public Settings() {
+	public Save() {
 	}
 
-	public Settings(boolean readFromFile) {
+	public Save(boolean readFromFile) {
 		if (readFromFile) {
 			readSettings();
 		} else {
@@ -198,9 +200,9 @@ public class Settings {
 	public void readSettings() {
 		FileHandle f = Gdx.files.local(SAVE_FILE);
 		Json json = new Json();
-		Settings savedSettings;
+		Save savedSettings;
 		try {
-			savedSettings = json.fromJson(Settings.class, f);
+			savedSettings = json.fromJson(Save.class, f);
 		} catch (Exception e) {
 			System.out.println("Invalid settings.");
 			resetSettings();
