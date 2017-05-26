@@ -51,7 +51,8 @@ public class AmazingMazeGame extends Game {
 		if (!set.isFullscreen()) {
 			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
 		}
-		this.setScreen(menuScreen);
+		// this.setScreen(menuScreen);
+		this.setScreen(new StoryScreen(this));
 	}
 
 	@Override

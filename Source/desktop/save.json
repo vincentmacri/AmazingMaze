@@ -1,0 +1,10 @@
+{
+upButton: 19
+rightButton: 22
+leftButton: 21
+downButton: 20
+pauseButton: 131
+musicLevel: 1
+fullscreen: true
+level: 1
+}

@@ -53,6 +53,8 @@ public class Assets implements Disposable {
 	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
 	/** The name of the tutorial label style. */
 	protected static final String TUTORIAL_SYTLE = "tutorial";
+	/** The name of the story label style. */
+	protected static final String STORY_STYLE = "story";
 
 	/** The location of the tile atlas. */
 	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
@@ -318,6 +320,7 @@ public class Assets implements Disposable {
 		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TUTORIAL_SYTLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
+		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 	}
 
@@ -334,7 +337,8 @@ public class Assets implements Disposable {
 		}
 		FreeTypeFontLoaderParameter fontParams = new FreeTypeFontLoaderParameter();
 		fontParams.fontFileName = "fonts/" + fontName + ".ttf";
-		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity()); // Make sure font size scales correctly on different monitors.
+		float screenSize = Math.min(Gdx.graphics.getWidth() / 1920f, Gdx.graphics.getHeight() / 1080f);
+		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity() * screenSize);
 		manager.load(fontName + fontSize + ".ttf", BitmapFont.class, fontParams);
 		manager.finishLoadingAsset(fontName + fontSize + ".ttf");
 		return manager.get(fontName + fontSize + ".ttf");

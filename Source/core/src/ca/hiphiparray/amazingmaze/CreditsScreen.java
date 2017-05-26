@@ -32,6 +32,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.utils.Align;
 
 import ca.hiphiparray.amazingmaze.MusicManager.Song;
 
@@ -60,7 +61,8 @@ public class CreditsScreen implements Screen {
 	private Label header;
 
 	/** Vertical grouping of who coded the game */
-	private VerticalGroup codeGroup;
+	private Label codeGroup;
+	// TODO: Use Label instead of VerticalGroup.
 	/** Vertical grouping of who did the art */
 	private VerticalGroup artGroup;
 	/** Vertical grouping of who wrote the story */
@@ -152,13 +154,24 @@ public class CreditsScreen implements Screen {
 		gameLogo = new Image(assets.manager.get(Assets.GAME_LOGO, Texture.class));
 
 		header = new Label("", assets.skin, Assets.CREDITS_HEADER_STYLE);
-		codeGroup = createVerticalGroup(CODE, Assets.CREDITS_CONTENTS_STYLE);
+		// codeGroup = createVerticalGroup(CODE, Assets.CREDITS_CONTENTS_STYLE);
+		codeGroup = new Label(join(CODE), game.assets.skin, Assets.CREDITS_CONTENTS_STYLE);
+		codeGroup.setAlignment(Align.center);
 		artGroup = createVerticalGroup(ART, Assets.CREDITS_CONTENTS_STYLE);
 		storyGroup = createVerticalGroup(STORY, Assets.CREDITS_CONTENTS_STYLE);
 		musicGroup = createVerticalGroup(MUSIC, Assets.CREDITS_SMALL_CONTENTS_STYLE);
 		thanksGroup = createVerticalGroup(THANKS, Assets.CREDITS_CONTENTS_STYLE);
 
 		companyLogo = new Image(assets.manager.get(Assets.COMPANY_LOGO, Texture.class));
+	}
+
+	private String join(String[] text) {
+		String s = text[0];
+		for (int i = 1; i < text.length; i++) {
+			s += "\n" + text[i];
+
+		}
+		return s;
 	}
 
 	/**
