@@ -29,9 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.Align;
 
 import ca.hiphiparray.amazingmaze.MusicManager.Song;
@@ -63,17 +61,16 @@ public class CreditsScreen implements Screen {
 	/** The {@link Label} explaining the role of the people currently on the screen. */
 	private Label header;
 
-	/** Vertical grouping of who coded the game */
+	/** Label of who coded the game */
 	private Label codeGroup;
-	// TODO: Use Label instead of VerticalGroup.
-	/** Vertical grouping of who did the art */
-	private VerticalGroup artGroup;
-	/** Vertical grouping of who wrote the story */
-	private VerticalGroup storyGroup;
-	/** Vertical grouping of who did the music */
-	private VerticalGroup musicGroup;
-	/** Vertical grouping of who to thank */
-	private VerticalGroup thanksGroup;
+	/** Label of who did the art */
+	private Label artGroup;
+	/** Label grouping of who wrote the story */
+	private Label storyGroup;
+	/** Label of who did the music */
+	private Label musicGroup;
+	/** Label of who to thank */
+	private Label thanksGroup;
 
 	private static final String[] HEADERS = {"", "Code", "Art", "Story", "Music", "Thanks", ""};
 
@@ -122,7 +119,7 @@ public class CreditsScreen implements Screen {
 	public CreditsScreen(final AmazingMazeGame game) {
 		this.game = game;
 
-		setupComponents(game.assets);
+		setupComponents();
 		createActions();
 		components = new Actor[] {gameLogo, codeGroup, artGroup, storyGroup, musicGroup, thanksGroup, companyLogo};
 		assert components.length == COMPONENT_COUNT : "Number of components does not match COMPONENT_COUNT.";
@@ -144,53 +141,42 @@ public class CreditsScreen implements Screen {
 	/**
 	 * Instantiate the stage and its actors for the credits screen.
 	 * Add all actors to the stage.
-	 *
-	 * @param assets the {@link Assets} instance to load the assets from.
 	 */
-	private void setupComponents(Assets assets) {
+	private void setupComponents() {
 		stage = new Stage();
 		table = new Table();
 		table.top();
 		table.setFillParent(true);
 		stage.addActor(table);
 
-		gameLogo = new Image(assets.manager.get(Assets.GAME_LOGO, Texture.class));
+		gameLogo = new Image(game.assets.manager.get(Assets.GAME_LOGO, Texture.class));
 
-		header = new Label("", assets.skin, Assets.CREDITS_HEADER_STYLE);
-		// codeGroup = createVerticalGroup(CODE, Assets.CREDITS_CONTENTS_STYLE);
-		codeGroup = new Label(join(CODE), game.assets.skin, Assets.CREDITS_CONTENTS_STYLE);
-		codeGroup.setAlignment(Align.center);
-		artGroup = createVerticalGroup(ART, Assets.CREDITS_CONTENTS_STYLE);
-		storyGroup = createVerticalGroup(STORY, Assets.CREDITS_CONTENTS_STYLE);
-		musicGroup = createVerticalGroup(MUSIC, Assets.CREDITS_SMALL_CONTENTS_STYLE);
-		thanksGroup = createVerticalGroup(THANKS, Assets.CREDITS_CONTENTS_STYLE);
+		header = new Label("", game.assets.skin, Assets.CREDITS_HEADER_STYLE);
+		codeGroup = setupCreditsLabel(CODE, Assets.CREDITS_CONTENTS_STYLE);
+		artGroup = setupCreditsLabel(ART, Assets.CREDITS_CONTENTS_STYLE);
+		storyGroup = setupCreditsLabel(STORY, Assets.CREDITS_CONTENTS_STYLE);
+		musicGroup = setupCreditsLabel(MUSIC, Assets.CREDITS_SMALL_CONTENTS_STYLE);
+		thanksGroup = setupCreditsLabel(THANKS, Assets.CREDITS_CONTENTS_STYLE);
 
-		companyLogo = new Image(assets.manager.get(Assets.COMPANY_LOGO, Texture.class));
-	}
-
-	private String join(String[] text) {
-		String s = text[0];
-		for (int i = 1; i < text.length; i++) {
-			s += "\n" + text[i];
-
-		}
-		return s;
+		companyLogo = new Image(game.assets.manager.get(Assets.COMPANY_LOGO, Texture.class));
 	}
 
 	/**
-	 * Create a vertical group for easy centering.
+	 * Helper method to create centred labels.
 	 *
-	 * @param text the text to put in the labels.
-	 * @param style the {@link LabelStyle} to use.
-	 * @return a {@link VerticalGroup} of {@link Label}s to display.
+	 * @param lines the lines to put in the label. Assumed to have at least one element.
+	 * @param skin the skin to load the style from.
+	 * @return a new {@link Label} with the given properties.
 	 */
-	private VerticalGroup createVerticalGroup(String[] text, String style) {
-		Label[] labels = new Label[text.length];
-		VerticalGroup group = new VerticalGroup();
-		for (int i = 0; i < labels.length; i++) {
-			group.addActor(new Label(text[i], game.assets.skin, style));
+	private Label setupCreditsLabel(String[] lines, String style) {
+		String s = lines[0];
+		for (int i = 1; i < lines.length; i++) {
+			s += "\n" + lines[i];
+
 		}
-		return group;
+		Label label = new Label(s, game.assets.skin, style);
+		label.setAlignment(Align.center);
+		return label;
 	}
 
 	/** Advance the credits screen, or go back to the main menu if it is finished. */
