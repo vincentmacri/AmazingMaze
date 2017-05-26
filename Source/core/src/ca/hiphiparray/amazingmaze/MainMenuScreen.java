@@ -23,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import ca.hiphiparray.amazingmaze.MusicManager.Song;
+
 /**
  * The menu screen for the game.
  *
@@ -43,10 +45,12 @@ public class MainMenuScreen implements Screen {
 	private TextButton playButton;
 	/** Help button. */
 	private TextButton helpButton;
-	/** Quit button. */
-	private TextButton quitButton;
 	/** Settings button. */
 	private TextButton settingsButton;
+	/** Credits button. */
+	private TextButton creditsButton;
+	/** Quit button. */
+	private TextButton quitButton;
 
 	/** Title of menu. */
 	private Image menuTitle;
@@ -66,7 +70,7 @@ public class MainMenuScreen implements Screen {
 		table.bottom();
 		menu.addActor(table);
 
-		menuTitle = new Image(this.game.assets.manager.get(Assets.MENU_IMAGE, Texture.class));
+		menuTitle = new Image(this.game.assets.manager.get(Assets.GAME_LOGO, Texture.class));
 
 		// Play
 		playButton = new TextButton("Play", game.assets.skin);
@@ -74,7 +78,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (playButton.isPressed()) {
-					game.setScreen(new MazeScreen(game));
+					game.setScreen(new MazeScreen(game, false));
 				}
 			}
 		});
@@ -85,7 +89,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (helpButton.isPressed()) {
-					// HELP HERE
+					game.setScreen(new HelpScreen(game));
 				}
 			}
 		});
@@ -97,6 +101,17 @@ public class MainMenuScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				if (settingsButton.isPressed()) {
 					game.setScreen(game.settingsScreen);
+				}
+			}
+		});
+
+		// Credits
+		creditsButton = new TextButton("Credits", game.assets.skin);
+		creditsButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (creditsButton.isPressed()) {
+					game.setScreen(new CreditsScreen(game));
 				}
 			}
 		});
@@ -117,6 +132,7 @@ public class MainMenuScreen implements Screen {
 	public void show() {
 		Gdx.input.setInputProcessor(menu);
 		Gdx.input.setCursorCatched(false);
+		game.music.setSong(Song.MENU);
 	}
 
 	@Override
@@ -136,7 +152,7 @@ public class MainMenuScreen implements Screen {
 
 	/**
 	 * Adds buttons and the title as well as set layout for the menu.
-	 * 
+	 *
 	 * @param width The width of the screen.
 	 * @param height The height of the screen.
 	 */
@@ -153,6 +169,8 @@ public class MainMenuScreen implements Screen {
 		table.add(helpButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
 		table.add(settingsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.row();
+		table.add(creditsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
 		table.add(quitButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 	}
