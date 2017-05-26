@@ -1,4 +1,4 @@
-"Bit Shift", "Exit the Premises", "Half Bit"
+"Babylon", "Digital Lemonade", "Lightless Dawn", "Secrets of the Schoolyard", "Vanes"
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
 http://creativecommons.org/licenses/by/3.0/

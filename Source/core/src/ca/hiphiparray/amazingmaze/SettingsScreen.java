@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * SettingsScreen allows users to adjust the settings for the game.
  *
  * @author Chloe Nguyen
+ * @author Vincent Macri
  */
 public class SettingsScreen implements Screen, InputProcessor {
 
@@ -130,9 +131,19 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		controlsHeader = new Label("Controls", game.assets.skin);
 
-		actions = new Label[] {new Label("Up", game.assets.skin), new Label("Right", game.assets.skin), new Label("Left", game.assets.skin), new Label("Down", game.assets.skin),};
+		actions = new Label[] {
+				new Label("Up", game.assets.skin),
+				new Label("Right", game.assets.skin),
+				new Label("Left", game.assets.skin),
+				new Label("Down", game.assets.skin),
+				new Label("Pause", game.assets.skin)};
 
-		actionControls = new TextButton[] {new TextButton(Keys.toString(game.set.getUpButton()), skin), new TextButton(Keys.toString(game.set.getRightButton()), skin), new TextButton(Keys.toString(game.set.getLeftButton()), skin), new TextButton(Keys.toString(game.set.getDownButton()), skin),};
+		actionControls = new TextButton[] {
+				new TextButton(Keys.toString(game.set.getUpButton()), skin),
+				new TextButton(Keys.toString(game.set.getRightButton()), skin),
+				new TextButton(Keys.toString(game.set.getLeftButton()), skin),
+				new TextButton(Keys.toString(game.set.getDownButton()), skin),
+				new TextButton(Keys.toString(game.set.getPauseButton()), skin)};
 
 		actionControls[0].addListener(new ChangeListener() {
 
@@ -178,6 +189,15 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		});
 
+		actionControls[4].addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (actionControls[4].isPressed()) {
+					updateControls(4);
+				}
+			}
+		});
+
 		// Reset settings button
 		resetSettingsButton = new TextButton("Reset Settings", skin);
 		resetSettingsButton.addListener(new ChangeListener() {
@@ -204,6 +224,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 		actionControls[1].setText(Keys.toString(game.set.getRightButton()));
 		actionControls[2].setText(Keys.toString(game.set.getLeftButton()));
 		actionControls[3].setText(Keys.toString(game.set.getDownButton()));
+		actionControls[4].setText(Keys.toString(game.set.getPauseButton()));
 	}
 
 	/**
@@ -264,7 +285,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		settings.act(Gdx.graphics.getDeltaTime());
+		settings.act(delta);
 		settings.draw();
 
 		if (backToMenuButton.isPressed()) {
@@ -322,10 +343,9 @@ public class SettingsScreen implements Screen, InputProcessor {
 				case 3: // Down
 					game.set.setDownButton(keycode);
 					break;
-
-				default:
+				case 4: // Pause
+					game.set.setPauseButton(keycode);
 					break;
-
 			}
 			actionControls[actionBeingSet].setText(Keys.toString(keycode));
 			actionBeingSet = -1;

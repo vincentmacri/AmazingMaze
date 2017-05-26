@@ -23,7 +23,6 @@ import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -311,15 +310,15 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.LEFT) {
+		if (keycode == game.set.getLeftButton()) {
 			player.setHorizontalDir(HorizontalDirection.LEFT);
-		} else if (keycode == Keys.RIGHT) {
+		} else if (keycode == game.set.getRightButton()) {
 			player.setHorizontalDir(HorizontalDirection.RIGHT);
-		} else if (keycode == Keys.UP) {
+		} else if (keycode == game.set.getUpButton()) {
 			player.setVerticalDir(VerticalDirection.UP);
-		} else if (keycode == Keys.DOWN) {
+		} else if (keycode == game.set.getDownButton()) {
 			player.setVerticalDir(VerticalDirection.DOWN);
-		} else if (keycode == Keys.ESCAPE) {
+		} else if (keycode == game.set.getPauseButton()) {
 			paused = !paused;
 		}
 		return true;
@@ -327,42 +326,42 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Keys.LEFT) {
-			if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if (keycode == game.set.getLeftButton()) {
+			if (Gdx.input.isKeyPressed(game.set.getRightButton())) {
 				player.setHorizontalDir(HorizontalDirection.RIGHT);
-			} else if (Gdx.input.isKeyPressed(Keys.UP)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getUpButton())) {
 				player.setVerticalDir(VerticalDirection.UP);
-			} else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getDownButton())) {
 				player.setVerticalDir(VerticalDirection.DOWN);
 			} else {
 				player.setHorizontalDir(HorizontalDirection.NONE);
 			}
-		} else if (keycode == Keys.RIGHT) {
-			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		} else if (keycode == game.set.getRightButton()) {
+			if (Gdx.input.isKeyPressed(game.set.getLeftButton())) {
 				player.setHorizontalDir(HorizontalDirection.LEFT);
-			} else if (Gdx.input.isKeyPressed(Keys.UP)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getUpButton())) {
 				player.setVerticalDir(VerticalDirection.UP);
-			} else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getDownButton())) {
 				player.setVerticalDir(VerticalDirection.DOWN);
 			} else {
 				player.setHorizontalDir(HorizontalDirection.NONE);
 			}
-		} else if (keycode == Keys.UP) {
-			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		} else if (keycode == game.set.getUpButton()) {
+			if (Gdx.input.isKeyPressed(game.set.getDownButton())) {
 				player.setVerticalDir(VerticalDirection.DOWN);
-			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getLeftButton())) {
 				player.setHorizontalDir(HorizontalDirection.LEFT);
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getRightButton())) {
 				player.setHorizontalDir(HorizontalDirection.RIGHT);
 			} else {
 				player.setVerticalDir(VerticalDirection.NONE);
 			}
-		} else if (keycode == Keys.DOWN) {
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
+		} else if (keycode == game.set.getDownButton()) {
+			if (Gdx.input.isKeyPressed(game.set.getUpButton())) {
 				player.setVerticalDir(VerticalDirection.UP);
-			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getLeftButton())) {
 				player.setHorizontalDir(HorizontalDirection.LEFT);
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			} else if (Gdx.input.isKeyPressed(game.set.getRightButton())) {
 				player.setHorizontalDir(HorizontalDirection.RIGHT);
 			} else {
 				player.setVerticalDir(VerticalDirection.NONE);

@@ -32,7 +32,8 @@ public class AmazingMazeGame extends Game {
 
 	/** The main menu screen. */
 	protected MainMenuScreen menuScreen;
-
+	/** The story screen. */
+	protected StoryScreen storyScreen;
 	/** The settings screen */
 	protected SettingsScreen settingsScreen;
 
@@ -41,17 +42,20 @@ public class AmazingMazeGame extends Game {
 
 	@Override
 	public void create() {
+		set = new Settings(true);
+		if (!set.isFullscreen()) {
+			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
+		}
 		batch = new SpriteBatch();
 		assets = new Assets();
-		set = new Settings(true);
 		music = new MusicManager(this);
 
 		settingsScreen = new SettingsScreen(this);
 		menuScreen = new MainMenuScreen(this);
-		if (!set.isFullscreen()) {
-			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
-		}
+		storyScreen = new StoryScreen(this);
+
 		this.setScreen(menuScreen);
+
 	}
 
 	@Override

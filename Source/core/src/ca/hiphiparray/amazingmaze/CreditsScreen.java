@@ -32,6 +32,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.utils.Align;
 
 import ca.hiphiparray.amazingmaze.MusicManager.Song;
 
@@ -41,6 +42,9 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * @author Vincent Macri
  */
 public class CreditsScreen implements Screen {
+
+	/** How long to wait between credits items. */
+	private static final float ITEM_DELAY = 5f;
 
 	/** The {@link AmazingMazeGame} instance that is managing this screen. */
 	private final AmazingMazeGame game;
@@ -60,7 +64,8 @@ public class CreditsScreen implements Screen {
 	private Label header;
 
 	/** Vertical grouping of who coded the game */
-	private VerticalGroup codeGroup;
+	private Label codeGroup;
+	// TODO: Use Label instead of VerticalGroup.
 	/** Vertical grouping of who did the art */
 	private VerticalGroup artGroup;
 	/** Vertical grouping of who wrote the story */
@@ -97,10 +102,10 @@ public class CreditsScreen implements Screen {
 	};
 	/** Who did the music. */
 	private static final String[] MUSIC = {
-			"\"Bit Shift\", \"Exit the Premises\", \"Half Bit\"",
+			"\"Babylon\", \"Digital Lemonade\", \"Lightless Dawn\", \"Secrets of the Schoolyard\", \"Vanes\"",
 			"Kevin MacLeod (incompetech.com)",
 			"Licensed under Creative Commons: By Attribution 3.0",
-			"http://creativecommons.org/licenses/by/3.0/"
+			"http://creativecommons.org/licenses/by/3.0/",
 	};
 
 	/** Who to thank. */
@@ -127,13 +132,13 @@ public class CreditsScreen implements Screen {
 
 	/** Create the actions of the credits actors. */
 	private void createActions() {
-		gameLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		codeGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		artGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		storyGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		musicGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		thanksGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
-		companyLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
+		gameLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		codeGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		artGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		storyGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		musicGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		thanksGroup.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
+		companyLogo.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
 	}
 
 	/**
@@ -152,13 +157,24 @@ public class CreditsScreen implements Screen {
 		gameLogo = new Image(assets.manager.get(Assets.GAME_LOGO, Texture.class));
 
 		header = new Label("", assets.skin, Assets.CREDITS_HEADER_STYLE);
-		codeGroup = createVerticalGroup(CODE, Assets.CREDITS_CONTENTS_STYLE);
+		// codeGroup = createVerticalGroup(CODE, Assets.CREDITS_CONTENTS_STYLE);
+		codeGroup = new Label(join(CODE), game.assets.skin, Assets.CREDITS_CONTENTS_STYLE);
+		codeGroup.setAlignment(Align.center);
 		artGroup = createVerticalGroup(ART, Assets.CREDITS_CONTENTS_STYLE);
 		storyGroup = createVerticalGroup(STORY, Assets.CREDITS_CONTENTS_STYLE);
 		musicGroup = createVerticalGroup(MUSIC, Assets.CREDITS_SMALL_CONTENTS_STYLE);
 		thanksGroup = createVerticalGroup(THANKS, Assets.CREDITS_CONTENTS_STYLE);
 
 		companyLogo = new Image(assets.manager.get(Assets.COMPANY_LOGO, Texture.class));
+	}
+
+	private String join(String[] text) {
+		String s = text[0];
+		for (int i = 1; i < text.length; i++) {
+			s += "\n" + text[i];
+
+		}
+		return s;
 	}
 
 	/**
@@ -196,7 +212,7 @@ public class CreditsScreen implements Screen {
 	private void updateComponents() {
 		table.clear();
 		header.setText(HEADERS[currentComponentIndex]);
-		header.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(1f), Actions.fadeOut(1f)));
+		header.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(1f), Actions.fadeIn(1f), Actions.delay(ITEM_DELAY), Actions.fadeOut(1f)));
 		table.add(header);
 		table.row();
 		table.add(components[currentComponentIndex]).expand();

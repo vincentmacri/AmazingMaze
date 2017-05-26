@@ -53,6 +53,8 @@ public class Assets implements Disposable {
 	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
 	/** The name of the tutorial label style. */
 	protected static final String TUTORIAL_SYTLE = "tutorial";
+	/** The name of the story label style. */
+	protected static final String STORY_STYLE = "story";
 
 	/** The location of the tile atlas. */
 	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
@@ -99,11 +101,15 @@ public class Assets implements Disposable {
 	protected static final int LARGE_FONT_SIZE = 128;
 
 	/** The file name of the song that plays on the menu screen. */
-	protected static final String MENU_SONG = "music/BitShift.mp3";
+	protected static final String MENU_SONG = "music/SecretsOfTheSchoolyard.mp3";
+	/** The file name of the song that plays on the story screen. */
+	protected static final String STORY_SONG = "music/Vanes.mp3";
 	/** The file name of the song that plays in the maze. */
-	protected static final String MAZE_SONG = "music/ExitThePremises.mp3";
+	protected static final String MAZE_SONG = "music/LightlessDawn.mp3";
+	/** The file name of the song that plays on the math screen. */
+	protected static final String MATH_SONG = "music/Babylon.mp3";
 	/** The file name of the song that plays during the credits. */
-	protected static final String CREDITS_SONG = "music/HalfBit.mp3";
+	protected static final String CREDITS_SONG = "music/DigitalLemonade.mp3";
 
 	/** The atlas name of the background tile. */
 	private final String BACKGROUND = "background";
@@ -185,7 +191,9 @@ public class Assets implements Disposable {
 	/** Helper method to load the game's music. */
 	private void loadMusic() {
 		manager.load(MENU_SONG, Music.class);
+		manager.load(STORY_SONG, Music.class);
 		manager.load(MAZE_SONG, Music.class);
+		manager.load(MATH_SONG, Music.class);
 		manager.load(CREDITS_SONG, Music.class);
 	}
 
@@ -318,6 +326,7 @@ public class Assets implements Disposable {
 		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TUTORIAL_SYTLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
+		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 	}
 
@@ -334,7 +343,8 @@ public class Assets implements Disposable {
 		}
 		FreeTypeFontLoaderParameter fontParams = new FreeTypeFontLoaderParameter();
 		fontParams.fontFileName = "fonts/" + fontName + ".ttf";
-		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity()); // Make sure font size scales correctly on different monitors.
+		float screenSize = Math.min(Gdx.graphics.getWidth() / 1920f, Gdx.graphics.getHeight() / 1080f);
+		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity() * screenSize);
 		manager.load(fontName + fontSize + ".ttf", BitmapFont.class, fontParams);
 		manager.finishLoadingAsset(fontName + fontSize + ".ttf");
 		return manager.get(fontName + fontSize + ".ttf");
