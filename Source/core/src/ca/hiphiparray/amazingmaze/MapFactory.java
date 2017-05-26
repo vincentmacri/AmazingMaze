@@ -149,7 +149,7 @@ public class MapFactory {
 
 		TiledMapTileLayer powerUpLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
 		powerUpLayer.setName(POWER_LAYER);
-		for (int c = 0; c < width; c++) {
+		for (int c = 0; c < width; c++) { // TODO: Ensure fish are not at level edge.
 			if (!splits.contains(c) && random.nextDouble() <= 0.25) {
 				placeFish(powerUpLayer, c, gateSpace);
 				c++;
