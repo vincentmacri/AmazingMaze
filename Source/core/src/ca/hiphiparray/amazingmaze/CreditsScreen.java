@@ -35,7 +35,7 @@ import com.badlogic.gdx.utils.Align;
 import ca.hiphiparray.amazingmaze.MusicManager.Song;
 
 /**
- *
+ * The credits screen.
  *
  * @author Vincent Macri
  */
@@ -207,6 +207,7 @@ public class CreditsScreen implements Screen {
 	@Override
 	public void show() {
 		game.music.setSong(Song.CREDITS);
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
