@@ -117,6 +117,8 @@ public class Assets implements Disposable {
 	private final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
 	private final String PLACEHOLDER = "placeholder";
+	/** The atlas name of the mouse. */
+	protected static final String MOUSE = "mouse";
 
 	/** The string appended to the end of atlas names for their on variation. */
 	private final String ON_MODIFIER = "-on";
