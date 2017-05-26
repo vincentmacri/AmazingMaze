@@ -26,9 +26,12 @@ import java.util.Scanner;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import ca.hiphiparray.amazingmaze.MusicManager.Song;
@@ -49,8 +52,14 @@ public class StoryScreen implements Screen {
 	/** Table for the stage. */
 	private Table table;
 
-	/** The story {@link Label}. */
-	private Label story;
+	/** The header label. */
+	private Label header;
+
+	/** The story label. */
+	private Label storyLabel;
+
+	/** The button to continue to the tutorial. */
+	private TextButton continueButton;
 
 	/**
 	 * Constructor for the story screen.
@@ -71,9 +80,25 @@ public class StoryScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 
-		story = new Label(readStory(), game.assets.skin, Assets.STORY_STYLE);
-		story.setWrap(true);
-		table.add(story).maxWidth(Gdx.graphics.getWidth()).prefWidth(Gdx.graphics.getWidth() / 1.125f);
+		header = new Label("Story", game.assets.skin, Assets.CREDITS_HEADER_STYLE);
+		table.add(header).padTop(Gdx.graphics.getHeight() / 25f);
+
+		storyLabel = new Label(readStory(), game.assets.skin, Assets.STORY_STYLE);
+		storyLabel.setWrap(true);
+		table.row();
+		table.add(storyLabel).maxWidth(Gdx.graphics.getWidth()).prefWidth(Gdx.graphics.getWidth() / 1.125f).pad(Gdx.graphics.getHeight() / 25f);
+
+		continueButton = new TextButton("Continue...", game.assets.skin);
+		continueButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (continueButton.isPressed()) {
+					game.setScreen(new MazeScreen(game));
+				}
+			}
+		});
+		table.row();
+		table.add(continueButton).width(Gdx.graphics.getWidth() / 4f).pad(Gdx.graphics.getHeight() / 25f).expandY().bottom().fillY();
 	}
 
 	/**
@@ -103,7 +128,9 @@ public class StoryScreen implements Screen {
 
 	@Override
 	public void show() {
+		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCursorCatched(false);
+		game.music.setSong(Song.STORY);
 	}
 
 	@Override
@@ -129,7 +156,6 @@ public class StoryScreen implements Screen {
 
 	@Override
 	public void hide() {
-		game.music.setSong(Song.STORY);
 	}
 
 	@Override

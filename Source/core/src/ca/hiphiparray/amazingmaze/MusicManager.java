@@ -85,11 +85,6 @@ public class MusicManager {
 	 * @param song the song to change to.
 	 */
 	public void setSong(Song song) {
-		menuMusic.stop();
-		storyMusic.stop();
-		mazeMusic.stop();
-		mathMusic.stop();
-		creditsMusic.stop();
 		switch (song) {
 			case MENU:
 				storyMusic.stop();
@@ -138,7 +133,9 @@ public class MusicManager {
 	public void setVolume(float value) {
 		volume = MathUtils.clamp(value, 0, 1);
 		menuMusic.setVolume(volume);
+		storyMusic.setVolume(volume);
 		mazeMusic.setVolume(volume);
+		mathMusic.setVolume(volume);
 		creditsMusic.setVolume(volume);
 	}
 
