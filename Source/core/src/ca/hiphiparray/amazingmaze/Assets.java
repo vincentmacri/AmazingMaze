@@ -25,8 +25,10 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -54,7 +56,7 @@ public class Assets implements Disposable {
 	/** The UI skin. */
 	protected Skin skin;
 	/** The location of the tile atlas. */
-	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
+	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
 
 	/** The name of the credits header style in the UI skin. */
 	protected static final String CREDITS_HEADER_STYLE = "header";
@@ -192,6 +194,15 @@ public class Assets implements Disposable {
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
 
+	/** The mouse walking up animation. */
+	protected Animation<TextureRegion> mouseUp;
+	/** The mouse walking down animation. */
+	protected Animation<TextureRegion> mouseDown;
+	/** The mouse walking left animation. */
+	protected Animation<TextureRegion> mouseLeft;
+	/** The mouse walking right animation. */
+	protected Animation<TextureRegion> mouseRight;
+
 	/**
 	 * {@link Assets} constructor.
 	 * Calling this constructor loads in all of the game assets.
@@ -207,10 +218,11 @@ public class Assets implements Disposable {
 
 		loadSkin();
 		loadMapResources();
+		loadMusic();
+		setupMouseAnimation();
 		manager.load(GAME_LOGO, Texture.class);
 		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
-		loadMusic();
 		manager.load(MENU_BACKGROUND_IMAGE, Texture.class);
 		manager.load(MINI_BACKGROUND, Texture.class);
 		manager.load(PENCIL_BUTTON, Texture.class);
@@ -220,6 +232,15 @@ public class Assets implements Disposable {
 		manager.load(CLEAR_BUTTON, Texture.class);
 
 		manager.finishLoading();
+	}
+
+	/** Helper method to setup the mouse animation. */
+	private void setupMouseAnimation() {
+		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
+		mouseUp = new Animation<TextureRegion>(0.25f, atlas.findRegions(Assets.MOUSE + Assets.UP_MODIFIER));
+		mouseDown = new Animation<TextureRegion>(0.25f, atlas.findRegions(Assets.MOUSE + Assets.DOWN_MODIFIER));
+		mouseLeft = new Animation<TextureRegion>(0.25f, atlas.findRegions(Assets.MOUSE + Assets.LEFT_MODIFIER));
+		mouseRight = new Animation<TextureRegion>(0.25f, atlas.findRegions(Assets.MOUSE + Assets.RIGHT_MODIFIER));
 	}
 
 	/** Helper method to load the game's music. */
@@ -233,9 +254,9 @@ public class Assets implements Disposable {
 
 	/** Helper method for loading the map resources. */
 	private void loadMapResources() {
-		manager.load(TILE_ATLAS_LOCATION, TextureAtlas.class);
-		manager.finishLoadingAsset(TILE_ATLAS_LOCATION);
-		TextureAtlas atlas = manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
+		manager.load(GAME_ATLAS_LOCATION, TextureAtlas.class);
+		manager.finishLoadingAsset(GAME_ATLAS_LOCATION);
+		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 
 		tiles = new TiledMapTileSet();
 

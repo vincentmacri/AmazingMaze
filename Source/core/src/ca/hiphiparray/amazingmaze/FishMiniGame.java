@@ -155,7 +155,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		fishImage = new Image[5];
 
-		TextureAtlas atlas = this.game.assets.manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class);
+		TextureAtlas atlas = this.game.assets.manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class);
 		fishImage[0] = new Image(atlas.findRegion(Assets.FISH + Assets.BLUE_MODIFIER));
 		fishImage[0].setScale(4f);
 		fishImage[1] = new Image(atlas.findRegion(Assets.FISH + Assets.PURPLE_MODIFIER));

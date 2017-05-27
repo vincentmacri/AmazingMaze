@@ -38,16 +38,6 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  */
 public class Player extends Sprite {
 
-	/** The direction the player is moving horizontally. */
-	public enum HorizontalDirection {
-		/** If the player is moving left. */
-		LEFT,
-		/** If the player is moving right. */
-		RIGHT,
-		/** If the player is not moving horizontally. */
-		NONE
-	}
-
 	/** The direction the player is moving vertically. */
 	public enum VerticalDirection {
 		/** If the player is moving up. */
@@ -58,13 +48,23 @@ public class Player extends Sprite {
 		NONE
 	}
 
+	/** The direction the player is moving horizontally. */
+	public enum HorizontalDirection {
+		/** If the player is moving left. */
+		LEFT,
+		/** If the player is moving right. */
+		RIGHT,
+		/** If the player is not moving horizontally. */
+		NONE
+	}
+
 	/** The speed of the player. */
 	private float SPEED = 10f;
 
-	/** The current horizontal movement of the player. */
-	private HorizontalDirection horizontalDir;
 	/** The current vertical movement of the player. */
 	private VerticalDirection verticalDir;
+	/** The current horizontal movement of the player. */
+	private HorizontalDirection horizontalDir;
 
 	/** A 2D vector representing the direction and magnitude the player is moving with. */
 	private Vector2 direction;
@@ -213,17 +213,6 @@ public class Player extends Sprite {
 	}
 
 	/**
-	 * Setter for {@link #horizontalDir}.
-	 *
-	 * @param horizontalDir the new horizontal direction of the player.
-	 */
-	public void setHorizontalDir(HorizontalDirection horizontalDir) {
-		this.horizontalDir = horizontalDir;
-		this.verticalDir = VerticalDirection.NONE;
-		updateDirection();
-	}
-
-	/**
 	 * Setter for {@link #verticalDir}
 	 *
 	 * @param verticalDir the new vertical direction of the player.
@@ -231,6 +220,17 @@ public class Player extends Sprite {
 	public void setVerticalDir(VerticalDirection verticalDir) {
 		this.verticalDir = verticalDir;
 		this.horizontalDir = HorizontalDirection.NONE;
+		updateDirection();
+	}
+
+	/**
+	 * Setter for {@link #horizontalDir}.
+	 *
+	 * @param horizontalDir the new horizontal direction of the player.
+	 */
+	public void setHorizontalDir(HorizontalDirection horizontalDir) {
+		this.horizontalDir = horizontalDir;
+		this.verticalDir = VerticalDirection.NONE;
 		updateDirection();
 	}
 
