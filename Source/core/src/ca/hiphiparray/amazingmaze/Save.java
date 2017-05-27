@@ -1,21 +1,25 @@
 package ca.hiphiparray.amazingmaze;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
-// TODO: Rename to Save.java
 /**
- * This class holds the settings for the game settings.
+ * This class saves the game state.
  *
  * @author Chloe Nguyen
  * @author Vincent Macri
  */
-public class Settings {
+public class Save {
 
 	/** The name of the save file. */
 	private static final String SAVE_FILE = "save.json";
+
+	/** The number of high score entries. */
+	private static final int MAX_HIGH_SCORES = 10;
 
 	/** For when the user moves up. */
 	private int upButton;
@@ -37,11 +41,14 @@ public class Settings {
 	/** The level the player is currently on. */
 	private int level;
 
+	/** The array of high scores. */
+	private HighScore[] highScores;
+
 	/** Default constructor to be used by JSON parser. */
-	public Settings() {
+	public Save() {
 	}
 
-	public Settings(boolean readFromFile) {
+	public Save(boolean readFromFile) {
 		if (readFromFile) {
 			readSettings();
 		} else {
@@ -50,9 +57,7 @@ public class Settings {
 		}
 	}
 
-	/**
-	 * Reset all of the settings to the default values.
-	 */
+	/** Reset all of the settings to the default values. */
 	public void resetSettings() {
 		this.upButton = Keys.UP;
 		this.rightButton = Keys.RIGHT;
@@ -62,8 +67,18 @@ public class Settings {
 
 		this.musicLevel = 1f;
 		this.fullscreen = true;
+	}
 
+	/** Reset the save state. */
+	public void resetSave() {
 		this.level = 1;
+		resetHighScores();
+	}
+
+	/** Reset the settings and the save state. */
+	public void resetAll() {
+		readSettings();
+		resetSave();
 	}
 
 	/**
@@ -198,9 +213,9 @@ public class Settings {
 	public void readSettings() {
 		FileHandle f = Gdx.files.local(SAVE_FILE);
 		Json json = new Json();
-		Settings savedSettings;
+		Save savedSettings;
 		try {
-			savedSettings = json.fromJson(Settings.class, f);
+			savedSettings = json.fromJson(Save.class, f);
 		} catch (Exception e) {
 			System.out.println("Invalid settings.");
 			resetSettings();
@@ -248,5 +263,44 @@ public class Settings {
 	 */
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	/**
+	 * Getter for {@link #highScores}.
+	 *
+	 * @return the high scores array.
+	 */
+	public HighScore[] getHighScores() {
+		return highScores;
+	}
+
+	/** Reset the high scores to 10 default values. */
+	public void resetHighScores() {
+		highScores = new HighScore[MAX_HIGH_SCORES];
+		for (int i = 0; i < highScores.length; i++) {
+			highScores[i] = new HighScore();
+		}
+	}
+
+	/**
+	 * Add the given high score to its appropriate position in {@link #highScores}.
+	 * The high score is not added if it is not high enough to be in the top 10.
+	 * As part of processing, this method will sort {@link #highScores} into descending order.
+	 *
+	 * @param score the high score to add.
+	 */
+	public void addHighScore(HighScore score) {
+		HighScore[] newScores = new HighScore[highScores.length + 1];
+
+		int i;
+		for (i = 0; i < highScores.length; i++) {
+			newScores[i] = highScores[i];
+		}
+		newScores[i] = score;
+
+		Arrays.sort(newScores);
+		for (i = 0; i < highScores.length; i++) {
+			highScores[i] = newScores[newScores.length - 1 - i];
+		}
 	}
 }
