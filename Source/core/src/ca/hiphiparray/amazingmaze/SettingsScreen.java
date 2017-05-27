@@ -48,7 +48,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 	/** Button to go back to menu */
 	private TextButton backToMenuButton;
 
-	/** Checkbox for whether game's in fullscreen or not */
+	/** CheckBox for whether game's in fullscreen or not */
 	private CheckBox fullscreenCheckBox;
 
 	/** Table for game controls */
@@ -60,8 +60,12 @@ public class SettingsScreen implements Screen, InputProcessor {
 	/** Array of TextButtons for changeable game action buttons */
 	private TextButton[] actionControls;
 
-	/** To reset settings */
+	/** Button to reset settings. */
 	private TextButton resetSettingsButton;
+	/** Button to reset save. */
+	private TextButton resetSaveButton;
+	/** Button to reset save and settings. */
+	private TextButton resetAllButton;
 
 	/** Action currently being set. This is -1 when no actions are being set. */
 	private int actionBeingSet = -1;
@@ -212,6 +216,31 @@ public class SettingsScreen implements Screen, InputProcessor {
 			}
 		});
 
+		// Reset save button.
+		resetSaveButton = new TextButton("Reset Save", skin);
+		resetSaveButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (resetSaveButton.isPressed()) {
+					game.set.resetSave();
+				}
+			}
+		});
+
+		// Reset all button.
+		resetAllButton = new TextButton("Reset All", skin);
+		resetAllButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (resetAllButton.isPressed()) {
+					game.set.resetAll();
+					musicSlider.setValue(game.set.getMusicLevel());
+					fullscreenCheckBox.setChecked(game.set.isFullscreen());
+					resetActionControlsLabels();
+				}
+			}
+		});
+
 		backToMenuButton = new TextButton("Main Menu", skin);
 
 	}
@@ -245,39 +274,40 @@ public class SettingsScreen implements Screen, InputProcessor {
 	 * @param height The height of the screen.
 	 */
 	private void layoutSettings(int width, int height) {
+		table.clear();
 
-		table.clear(); // Clear the table.
-
-		table.add(screenHeader).expand().bottom().pad(10f);
+		table.add(screenHeader).pad(10f).colspan(3);
 		table.row();
 
-		table.add(musicSliderLabel);
+		table.add(musicSliderLabel).colspan(3);
 		table.row();
 
-		table.add(musicSlider).pad(10f);
+		table.add(musicSlider).pad(10f).colspan(3);
 		table.row();
 
-		table.add(fullscreenCheckBox);
+		table.add(fullscreenCheckBox).colspan(3);
 		table.row();
 
-		table.add(controlsHeader).pad(10f);
+		table.add(controlsHeader).pad(10f).colspan(3);
 		table.row();
 
-		table.add(controlsTable);
+		table.add(controlsTable).colspan(3);
 
 		controlsTable.clear();
 		for (int i = 0; i < actions.length; i++) {
 			controlsTable.add(actionControls[i]).pad(5f).fill().width(actionControls[i].getHeight() * 5);
 			controlsTable.add(actions[i]).left().pad(5f);
-
 			controlsTable.row();
 		}
 		table.row();
 
-		table.add(resetSettingsButton).prefSize(width / 4, height / 20).pad(30f);
+		table.add(resetSettingsButton).prefSize(width / 6, height / 15).padLeft(width / 64).padRight(width / 64).expandY();
+		table.add(resetSaveButton).prefSize(width / 6, height / 15).padLeft(width / 64).padRight(width / 64).expandY();
+		table.add(resetAllButton).prefSize(width / 6, height / 15).padLeft(width / 64).padRight(width / 64).expandY();
+
 		table.row();
 
-		table.add(backToMenuButton).expandY().bottom().minSize(width / 4, height / 20).maxSize(width, height / 5).prefSize(width / 3, height / 15).pad(10f);
+		table.add(backToMenuButton).padBottom(10f).minSize(width / 4, height / 20).maxSize(width, height / 5).prefSize(width / 3, height / 15).colspan(3);
 	}
 
 	@Override
