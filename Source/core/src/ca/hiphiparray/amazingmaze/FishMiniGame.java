@@ -19,8 +19,6 @@
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -118,23 +116,27 @@ public class FishMiniGame implements Screen, InputProcessor {
 	/**
 	 * Constructor for FishMiniGame.
 	 *
-	 * @param game
-	 *            the {@link AmazingMazeGame} instance that is managing this
-	 *            screen.
+	 * @param game the {@link AmazingMazeGame} instance that is managing this screen.
+	 * @param blueCollected the number of blue fish.
+	 * @param purpleCollected the number of purple fish.
+	 * @param greenCollected the number of green fish.
+	 * @param redCollected the number of red fish.
+	 * @param orangeCollected the number of orange fish.
 	 */
-	public FishMiniGame(final AmazingMazeGame game) {
+	public FishMiniGame(final AmazingMazeGame game, int blueCollected, int purpleCollected, int greenCollected, int redCollected, int orangeCollected) {
 		// System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
 
 		fishNumber = new int[5];
 
-		// FOR TESTING. fishNumber should contain the number of fish retrieved
-		// by the player for each type of fish, instead of randomly generating
-		// numbers.
-		Random random = new Random();
-		answer = 1;
-		for (int i = 0; i < 5; i++) {
-			fishNumber[i] = random.nextInt(4) + 1;
-			answer += fishNumber[i] * i;
+		fishNumber[0] = blueCollected;
+		fishNumber[1] = purpleCollected;
+		fishNumber[2] = greenCollected;
+		fishNumber[3] = redCollected;
+		fishNumber[4] = orangeCollected;
+
+		answer = 0;
+		for (int i = 0; i < fishNumber.length; i++) {
+			answer += fishNumber[i] * fishValue[i];
 		}
 
 		this.game = game;
@@ -194,7 +196,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 					final Dialog dialog = new Dialog("Help", game.assets.skin);
 					final TextButton okButton = new TextButton("OK", game.assets.skin);
 					dialog.getButtonTable().bottom();
-					Label label = new Label("Find the total value of fish that you retrieved! Each colour corresponds to the colour of Canadian money. The numbers correspond to each number of fish you got.", labelStyle);
+					Label label = new Label("Find the total value of fish that you retrieved!\n" + "Each colour corresponds to the colour of Canadian money.\n" + "The numbers correspond to each number of fish you got.\n\n" + "In case you forgot: blue is 5, purple is 10, green is 20, red is 50, and orange is 100.", labelStyle);
 					label.setScale(.5f);
 					label.setWrap(true);
 					label.setAlignment(Align.center);
@@ -252,7 +254,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 						public void changed(ChangeEvent event, Actor actor) {
 							if (okButton.isPressed()) {
 								dialog.cancel();
-								game.setScreen(new MainMenuScreen(game));
+								game.setScreen(new MazeScreen(game));
 							}
 						}
 					});
@@ -331,10 +333,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 	 * @return The number of fish given back to the player.
 	 */
 	public int checkAnswer() {
-		answer = 0;
-		for (int i = 0; i < 5; i++) {
-			answer += fishValue[i] * fishNumber[i];
-		}
 		if (message == -1) {
 			return -1;
 		}
@@ -383,7 +381,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		canvas.dispose();
+		dispose();
 	}
 
 	@Override

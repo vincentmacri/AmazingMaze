@@ -276,9 +276,9 @@ public class MazeScreen implements Screen, InputProcessor {
 	private void update(float delta) {
 		player.update(delta);
 
-		if (player.getX() + 2 * Player.PLAYER_SIZE >= mapWidth) {
+		if (player.getX() + 1 * Player.PLAYER_SIZE >= mapWidth) {
 			game.set.setLevel(game.set.getLevel() + 1);
-			game.setScreen(game.menuScreen);
+			game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
 		}
 	}
 
