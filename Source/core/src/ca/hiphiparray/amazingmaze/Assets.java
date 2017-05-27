@@ -112,59 +112,59 @@ public class Assets implements Disposable {
 	protected static final String CREDITS_SONG = "music/DigitalLemonade.mp3";
 
 	/** The atlas name of the background tile. */
-	private final String BACKGROUND = "background";
+	private static final String BACKGROUND = "background";
 	/** The atlas name of the barrier tile. */
-	private final String BARRIER = "blocked";
+	private static final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
-	private final String PLACEHOLDER = "placeholder";
+	private static final String PLACEHOLDER = "placeholder";
 	/** The atlas name of the mouse. */
 	protected static final String MOUSE = "mouse";
 
 	/** The string appended to the end of atlas names for their on variation. */
-	private final String ON_MODIFIER = "-on";
+	private static final String ON_MODIFIER = "-on";
 	/** The string appended to the end of atlas names for their off variation. */
-	private final String OFF_MODIFIER = "-off";
+	private static final String OFF_MODIFIER = "-off";
 	/** The string appended to the end of atlas names for their unknown variation. */
-	private final String UNKNOWN_MODIFIER = "-unknown";
+	private static final String UNKNOWN_MODIFIER = "-unknown";
 
 	/** The string appended to the end of atlas names for their up variation. */
-	private final String UP_MODIFIER = "-up";
+	private static final String UP_MODIFIER = "-up";
 	/** The string appended to the end of atlas names for their down variation. */
-	private final String DOWN_MODIFIER = "-down";
+	private static final String DOWN_MODIFIER = "-down";
 	/** The string appended to the end of atlas names for their left variation. */
-	private final String LEFT_MODIFIER = "-left";
+	private static final String LEFT_MODIFIER = "-left";
 	/** The string appended to the end of atlas names for their right variation. */
-	private final String RIGHT_MODIFIER = "-right";
+	private static final String RIGHT_MODIFIER = "-right";
 
 	/** The atlas base name of the vertical wire. */
-	private final String VERTICAL = "vertical";
+	private static final String VERTICAL = "vertical";
 	/** The atlas base name of the turn wire. */
-	private final String TURN = "turn";
+	private static final String TURN = "turn";
 
 	/** The atlas base name of the AND gate. */
-	private final String AND_GATE = "and";
+	private static final String AND_GATE = "and";
 	/** The atlas base name of the NAND gate. */
-	private final String NAND_GATE = "nand";
+	private static final String NAND_GATE = "nand";
 	/** The atlas base name of the OR gate. */
-	private final String OR_GATE = "or";
+	private static final String OR_GATE = "or";
 	/** The atlas base name of the NOR gate. */
-	private final String NOR_GATE = "nor";
+	private static final String NOR_GATE = "nor";
 	/** The atlas base name of the XOR gate. */
-	private final String XOR_GATE = "xor";
+	private static final String XOR_GATE = "xor";
 
 	/** The atlas base name of the fish. */
-	private final String FISH = "fish";
+	protected static final String FISH = "fish";
 
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	private final String BLUE_MODIFIER = "-blue";
+	protected static final String BLUE_MODIFIER = "-blue";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	private final String PURPLE_MODIFIER = "-purple";
+	protected static final String PURPLE_MODIFIER = "-purple";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	private final String GREEN_MODIFIER = "-green";
+	protected static final String GREEN_MODIFIER = "-green";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	private final String RED_MODIFIER = "-red";
+	protected static final String RED_MODIFIER = "-red";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	private final String ORANGE_MODIFIER = "-orange";
+	protected static final String ORANGE_MODIFIER = "-orange";
 
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
