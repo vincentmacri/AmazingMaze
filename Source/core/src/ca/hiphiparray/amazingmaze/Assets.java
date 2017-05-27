@@ -1,13 +1,21 @@
 /********************************************************************************
- * Amazing Maze is an educational game created in Java with the libGDX library. Copyright (C) 2017 Hip Hip Array
+ * Amazing Maze is an educational game created in Java with the libGDX library.
+ * Copyright (C) 2017 Hip Hip Array
  *
  * This file is part of Amazing Maze.
  *
- * Amazing Maze is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * Amazing Maze is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Amazing Maze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * Amazing Maze is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
@@ -29,13 +37,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Class to easily manage assets, furthering the capabilities of an {@link AssetManager};
  *
  * @author Vincent Macri
- * @author Chloe Nguyen
  */
 public class Assets implements Disposable {
 
@@ -44,6 +53,8 @@ public class Assets implements Disposable {
 
 	/** The UI skin. */
 	protected Skin skin;
+	/** The location of the tile atlas. */
+	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
 
 	/** The name of the credits header style in the UI skin. */
 	protected static final String CREDITS_HEADER_STYLE = "header";
@@ -55,9 +66,6 @@ public class Assets implements Disposable {
 	protected static final String TUTORIAL_SYTLE = "tutorial";
 	/** The name of the story label style. */
 	protected static final String STORY_STYLE = "story";
-
-	/** The location of the tile atlas. */
-	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
 
 	/** The regular monospace font. */
 	protected static final String MONO_REGULAR = "LiberationMono-Regular";
@@ -86,19 +94,34 @@ public class Assets implements Disposable {
 	/** The bold italic serif font. */
 	protected static final String SERIF_BOLD_ITALIC = "LiberationSerif-BoldItalic";
 
-	/** The game logo. */
-	protected static final String GAME_LOGO = "logos/game.png";
-	/** The company logo. */
-	protected static final String COMPANY_LOGO = "logos/company.png";
-	/** The life HUD image. */
-	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
-
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;
 	/** The font size for regular text. */
 	protected static final int REGULAR_FONT_SIZE = 64;
 	/** The font size for large text. */
 	protected static final int LARGE_FONT_SIZE = 128;
+
+	/** The game logo. */
+	protected static final String GAME_LOGO = "logos/game.png";
+	/** The company logo. */
+	protected static final String COMPANY_LOGO = "logos/company.png";
+	/** The life HUD image. */
+	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
+	/** The menu background image. */
+	protected static final String MENU_BACKGROUND_IMAGE = "misc/main.png";
+	/** The fish minigame background image. */
+	protected static final String MINI_BACKGROUND = "mini/background.png";
+
+	/** The pencil button image. */
+	protected static final String PENCIL_BUTTON = "mini/pencil.png";
+	/** The eraser button image. */
+	protected static final String ERASER_BUTTON = "mini/eraser.png";
+	/** The help button image. */
+	protected static final String HELP_BUTTON = "mini/help.png";
+	/** The check answer button image. */
+	protected static final String CHECK_BUTTON = "mini/check.png";
+	/** The clear button image. */
+	protected static final String CLEAR_BUTTON = "mini/clear.png";
 
 	/** The file name of the song that plays on the menu screen. */
 	protected static final String MENU_SONG = "music/SecretsOfTheSchoolyard.mp3";
@@ -170,7 +193,9 @@ public class Assets implements Disposable {
 	protected TiledMapTileSet tiles;
 
 	/**
-	 * {@link Assets} constructor. Calling this constructor loads in all of the game assets. As such, only one {@link Assets} instance should ever be created.
+	 * {@link Assets} constructor.
+	 * Calling this constructor loads in all of the game assets.
+	 * As such, only one {@link Assets} instance should ever be created.
 	 */
 	public Assets() {
 		manager = new AssetManager();
@@ -186,6 +211,13 @@ public class Assets implements Disposable {
 		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
 		loadMusic();
+		manager.load(MENU_BACKGROUND_IMAGE, Texture.class);
+		manager.load(MINI_BACKGROUND, Texture.class);
+		manager.load(PENCIL_BUTTON, Texture.class);
+		manager.load(ERASER_BUTTON, Texture.class);
+		manager.load(HELP_BUTTON, Texture.class);
+		manager.load(CHECK_BUTTON, Texture.class);
+		manager.load(CLEAR_BUTTON, Texture.class);
 
 		manager.finishLoading();
 	}
@@ -330,6 +362,8 @@ public class Assets implements Disposable {
 		skin.get(TUTORIAL_SYTLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
 		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(WindowStyle.class).titleFont = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
 	}
 
 	/**

@@ -54,8 +54,7 @@ public class AmazingMazeGame extends Game {
 		menuScreen = new MainMenuScreen(this);
 		storyScreen = new StoryScreen(this);
 
-		this.setScreen(menuScreen);
-
+		this.setScreen(new FishMiniGame(this));
 	}
 
 	@Override
