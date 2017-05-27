@@ -32,6 +32,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -49,9 +50,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import ca.hiphiparray.amazingmaze.MusicManager.Song;
+
 /**
  * The fish minigame.
- * 
+ *
  * @author Susie Son
  */
 public class FishMiniGame implements Screen, InputProcessor {
@@ -94,7 +97,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 	/** Number of fish for each type. */
 	private int[] fishNumber;
 	/** Values of each type of fish. */
-	private final int[] fishValue = { 50, 100, 20, 5, 10 };
+	private final int[] fishValue = {5, 10, 20, 50, 100};
 	/** Fish images. */
 	private Image[] fishImage;
 
@@ -107,20 +110,20 @@ public class FishMiniGame implements Screen, InputProcessor {
 	/** Whether the mouse has been pressed and left down. */
 	private boolean leftDown;
 
-	/** The eraser color. */
-	private final static Color clearColor = new Color(Color.DARK_GRAY);
-	/** The pencil color. */
-	private final static Color drawColor = new Color(Color.LIGHT_GRAY);
+	/** The pencil colour. */
+	private final static Color drawColor = Color.LIGHT_GRAY;
+	/** The eraser colour. */
+	private final static Color clearColor = Color.DARK_GRAY;
 
 	/**
 	 * Constructor for FishMiniGame.
-	 * 
+	 *
 	 * @param game
 	 *            the {@link AmazingMazeGame} instance that is managing this
 	 *            screen.
 	 */
 	public FishMiniGame(final AmazingMazeGame game) {
-		System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
+		// System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
 
 		fishNumber = new int[5];
 
@@ -141,8 +144,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		menuTable = new Table();
 		fishTable = new Table();
 
-		canvas = new Canvas(
-				new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + shift, Pixmap.Format.RGB565));
+		canvas = new Canvas(new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + shift, Pixmap.Format.RGB565));
 
 		menuTable.setFillParent(true);
 		menuTable.top();
@@ -151,19 +153,19 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		fishImage = new Image[5];
 
-		fishImage[0] = new Image(this.game.assets.manager.get(Assets.FISH_RED, Texture.class));
+		TextureAtlas atlas = this.game.assets.manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class);
+		fishImage[0] = new Image(atlas.findRegion(Assets.FISH + Assets.BLUE_MODIFIER));
 		fishImage[0].setScale(4f);
-		fishImage[1] = new Image(this.game.assets.manager.get(Assets.FISH_ORANGE, Texture.class));
+		fishImage[1] = new Image(atlas.findRegion(Assets.FISH + Assets.PURPLE_MODIFIER));
 		fishImage[1].setScale(4f);
-		fishImage[2] = new Image(this.game.assets.manager.get(Assets.FISH_GREEN, Texture.class));
+		fishImage[2] = new Image(atlas.findRegion(Assets.FISH + Assets.GREEN_MODIFIER));
 		fishImage[2].setScale(4f);
-		fishImage[3] = new Image(this.game.assets.manager.get(Assets.FISH_BLUE, Texture.class));
+		fishImage[3] = new Image(atlas.findRegion(Assets.FISH + Assets.RED_MODIFIER));
 		fishImage[3].setScale(4f);
-		fishImage[4] = new Image(this.game.assets.manager.get(Assets.FISH_PURPLE, Texture.class));
+		fishImage[4] = new Image(atlas.findRegion(Assets.FISH + Assets.ORANGE_MODIFIER));
 		fishImage[4].setScale(4f);
 
-		pencilButton = new Button(new TextureRegionDrawable(
-				new TextureRegion(this.game.assets.manager.get(Assets.PENCIL_BUTTON, Texture.class))));
+		pencilButton = new Button(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.PENCIL_BUTTON, Texture.class))));
 		pencilButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -173,8 +175,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 			}
 		});
 
-		eraserButton = new Button(new TextureRegionDrawable(
-				new TextureRegion(this.game.assets.manager.get(Assets.ERASER_BUTTON, Texture.class))));
+		eraserButton = new Button(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.ERASER_BUTTON, Texture.class))));
 		eraserButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -184,20 +185,16 @@ public class FishMiniGame implements Screen, InputProcessor {
 			}
 		});
 
-		helpButton = new Button(new TextureRegionDrawable(
-				new TextureRegion(this.game.assets.manager.get(Assets.HELP_BUTTON, Texture.class))));
+		helpButton = new Button(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.HELP_BUTTON, Texture.class))));
 		helpButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (helpButton.isPressed()) {
-					Label.LabelStyle labelStyle = new Label.LabelStyle(
-							game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
+					Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
 					final Dialog dialog = new Dialog("Help", game.assets.skin);
 					final TextButton okButton = new TextButton("OK", game.assets.skin);
 					dialog.getButtonTable().bottom();
-					Label label = new Label(
-							"Find the total value of fish that you retrieved! Each colour corresponds to the colour of Canadian money. The numbers correspond to each number of fish you got.",
-							labelStyle);
+					Label label = new Label("Find the total value of fish that you retrieved! Each colour corresponds to the colour of Canadian money. The numbers correspond to each number of fish you got.", labelStyle);
 					label.setScale(.5f);
 					label.setWrap(true);
 					label.setAlignment(Align.center);
@@ -218,14 +215,12 @@ public class FishMiniGame implements Screen, InputProcessor {
 			}
 		});
 
-		checkButton = new Button(new TextureRegionDrawable(
-				new TextureRegion(this.game.assets.manager.get(Assets.CHECK_BUTTON, Texture.class))));
+		checkButton = new Button(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.CHECK_BUTTON, Texture.class))));
 		checkButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				message = formatString(answerField.getText());
-				Label.LabelStyle labelStyle = new Label.LabelStyle(
-						game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
+				Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
 				final Dialog dialog = new Dialog("Results", game.assets.skin);
 				final TextButton okButton = new TextButton("OK", game.assets.skin);
 				dialog.getButtonTable().bottom();
@@ -246,8 +241,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 						}
 					});
 				} else {
-					Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer
-							+ ". " + "You get " + checkAnswer() + " back!", labelStyle);
+					Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
 					label.setScale(.5f);
 					label.setWrap(true);
 					label.setAlignment(Align.center);
@@ -268,8 +262,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 			}
 		});
 
-		clearButton = new Button(new TextureRegionDrawable(
-				new TextureRegion(this.game.assets.manager.get(Assets.CLEAR_BUTTON, Texture.class))));
+		clearButton = new Button(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.CLEAR_BUTTON, Texture.class))));
 		clearButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -288,8 +281,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		menuTable.clear();
 		fishTable.clear();
 		helpButton.right();
-		menuTable.background(new TextureRegionDrawable(
-				new TextureRegion(this.game.assets.manager.get(Assets.MINI_BACKGROUND, Texture.class))));
+		menuTable.background(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.MINI_BACKGROUND, Texture.class))));
 		menuTable.add(pencilButton).pad(10).size(64);
 		menuTable.add(eraserButton).pad(10).size(64);
 		menuTable.add(clearButton).pad(10).size(64);
@@ -297,8 +289,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		menuTable.row();
 
-		Label.LabelStyle labelStyle = new Label.LabelStyle(
-				game.assets.getFont(Assets.SANS_REGULAR, Assets.REGULAR_FONT_SIZE), Color.WHITE);
+		Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.SANS_REGULAR, Assets.REGULAR_FONT_SIZE), Color.WHITE);
 
 		for (int i = 0; i < 5; i++) {
 			fishTable.add(fishImage[i]).bottom().left().padLeft(10);
@@ -306,7 +297,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		fishTable.add(answerField).minWidth(150).padLeft(150);
 		fishTable.add(checkButton).pad(10).size(64);
 		fishTable.row();
-		
+
 		for (int i = 0; i < 5; i++) {
 			fishTable.add(new Label(fishNumber[i] + "", labelStyle)).pad(30).center();
 		}
@@ -317,7 +308,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	/**
 	 * Formats the string into an integer.
-	 * 
+	 *
 	 * @param s
 	 *            The string being formatted.
 	 * @return The formatted string.
@@ -336,7 +327,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	/**
 	 * Checks the player's answer and gives fish accordingly.
-	 * 
+	 *
 	 * @return The number of fish given back to the player.
 	 */
 	public int checkAnswer() {
@@ -363,6 +354,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 	public void show() {
 		Gdx.input.setInputProcessor(input);
 		Gdx.input.setCursorCatched(false);
+		game.music.setSong(Song.MATH);
 	}
 
 	@Override
@@ -404,7 +396,12 @@ public class FishMiniGame implements Screen, InputProcessor {
 	private static class Canvas extends Actor implements Disposable {
 
 		/** Radius of the drawing tool. */
-		private final int brushSize = 5;
+		private static final int pencilSize = 1;
+		/** Radius of the erasing tool. */
+		private static final int eraserSize = 5;
+
+		/** The current brush size. */
+		private int brushSize;
 
 		/** Canvas' pixmap. */
 		private Pixmap pixmap;
@@ -423,16 +420,22 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 			this.texture = new Texture(pixmap);
 			this.pixmapChanged = false;
+			this.brushSize = pencilSize;
 		}
 
 		/**
 		 * Sets the color of the drawing tool.
-		 * 
-		 * @param color
-		 *            Color selected for drawing.
+		 *
+		 * @param color color selected for drawing.
 		 */
+		@Override
 		public void setColor(Color color) {
 			pixmap.setColor(color);
+			if (color.equals(drawColor)) {
+				brushSize = pencilSize;
+			} else {
+				brushSize = eraserSize;
+			}
 		}
 
 		@Override
@@ -449,6 +452,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		}
 
 		/** Clears the pixmap. */
+		@Override
 		public void clear() {
 			pixmap.setColor(clearColor);
 			pixmap.fill();
@@ -457,11 +461,9 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		/**
 		 * Draw a dot on the pixmap.
-		 * 
-		 * @param x
-		 *            The x-coordinate.
-		 * @param y
-		 *            The y-coordinate.
+		 *
+		 * @param x The x-coordinate.
+		 * @param y The y-coordinate.
 		 */
 		private void drawDot(Vector2 spot) {
 			pixmap.fillCircle((int) spot.x, (int) spot.y + shift, brushSize);
@@ -470,7 +472,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		/**
 		 * Draws a line when mouse is dragged.
-		 * 
+		 *
 		 * @param from
 		 *            Where line starts.
 		 * @param to

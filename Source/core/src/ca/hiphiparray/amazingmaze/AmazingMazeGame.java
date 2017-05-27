@@ -38,11 +38,11 @@ public class AmazingMazeGame extends Game {
 	protected SettingsScreen settingsScreen;
 
 	/** The settings for the game. */
-	protected Settings set;
+	protected Save set;
 
 	@Override
 	public void create() {
-		set = new Settings(true);
+		set = new Save(true);
 		if (!set.isFullscreen()) {
 			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
 		}
@@ -54,8 +54,7 @@ public class AmazingMazeGame extends Game {
 		menuScreen = new MainMenuScreen(this);
 		storyScreen = new StoryScreen(this);
 
-		this.setScreen(menuScreen);
-
+		this.setScreen(new FishMiniGame(this));
 	}
 
 	@Override
