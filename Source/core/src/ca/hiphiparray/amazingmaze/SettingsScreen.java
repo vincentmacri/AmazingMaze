@@ -45,8 +45,8 @@ public class SettingsScreen implements Screen, InputProcessor {
 	/** Slider for the music volume */
 	private Slider musicSlider;
 
-	/** Button to go back to menu */
-	private TextButton backToMenuButton;
+	/** Button to go back to the previous screen. */
+	private TextButton backButton;
 
 	/** CheckBox for whether game's in fullscreen or not */
 	private CheckBox fullscreenCheckBox;
@@ -70,6 +70,9 @@ public class SettingsScreen implements Screen, InputProcessor {
 	/** Action currently being set. This is -1 when no actions are being set. */
 	private int actionBeingSet = -1;
 
+	/** A reference to the screen that sent the user to the settings screen. */
+	private Screen sourceScreen;
+
 	/**
 	 * For InputProcessors and allows for UI to process events first. Otherwise, regular InputProcessor take over.
 	 */
@@ -82,6 +85,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 	 */
 	public SettingsScreen(final AmazingMazeGame game) {
 		this.game = game;
+		this.sourceScreen = game.menuScreen;
 		settings = new Stage(new ScreenViewport(), this.game.batch);
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(settings);
@@ -241,7 +245,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 			}
 		});
 
-		backToMenuButton = new TextButton("Main Menu", skin);
+		backButton = new TextButton("Back", skin);
 
 	}
 
@@ -307,7 +311,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		table.row();
 
-		table.add(backToMenuButton).padBottom(10f).minSize(width / 4, height / 20).maxSize(width, height / 5).prefSize(width / 3, height / 15).colspan(3);
+		table.add(backButton).padBottom(10f).minSize(width / 4, height / 20).maxSize(width, height / 5).prefSize(width / 3, height / 15).colspan(3);
 	}
 
 	@Override
@@ -318,11 +322,21 @@ public class SettingsScreen implements Screen, InputProcessor {
 		settings.act(delta);
 		settings.draw();
 
-		if (backToMenuButton.isPressed()) {
+		if (backButton.isPressed()) {
 			game.set.writeSettings();
-			game.setScreen(game.menuScreen);
+			game.setScreen(sourceScreen);
+			setSourceScreen(game.menuScreen);
 		}
+	}
 
+	/**
+	 * Set the source screen for this time the settings screen is shown.
+	 * It is reset to {@link AmazingMazeGame#menuScreen} after back is clicked.
+	 *
+	 * @param sourceScreen the screen to go back to when the user clicks {@link #backButton}.
+	 */
+	public void setSourceScreen(Screen sourceScreen) {
+		this.sourceScreen = sourceScreen;
 	}
 
 	@Override
@@ -423,5 +437,4 @@ public class SettingsScreen implements Screen, InputProcessor {
 	public void show() {
 		Gdx.input.setInputProcessor(multiplexer);
 	}
-
 }
