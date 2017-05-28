@@ -1,1 +1,5 @@
+# Save file
 save.json
+
+# Compiled class files
+*.class
