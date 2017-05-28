@@ -165,6 +165,18 @@ public class MazeScreen implements Screen, InputProcessor {
 		table.add(resumeButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
 		table.row();
 
+		TextButton settingsButton = new TextButton("Settings", game.assets.skin);
+		final Screen sourceScreen = this;
+		settingsButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.settingsScreen.setSourceScreen(sourceScreen);
+				game.setScreen(game.settingsScreen);
+			}
+		});
+		table.add(settingsButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
+		table.row();
+
 		TextButton quitButton = new TextButton("Quit", game.assets.skin);
 		quitButton.addListener(new ChangeListener() {
 			@Override
@@ -279,6 +291,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		if (player.getX() + 1 * Player.PLAYER_SIZE >= mapWidth) {
 			game.set.setLevel(game.set.getLevel() + 1);
 			game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
+			dispose();
 		}
 	}
 
@@ -298,7 +311,6 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		dispose();
 	}
 
 	@Override

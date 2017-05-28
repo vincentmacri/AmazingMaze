@@ -50,8 +50,8 @@ public class AmazingMazeGame extends Game {
 		assets = new Assets();
 		music = new MusicManager(this);
 
-		settingsScreen = new SettingsScreen(this);
 		menuScreen = new MainMenuScreen(this);
+		settingsScreen = new SettingsScreen(this);
 		storyScreen = new StoryScreen(this);
 
 		this.setScreen(menuScreen);
