@@ -47,6 +47,8 @@ public class MainMenuScreen implements Screen {
 	private TextButton helpButton;
 	/** Settings button. */
 	private TextButton settingsButton;
+	/** High scores button. */
+	private TextButton highScoresButton;
 	/** Credits button. */
 	private TextButton creditsButton;
 	/** Quit button. */
@@ -116,13 +118,24 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
+		// High scores
+		highScoresButton = new TextButton("High Scores", game.assets.skin);
+		highScoresButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (highScoresButton.isPressed()) {
+					game.setScreen(game.highScoresScreen);
+				}
+			}
+		});
+
 		// Quit
 		quitButton = new TextButton("Quit", game.assets.skin);
 		quitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (quitButton.isPressed()) {
-					game.set.writeSettings();
+					game.set.writeSave();
 					Gdx.app.exit();
 				}
 			}

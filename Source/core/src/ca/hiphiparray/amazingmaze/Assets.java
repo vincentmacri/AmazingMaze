@@ -59,8 +59,10 @@ public class Assets implements Disposable {
 	/** The location of the tile atlas. */
 	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
 
-	/** The name of the credits header style in the UI skin. */
-	protected static final String CREDITS_HEADER_STYLE = "header";
+	/** The name of the sans header style in the UI skin. */
+	protected static final String SANS_HEADER_STYLE = "header";
+	/** The name of the serif header style in the UI skin. */
+	protected static final String SERIF_HEADER_STYLE = "credits-header";
 	/** The name of the credits contents style in the UI skin. */
 	protected static final String CREDITS_CONTENTS_STYLE = "contents";
 	/** The name of the credits small contents style in the UI skin. */
@@ -142,7 +144,7 @@ public class Assets implements Disposable {
 	/** The atlas name of the barrier tile. */
 	private static final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
-	protected static final String PLACEHOLDER = "placeholder"; // TODO: make private
+	protected static final String PLACEHOLDER = "placeholder";
 	/** The atlas name of the mouse. */
 	protected static final String MOUSE = "mouse";
 
@@ -390,7 +392,8 @@ public class Assets implements Disposable {
 		skin.get(LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextButtonStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 
-		skin.get(CREDITS_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
+		skin.get(SANS_HEADER_STYLE, LabelStyle.class).font = getFont(SANS_BOLD, LARGE_FONT_SIZE);
+		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
 		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TUTORIAL_SYTLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);

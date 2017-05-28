@@ -100,7 +100,7 @@ public class Player extends Sprite {
 	/**
 	 * Create the player.
 	 *
-	 * @param region the player's image.
+	 * @param region the player's default image.
 	 * @param maze the {@link MazeScreen} instance managing this player.
 	 */
 	public Player(TextureRegion region, final MazeScreen maze) {

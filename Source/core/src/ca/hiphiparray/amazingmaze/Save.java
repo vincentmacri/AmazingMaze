@@ -53,7 +53,7 @@ public class Save {
 			readSettings();
 		} else {
 			resetSettings();
-			writeSettings();
+			writeSave();
 		}
 	}
 
@@ -72,12 +72,11 @@ public class Save {
 	/** Reset the save state. */
 	public void resetSave() {
 		this.level = 1;
-		resetHighScores();
 	}
 
 	/** Reset the settings and the save state. */
 	public void resetAll() {
-		readSettings();
+		resetSettings();
 		resetSave();
 	}
 
@@ -217,9 +216,9 @@ public class Save {
 		try {
 			savedSettings = json.fromJson(Save.class, f);
 		} catch (Exception e) {
-			System.out.println("Invalid settings.");
-			resetSettings();
-			writeSettings();
+			System.out.println("Invalid save file.");
+			resetAll();
+			writeSave();
 			return;
 		}
 
@@ -233,12 +232,21 @@ public class Save {
 		fullscreen = savedSettings.fullscreen;
 
 		level = savedSettings.level;
+
+		highScores = savedSettings.highScores;
+
+		if (highScores == null || highScores.length != MAX_HIGH_SCORES) {
+			System.out.println("Invalid high scores file.");
+			resetHighScores();
+		}
+
+		Arrays.sort(highScores);
 	}
 
 	/**
 	 * Write settings to Settings.json.
 	 */
-	public void writeSettings() {
+	public void writeSave() {
 		FileHandle f = Gdx.files.local(SAVE_FILE);
 
 		Json json = new Json();

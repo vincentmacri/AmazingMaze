@@ -80,7 +80,7 @@ public class StoryScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 
-		header = new Label("Story", game.assets.skin, Assets.CREDITS_HEADER_STYLE);
+		header = new Label("Story", game.assets.skin, Assets.SERIF_HEADER_STYLE);
 		table.add(header).padTop(Gdx.graphics.getHeight() / 25f);
 
 		storyLabel = new Label(readStory(), game.assets.skin, Assets.STORY_STYLE);

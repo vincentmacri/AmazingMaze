@@ -99,7 +99,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		Skin skin = game.assets.skin;
 
-		screenHeader = new Label("Settings", game.assets.skin);
+		screenHeader = new Label("Settings", game.assets.skin, Assets.SANS_HEADER_STYLE);
 
 		musicSlider = new Slider(0, 1, 0.1f, false, game.assets.skin);
 		musicSlider.setValue(game.set.getMusicLevel());
@@ -323,7 +323,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 		settings.draw();
 
 		if (backButton.isPressed()) {
-			game.set.writeSettings();
+			game.set.writeSave();
 			game.setScreen(sourceScreen);
 			setSourceScreen(game.menuScreen);
 		}
@@ -359,7 +359,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 	public void hide() {
 		System.out.println("Hiding SettingsScreen.");
 		actionBeingSet = -1;
-		game.set.writeSettings();
+		game.set.writeSave();
 	}
 
 	@Override
@@ -370,9 +370,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (actionBeingSet >= 0 && actionBeingSet < actionControls.length) {
-
 			switch (actionBeingSet) {
-
 				case 0: // Up.
 					game.set.setUpButton(keycode);
 					break;

@@ -36,9 +36,11 @@ public class AmazingMazeGame extends Game {
 	protected StoryScreen storyScreen;
 	/** The settings screen */
 	protected SettingsScreen settingsScreen;
+	/** The high scores screen. */
+	protected HighScoresScreen highScoresScreen;
 
 	/** The settings for the game. */
-	protected Save set;
+	protected Save set; // TODO: Rename to save.
 
 	@Override
 	public void create() {
@@ -50,11 +52,14 @@ public class AmazingMazeGame extends Game {
 		assets = new Assets();
 		music = new MusicManager(this);
 
-		menuScreen = new MainMenuScreen(this);
 		settingsScreen = new SettingsScreen(this);
+		menuScreen = new MainMenuScreen(this);
 		storyScreen = new StoryScreen(this);
 
-		this.setScreen(menuScreen);
+		settingsScreen.setSourceScreen(menuScreen);
+
+		// this.setScreen(menuScreen);
+		setScreen(new HighScoresScreen(this));
 	}
 
 	@Override
