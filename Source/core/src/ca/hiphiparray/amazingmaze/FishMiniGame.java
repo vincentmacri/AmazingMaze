@@ -54,6 +54,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * The fish minigame.
  *
  * @author Susie Son
+ * @author Vincent Macri
  */
 public class FishMiniGame implements Screen, InputProcessor {
 
