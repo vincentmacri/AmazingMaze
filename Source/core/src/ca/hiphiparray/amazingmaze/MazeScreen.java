@@ -138,7 +138,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		createBoundingBoxes();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(map, MAP_SCALE, game.batch);
-		player = new Player(game.assets.manager.get("tiles/tiles.atlas", TextureAtlas.class).findRegion(Assets.MOUSE), this);
+		player = new Player(game.assets.manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class).findRegion(Assets.PLACEHOLDER), this);
 		player.setScale(MAP_SCALE);
 
 		setupHUD();

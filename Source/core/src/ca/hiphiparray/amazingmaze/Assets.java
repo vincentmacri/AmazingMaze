@@ -25,8 +25,11 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -54,7 +57,7 @@ public class Assets implements Disposable {
 	/** The UI skin. */
 	protected Skin skin;
 	/** The location of the tile atlas. */
-	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
+	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
 
 	/** The name of the credits header style in the UI skin. */
 	protected static final String CREDITS_HEADER_STYLE = "header";
@@ -139,7 +142,7 @@ public class Assets implements Disposable {
 	/** The atlas name of the barrier tile. */
 	private static final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
-	private static final String PLACEHOLDER = "placeholder";
+	protected static final String PLACEHOLDER = "placeholder"; // TODO: make private
 	/** The atlas name of the mouse. */
 	protected static final String MOUSE = "mouse";
 
@@ -192,6 +195,22 @@ public class Assets implements Disposable {
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
 
+	/** How many frames the mouse animation has. */
+	protected static final int MOUSE_FRAME_COUNT = 5;
+	/** The index of the mouse running frame. */
+	protected static final int MOUSE_RUN_FRAME = 3;
+	/** How long to spend on each frame of the mouse animations. */
+	protected static final float MOUSE_FRAME_DURATION = 0.25f;
+
+	/** The mouse walking up animation. */
+	protected static Animation<TextureRegion> mouseUp;
+	/** The mouse walking down animation. */
+	protected static Animation<TextureRegion> mouseDown;
+	/** The mouse walking left animation. */
+	protected static Animation<TextureRegion> mouseLeft;
+	/** The mouse walking right animation. */
+	protected static Animation<TextureRegion> mouseRight;
+
 	/**
 	 * {@link Assets} constructor.
 	 * Calling this constructor loads in all of the game assets.
@@ -207,10 +226,11 @@ public class Assets implements Disposable {
 
 		loadSkin();
 		loadMapResources();
+		loadMusic();
+		setupMouseAnimation();
 		manager.load(GAME_LOGO, Texture.class);
 		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
-		loadMusic();
 		manager.load(MENU_BACKGROUND_IMAGE, Texture.class);
 		manager.load(MINI_BACKGROUND, Texture.class);
 		manager.load(PENCIL_BUTTON, Texture.class);
@@ -220,6 +240,20 @@ public class Assets implements Disposable {
 		manager.load(CLEAR_BUTTON, Texture.class);
 
 		manager.finishLoading();
+	}
+
+	/** Helper method to setup the mouse animation. */
+	private void setupMouseAnimation() {
+		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
+		mouseUp = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.UP_MODIFIER), PlayMode.LOOP_PINGPONG);
+		mouseDown = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.DOWN_MODIFIER), PlayMode.LOOP_PINGPONG);
+		mouseLeft = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.LEFT_MODIFIER), PlayMode.LOOP_PINGPONG);
+		mouseRight = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.RIGHT_MODIFIER), PlayMode.LOOP_PINGPONG);
+
+		assert mouseUp.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseUp frame count does not match MOUSE_FRAME_COUNT.";
+		assert mouseDown.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseDown frame count does not match MOUSE_FRAME_COUNT.";
+		assert mouseLeft.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseLeft frame count does not match MOUSE_FRAME_COUNT.";
+		assert mouseRight.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseRight frame count does not match MOUSE_FRAME_COUNT.";
 	}
 
 	/** Helper method to load the game's music. */
@@ -233,9 +267,9 @@ public class Assets implements Disposable {
 
 	/** Helper method for loading the map resources. */
 	private void loadMapResources() {
-		manager.load(TILE_ATLAS_LOCATION, TextureAtlas.class);
-		manager.finishLoadingAsset(TILE_ATLAS_LOCATION);
-		TextureAtlas atlas = manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
+		manager.load(GAME_ATLAS_LOCATION, TextureAtlas.class);
+		manager.finishLoadingAsset(GAME_ATLAS_LOCATION);
+		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 
 		tiles = new TiledMapTileSet();
 

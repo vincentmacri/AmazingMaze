@@ -38,16 +38,6 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  */
 public class Player extends Sprite {
 
-	/** The direction the player is moving horizontally. */
-	public enum HorizontalDirection {
-		/** If the player is moving left. */
-		LEFT,
-		/** If the player is moving right. */
-		RIGHT,
-		/** If the player is not moving horizontally. */
-		NONE
-	}
-
 	/** The direction the player is moving vertically. */
 	public enum VerticalDirection {
 		/** If the player is moving up. */
@@ -58,13 +48,28 @@ public class Player extends Sprite {
 		NONE
 	}
 
+	/** The direction the player is moving horizontally. */
+	public enum HorizontalDirection {
+		/** If the player is moving left. */
+		LEFT,
+		/** If the player is moving right. */
+		RIGHT,
+		/** If the player is not moving horizontally. */
+		NONE
+	}
+
 	/** The speed of the player. */
 	private float SPEED = 10f;
 
-	/** The current horizontal movement of the player. */
-	private HorizontalDirection horizontalDir;
-	/** The current vertical movement of the player. */
+	/** The current vertical direction of the player. */
 	private VerticalDirection verticalDir;
+	/** The current horizontal direction of the player. */
+	private HorizontalDirection horizontalDir;
+
+	/** The last vertical direction of the player. */
+	private VerticalDirection lastVerticalDir;
+	/** The last horizontal direction of the player. */
+	private HorizontalDirection lastHorizontalDir;
 
 	/** A 2D vector representing the direction and magnitude the player is moving with. */
 	private Vector2 direction;
@@ -89,6 +94,9 @@ public class Player extends Sprite {
 	/** How many lives the player has left. */
 	protected int lives;
 
+	/** How long the player has been in the current animation state. */
+	private float stateTime;
+
 	/**
 	 * Create the player.
 	 *
@@ -103,19 +111,52 @@ public class Player extends Sprite {
 		this.direction = new Vector2(0, 0);
 		this.horizontalDir = HorizontalDirection.NONE;
 		this.verticalDir = VerticalDirection.NONE;
+		this.lastHorizontalDir = HorizontalDirection.NONE;
+		this.lastVerticalDir = VerticalDirection.NONE;
 		this.lives = 3;
+		this.stateTime = 0;
 	}
 
 	/**
 	 * Update the player's status.
 	 *
-	 * @param obstacleBoxes the rectangles that the player can collide with.
+	 * @param deltaTime how much time has passed since the last frame.
 	 */
 	protected void update(float deltaTime) {
 		Point2D.Float newPos = doObjectCollision(new Vector2(direction).scl(deltaTime));
 		setPosition(newPos.x, newPos.y);
 		handleDeath();
 		collectFish();
+
+		updateImage(deltaTime);
+
+		lastHorizontalDir = horizontalDir;
+		lastVerticalDir = verticalDir;
+	}
+
+	/**
+	 * Set the correct image for the player.
+	 *
+	 * @param deltaTime how much time has passed since the last frame.
+	 */
+	private void updateImage(float deltaTime) {
+		if (!direction.equals(Vector2.Zero)) { // If the mouse if moving, use frame 3.
+			stateTime = (Assets.MOUSE_RUN_FRAME - 1) * Assets.MOUSE_FRAME_DURATION;
+		} else if (horizontalDir != lastHorizontalDir || verticalDir != lastVerticalDir) {
+			stateTime = (Assets.MOUSE_FRAME_COUNT - 1) * Assets.MOUSE_FRAME_DURATION;
+		} else {
+			stateTime += deltaTime;
+		}
+
+		if (verticalDir == VerticalDirection.UP) {
+			setRegion(Assets.mouseUp.getKeyFrame(stateTime));
+		} else if (verticalDir == VerticalDirection.DOWN) {
+			setRegion(Assets.mouseDown.getKeyFrame(stateTime));
+		} else if (horizontalDir == HorizontalDirection.LEFT) {
+			setRegion(Assets.mouseLeft.getKeyFrame(stateTime));
+		} else {
+			setRegion(Assets.mouseRight.getKeyFrame(stateTime));
+		}
 	}
 
 	/** Handle the player collecting fish. */
@@ -191,13 +232,13 @@ public class Player extends Sprite {
 				float objectStartY = obstacle.getY();
 				float objectEndY = objectStartY + obstacle.getHeight();
 
-				if (horizontalDir != HorizontalDirection.NONE) {
+				if (deltaPos.x != 0) {
 					if (nextStartX > objectStartX && nextStartX < objectEndX) { // Collided on right.
 						newX = objectEndX;
 					} else if (nextEndX > objectStartX && nextEndX < objectEndX) { // Collided on left.
 						newX = objectStartX - PLAYER_SIZE;
 					}
-				} else if (verticalDir != VerticalDirection.NONE) {
+				} else if (deltaPos.y != 0) {
 					if (nextStartY > objectStartY && nextStartY < objectEndY) { // Collided on bottom.
 						newY = objectEndY;
 					} else if (nextEndY > objectStartY && nextEndY < objectEndY) { // Collided on top.
@@ -213,51 +254,50 @@ public class Player extends Sprite {
 	}
 
 	/**
-	 * Setter for {@link #horizontalDir}.
-	 *
-	 * @param horizontalDir the new horizontal direction of the player.
-	 */
-	public void setHorizontalDir(HorizontalDirection horizontalDir) {
-		this.horizontalDir = horizontalDir;
-		this.verticalDir = VerticalDirection.NONE;
-		updateDirection();
-	}
-
-	/**
 	 * Setter for {@link #verticalDir}
 	 *
 	 * @param verticalDir the new vertical direction of the player.
 	 */
 	public void setVerticalDir(VerticalDirection verticalDir) {
-		this.verticalDir = verticalDir;
 		this.horizontalDir = HorizontalDirection.NONE;
-		updateDirection();
-	}
+		direction.x = 0;
 
-	/** Update {@link #direction} based on {@link #horizontalDir} and {@link #verticalDir}. */
-	private void updateDirection() {
-		switch (horizontalDir) {
-			case LEFT:
-				direction.x = -SPEED;
-				break;
-			case RIGHT:
-				direction.x = SPEED;
-				break;
-			case NONE:
-				direction.x = 0;
-				break;
-		}
 		switch (verticalDir) {
 			case UP:
 				direction.y = SPEED;
+				this.verticalDir = verticalDir;
 				break;
 			case DOWN:
 				direction.y = -SPEED;
+				this.verticalDir = verticalDir;
 				break;
-			case NONE:
+			default:
 				direction.y = 0;
 				break;
 		}
 	}
 
+	/**
+	 * Setter for {@link #horizontalDir}.
+	 *
+	 * @param horizontalDir the new horizontal direction of the player.
+	 */
+	public void setHorizontalDir(HorizontalDirection horizontalDir) {
+		this.verticalDir = VerticalDirection.NONE;
+		direction.y = 0;
+
+		switch (horizontalDir) {
+			case LEFT:
+				direction.x = -SPEED;
+				this.horizontalDir = horizontalDir;
+				break;
+			case RIGHT:
+				direction.x = SPEED;
+				this.horizontalDir = horizontalDir;
+				break;
+			default:
+				direction.x = 0;
+				break;
+		}
+	}
 }
