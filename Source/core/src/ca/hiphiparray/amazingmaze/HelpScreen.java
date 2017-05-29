@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  *
  * @author Chloe Nguyen
  */
-
 public class HelpScreen extends MazeScreen {
 
 	/** The label for the instructions. */

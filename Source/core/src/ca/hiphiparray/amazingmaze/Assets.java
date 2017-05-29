@@ -48,6 +48,8 @@ import com.badlogic.gdx.utils.Disposable;
  * Class to easily manage assets, furthering the capabilities of an {@link AssetManager};
  *
  * @author Vincent Macri
+ * @author Chloe Nguyen
+ * @author Susie Son
  */
 public class Assets implements Disposable {
 
