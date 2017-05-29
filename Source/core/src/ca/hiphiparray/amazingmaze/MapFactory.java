@@ -35,6 +35,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  * Class to procedurally generate maps.
  *
  * @author Vincent Macri
+ * @author Chloe Nguyen
  */
 public class MapFactory {
 
@@ -61,6 +62,14 @@ public class MapFactory {
 	/** The name of the power-up layer. */
 	public static final String ITEM_LAYER = "items";
 
+	/** The distance between the wires. */
+	final static int WIRE_DISTANCE = 5;
+	/** The start distance. */
+	final static int START_DISTANCE = 3;
+
+	/** Arraylist of gates of wires that are on. */
+	protected ArrayList<Circuit> gateOn;
+
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
 
@@ -79,6 +88,7 @@ public class MapFactory {
 		this.width = width;
 		this.height = height;
 		this.gateLocations = new Array<Point>();
+		this.gateOn = new ArrayList<Circuit>();
 	}
 
 	/**
@@ -115,6 +125,12 @@ public class MapFactory {
 			Circuit lowerGate = new Circuit(!upperOutput, random);
 			Point highLocation = new Point(col, height - gateSpace);
 			Point lowLocation = new Point(col, gateSpace - 1);
+
+			if (Circuit.evaluateGate(upperGate.getGate(), upperGate.isInputA(), upperGate.isInputB())) {
+				gateOn.add(upperGate);
+			} else {
+				gateOn.add(lowerGate);
+			}
 
 			placeUpperCircuit(objectLayer, upperGate, highLocation);
 			placeLowerCircuit(objectLayer, lowerGate, lowLocation);
@@ -166,6 +182,7 @@ public class MapFactory {
 	}
 
 	/**
+	<<<<<<< HEAD
 	 * Place a piece of cheese on the map.
 	 *
 	 * @param layer the layer to add the cheese to.
@@ -180,6 +197,8 @@ public class MapFactory {
 	}
 
 	/**
+	=======
+	>>>>>>> origin/menu
 	 * Place a fish on the map.
 	 *
 	 * @param layer the layer to add the fish to.
@@ -273,13 +292,11 @@ public class MapFactory {
 	 * @return a boolean array of where wires are to be placed.
 	 */
 	private List<Integer> generateWireLocations() {
-		final int wireDistance = 5;
-		final int startDistance = 3;
-		final int size = width / wireDistance;
+		final int size = width / WIRE_DISTANCE;
 		List<Integer> wires = new ArrayList<Integer>(size);
 
 		for (int i = 0; i < size; i++) {
-			wires.add(startDistance + (i * wireDistance));
+			wires.add(START_DISTANCE + (i * WIRE_DISTANCE));
 		}
 
 		return wires;
@@ -295,6 +312,18 @@ public class MapFactory {
 	}
 
 	/**
+	<<<<<<< HEAD
+	=======
+	 * Get the {@link ArrayList} of gates of the wires that are on.
+	 *
+	 * @return the gates of the wires that are on.
+	 */
+	public ArrayList<Circuit> getGateOn() {
+		return gateOn;
+	}
+
+	/**
+	>>>>>>> origin/menu
 	 * Use {@link #random} to generate a random integer in the given range.
 	 *
 	 * @param low The lowest number that can be generated (inclusive).

@@ -35,6 +35,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  * The player class.
  *
  * @author Vincent Macri
+ * @author Chloe Nguyen
  */
 public class Player extends Sprite {
 
@@ -121,6 +122,7 @@ public class Player extends Sprite {
 	 * Update the player's status.
 	 *
 	 * @param deltaTime how much time has passed since the last frame.
+	 * @param obstacleBoxes the rectangles that the player can collide with.
 	 */
 	protected void update(float deltaTime) {
 		Point2D.Float newPos = doObjectCollision(new Vector2(direction).scl(deltaTime));
@@ -161,6 +163,7 @@ public class Player extends Sprite {
 
 	/** Handle the player collecting cheese. */
 	private void collectCheese() {
+		/*
 		Rectangle thisBox = getBoundingRectangle();
 		for (int i = 0; i < maze.cheeseBoxes.size; i++) {
 			if (thisBox.overlaps(maze.cheeseBoxes.get(i))) {
@@ -177,6 +180,7 @@ public class Player extends Sprite {
 				break;
 			}
 		}
+		*/
 	}
 
 	/** Handle the player collecting fish. */
@@ -187,6 +191,7 @@ public class Player extends Sprite {
 				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
 				int x = (int) maze.fishBoxes.get(i).x;
 				int y = (int) maze.fishBoxes.get(i).y;
+
 				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();
 				layer.setCell(x, y, null);
 				maze.fishBoxes.removeIndex(i);
@@ -218,12 +223,14 @@ public class Player extends Sprite {
 		Rectangle thisBox = getBoundingRectangle();
 		for (Rectangle wire : maze.wireBoxes) {
 			if (thisBox.overlaps(wire)) {
-				lives--;
 				if (lives <= 0) {
 					Gdx.app.exit();
 				}
+				if (!maze.help) {
+					lives--;
+				}
+				maze.loseLife((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
 				setPosition(0, maze.mapHeight / 2);
-				maze.loseLife();
 				break;
 			}
 		}

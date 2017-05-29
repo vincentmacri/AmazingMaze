@@ -20,6 +20,7 @@
 package ca.hiphiparray.amazingmaze;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -55,6 +56,7 @@ import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
  * The maze screen. This is where most of the gameplay takes place.
  *
  * @author Vincent Macri
+ * @author Chloe Nguyen
  */
 public class MazeScreen implements Screen, InputProcessor {
 
@@ -65,7 +67,8 @@ public class MazeScreen implements Screen, InputProcessor {
 	private InputMultiplexer input;
 
 	/** The game HUD. */
-	private Stage hud;
+	protected Stage hud;
+
 	/** The pause menu. */
 	private Stage pauseMenu;
 
@@ -105,6 +108,9 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
 
+	/** ArrayList of gates of wires that are on. */ // TODO: Change to Array.
+	protected ArrayList<Circuit> gateOn;
+
 	/** The HUD container showing how many lives are left. */
 	protected HorizontalGroup lives;
 
@@ -114,40 +120,53 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** If the game is paused. */
 	private boolean paused;
 
+	/** If the game is in tutorial mode. */
+	protected boolean help;
+
 	/**
 	 * Constructor for the maze screen.
 	 *
 	 * @param game the {@link AmazingMazeGame} instance that is managing this screen.
+	 * @param help if this is the tutorial level.
 	 */
-	public MazeScreen(final AmazingMazeGame game) {
+	public MazeScreen(final AmazingMazeGame game, boolean help) {
 		final int mapSize = 2;
 		this.game = game;
+		this.paused = false;
+
 		this.mapWidth = 16 * mapSize + game.set.getLevel() * 5;
 		this.mapHeight = 9 * mapSize;
-		this.paused = false;
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 16 * mapSize, this.mapHeight);
 
 		viewport = new ExtendViewport(0, this.mapHeight, this.mapWidth, this.mapHeight, camera);
 
-		MapFactory factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
+		MapFactory factory;
+		if (!help) {
+			factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
+		} else {
+			factory = new MapFactory(game, 3, this.mapWidth, this.mapHeight, TILE_SIZE);
+		}
 		map = factory.generateMap();
 		gateLocations = factory.getGateLocations();
+		gateOn = factory.getGateOn();
 		createBoundingBoxes();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(map, MAP_SCALE, game.batch);
 		player = new Player(game.assets.manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class).findRegion(Assets.PLACEHOLDER), this);
 		player.setScale(MAP_SCALE);
 
-		setupHUD();
+		if (!help) {
+			setupHUD();
+		}
 		setupPauseMenu();
 		input = new InputMultiplexer(pauseMenu, this);
 	}
 
 	/** Create the pause menu. */
 	private void setupPauseMenu() {
-		pauseMenu = new Stage(new ScreenViewport());
+		pauseMenu = new Stage(new ScreenViewport(), game.batch);
 
 		Table table = new Table();
 		table.setFillParent(true);
@@ -188,7 +207,7 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	/** Create the game HUD. */
 	private void setupHUD() {
-		hud = new Stage(new ScreenViewport());
+		hud = new Stage(new ScreenViewport(), game.batch);
 
 		lives = new HorizontalGroup();
 		lives.setFillParent(true);
@@ -197,7 +216,7 @@ public class MazeScreen implements Screen, InputProcessor {
 
 		lifeImages = new Array<Image>(false, 8);
 		for (int i = 0; i < 3; i++) {
-			addLife();
+			// addLife();
 			lifeImages.add(new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class)));
 		}
 		for (Image image : lifeImages) {
@@ -236,6 +255,7 @@ public class MazeScreen implements Screen, InputProcessor {
 				if (item != null) {
 					if (item.getClass() == FishCell.class) {
 						fishBoxes.add(new Rectangle(c, r, 1, 1));
+						System.out.println("Adding new item");
 					} else {
 						cheeseBoxes.add(new Rectangle(c, r, 1, 1));
 					}
@@ -315,6 +335,7 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
+		dispose();
 	}
 
 	@Override
@@ -474,14 +495,15 @@ public class MazeScreen implements Screen, InputProcessor {
 		return false;
 	}
 
-	/** Update the HUD to show one less life. */
-	public void loseLife() {
-		lives.removeActor(lifeImages.removeIndex(0));
-	}
-
 	/** Update the HUD to show one more life. */
 	public void addLife() {
 
+	}
+
+	/** Update the HUD to show one less life.
+	 * @param Gate that the user died at*/
+	public void loseLife(int a) {
+		lives.removeActor(lifeImages.removeIndex(0));
 	}
 
 }

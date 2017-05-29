@@ -1,21 +1,13 @@
 /********************************************************************************
- * Amazing Maze is an educational game created in Java with the libGDX library.
- * Copyright (C) 2017 Hip Hip Array
+ * Amazing Maze is an educational game created in Java with the libGDX library. Copyright (C) 2017 Hip Hip Array
  *
  * This file is part of Amazing Maze.
  *
- * Amazing Maze is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Amazing Maze is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  *
- * Amazing Maze is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * Amazing Maze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
@@ -25,11 +17,8 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -40,14 +29,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Class to easily manage assets, furthering the capabilities of an {@link AssetManager};
  *
  * @author Vincent Macri
+ * @author Chloe Nguyen
  */
 public class Assets implements Disposable {
 
@@ -57,21 +45,17 @@ public class Assets implements Disposable {
 	/** The UI skin. */
 	protected Skin skin;
 
-	/** The name of the sans header style in the UI skin. */
-	protected static final String SANS_HEADER_STYLE = "header";
-	/** The name of the serif header style in the UI skin. */
-	protected static final String SERIF_HEADER_STYLE = "serif-header";
+	/** The name of the credits header style in the UI skin. */
+	protected static final String CREDITS_HEADER_STYLE = "header";
 	/** The name of the credits contents style in the UI skin. */
-	protected static final String CREDITS_CONTENTS = "contents";
-	/** The name of the small credits contents style in the UI skin. */
-	protected static final String SMALL_CREDITS_CONTENTS = "small-contents";
-	/** The name of the tutorial label style in the UI skin. */
+	protected static final String CREDITS_CONTENTS_STYLE = "contents";
+	/** The name of the credits small contents style in the UI skin. */
+	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
+	/** The name of the tutorial label style. */
 	protected static final String TUTORIAL_STYLE = "tutorial";
-	/** The name of the story label style in the UI skin. */
-	protected static final String STORY_STYLE = "story";
 
 	/** The location of the tile atlas. */
-	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
+	protected static final String TILE_ATLAS_LOCATION = "tiles/tiles.atlas";
 
 	/** The regular monospace font. */
 	protected static final String MONO_REGULAR = "LiberationMono-Regular";
@@ -99,6 +83,27 @@ public class Assets implements Disposable {
 	protected static final String SERIF_ITALIC = "LiberationSerif-Italic";
 	/** The bold italic serif font. */
 	protected static final String SERIF_BOLD_ITALIC = "LiberationSerif-BoldItalic";
+	/** The font for the tutorial. */
+	protected static final String EMULOGIC = "emulogic";
+
+	/** The game logo. */
+	protected static final String GAME_LOGO = "logos/game.png";
+	/** The company logo. */
+	protected static final String COMPANY_LOGO = "logos/company.png";
+	/** The life HUD image. */
+	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
+	/** The AND gate image. */
+	protected static final String AND_IMAGE = "gates/and-unknown.png";
+	/** The NAND gate image. */
+	protected static final String NAND_IMAGE = "gates/nand-unknown.png";
+	/** The OR gate image. */
+	protected static final String OR_IMAGE = "gates/or-unknown.png";
+	/** The NOR gate image. */
+	protected static final String NOR_IMAGE = "gates/nor-unknown.png";
+	/** The NOT gate image. */
+	protected static final String NOT_IMAGE = "gates/not-unknown.png";
+	/** The XOR gate image. */
+	protected static final String XOR_IMAGE = "gates/xor-unknown.png";
 
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;
@@ -107,120 +112,71 @@ public class Assets implements Disposable {
 	/** The font size for large text. */
 	protected static final int LARGE_FONT_SIZE = 128;
 
-	/** The game logo. */
-	protected static final String GAME_LOGO = "logos/game.png";
-	/** The company logo. */
-	protected static final String COMPANY_LOGO = "logos/company.png";
-	/** The life HUD image. */
-	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
-	/** The menu background image. */
-	protected static final String MENU_BACKGROUND_IMAGE = "misc/main.png";
-	/** The fish minigame background image. */
-	protected static final String MINI_BACKGROUND = "mini/background.png";
-
-	/** The pencil button image. */
-	protected static final String PENCIL_BUTTON = "mini/pencil.png";
-	/** The eraser button image. */
-	protected static final String ERASER_BUTTON = "mini/eraser.png";
-	/** The help button image. */
-	protected static final String HELP_BUTTON = "mini/help.png";
-	/** The check answer button image. */
-	protected static final String CHECK_BUTTON = "mini/check.png";
-	/** The clear button image. */
-	protected static final String CLEAR_BUTTON = "mini/clear.png";
-
 	/** The file name of the song that plays on the menu screen. */
-	protected static final String MENU_SONG = "music/SecretsOfTheSchoolyard.mp3";
-	/** The file name of the song that plays on the story screen. */
-	protected static final String STORY_SONG = "music/Vanes.mp3";
+	protected static final String MENU_SONG = "music/BitShift.mp3";
 	/** The file name of the song that plays in the maze. */
-	protected static final String MAZE_SONG = "music/LightlessDawn.mp3";
-	/** The file name of the song that plays on the math screen. */
-	protected static final String MATH_SONG = "music/Babylon.mp3";
+	protected static final String MAZE_SONG = "music/ExitThePremises.mp3";
 	/** The file name of the song that plays during the credits. */
-	protected static final String CREDITS_SONG = "music/DigitalLemonade.mp3";
+	protected static final String CREDITS_SONG = "music/HalfBit.mp3";
 
 	/** The atlas name of the background tile. */
-	private static final String BACKGROUND = "background";
+	private final String BACKGROUND = "background";
 	/** The atlas name of the barrier tile. */
-	private static final String BARRIER = "blocked";
+	private final String BARRIER = "blocked";
 	/** The atlas name of the placeholder tile. */
-	protected static final String PLACEHOLDER = "placeholder";
-	/** The atlas name of the mouse. */
-	protected static final String MOUSE = "mouse";
-
-	/** The atlas name of the cheese tile. */
-	private static final String CHEESE = "cheese";
+	private final String PLACEHOLDER = "placeholder";
 
 	/** The string appended to the end of atlas names for their on variation. */
-	protected static final String ON_MODIFIER = "-on";
+	private final String ON_MODIFIER = "-on";
 	/** The string appended to the end of atlas names for their off variation. */
-	protected static final String OFF_MODIFIER = "-off";
+	private final String OFF_MODIFIER = "-off";
 	/** The string appended to the end of atlas names for their unknown variation. */
-	protected static final String UNKNOWN_MODIFIER = "-unknown";
+	private final String UNKNOWN_MODIFIER = "-unknown";
 
 	/** The string appended to the end of atlas names for their up variation. */
-	protected static final String UP_MODIFIER = "-up";
+	private final String UP_MODIFIER = "-up";
 	/** The string appended to the end of atlas names for their down variation. */
-	protected static final String DOWN_MODIFIER = "-down";
+	private final String DOWN_MODIFIER = "-down";
 	/** The string appended to the end of atlas names for their left variation. */
-	private static final String LEFT_MODIFIER = "-left";
+	private final String LEFT_MODIFIER = "-left";
 	/** The string appended to the end of atlas names for their right variation. */
-	private static final String RIGHT_MODIFIER = "-right";
+	private final String RIGHT_MODIFIER = "-right";
 
 	/** The atlas base name of the vertical wire. */
-	private static final String VERTICAL = "vertical";
+	private final String VERTICAL = "vertical";
 	/** The atlas base name of the turn wire. */
-	private static final String TURN = "turn";
+	private final String TURN = "turn";
 
 	/** The atlas base name of the AND gate. */
-	protected static final String AND_GATE = "and";
+	private final String AND_GATE = "and";
 	/** The atlas base name of the NAND gate. */
-	protected static final String NAND_GATE = "nand";
+	private final String NAND_GATE = "nand";
 	/** The atlas base name of the OR gate. */
-	protected static final String OR_GATE = "or";
+	private final String OR_GATE = "or";
 	/** The atlas base name of the NOR gate. */
-	protected static final String NOR_GATE = "nor";
+	private final String NOR_GATE = "nor";
 	/** The atlas base name of the XOR gate. */
-	protected static final String XOR_GATE = "xor";
+	private final String XOR_GATE = "xor";
 
 	/** The atlas base name of the fish. */
-	protected static final String FISH = "fish";
+	private final String FISH = "fish";
 
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	protected static final String BLUE_MODIFIER = "-blue";
+	private final String BLUE_MODIFIER = "-blue";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	protected static final String PURPLE_MODIFIER = "-purple";
+	private final String PURPLE_MODIFIER = "-purple";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	protected static final String GREEN_MODIFIER = "-green";
+	private final String GREEN_MODIFIER = "-green";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	protected static final String RED_MODIFIER = "-red";
+	private final String RED_MODIFIER = "-red";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
-	protected static final String ORANGE_MODIFIER = "-orange";
+	private final String ORANGE_MODIFIER = "-orange";
 
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
 
-	/** How many frames the mouse animation has. */
-	protected static final int MOUSE_FRAME_COUNT = 5;
-	/** The index of the mouse running frame. */
-	protected static final int MOUSE_RUN_FRAME = 3;
-	/** How long to spend on each frame of the mouse animations. */
-	protected static final float MOUSE_FRAME_DURATION = 0.25f;
-
-	/** The mouse walking up animation. */
-	protected static Animation<TextureRegion> mouseUp;
-	/** The mouse walking down animation. */
-	protected static Animation<TextureRegion> mouseDown;
-	/** The mouse walking left animation. */
-	protected static Animation<TextureRegion> mouseLeft;
-	/** The mouse walking right animation. */
-	protected static Animation<TextureRegion> mouseRight;
-
 	/**
-	 * {@link Assets} constructor.
-	 * Calling this constructor loads in all of the game assets.
-	 * As such, only one {@link Assets} instance should ever be created.
+	 * {@link Assets} constructor. Calling this constructor loads in all of the game assets. As such, only one {@link Assets} instance should ever be created.
 	 */
 	public Assets() {
 		manager = new AssetManager();
@@ -232,52 +188,32 @@ public class Assets implements Disposable {
 
 		loadSkin();
 		loadMapResources();
-		setupMouseAnimation();
-
 		manager.load(GAME_LOGO, Texture.class);
 		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
-		manager.load(MENU_BACKGROUND_IMAGE, Texture.class);
-		manager.load(MINI_BACKGROUND, Texture.class);
-		manager.load(PENCIL_BUTTON, Texture.class);
-		manager.load(ERASER_BUTTON, Texture.class);
-		manager.load(HELP_BUTTON, Texture.class);
-		manager.load(CHECK_BUTTON, Texture.class);
-		manager.load(CLEAR_BUTTON, Texture.class);
-
+		manager.load(AND_IMAGE, Texture.class);
+		manager.load(NAND_IMAGE, Texture.class);
+		manager.load(OR_IMAGE, Texture.class);
+		manager.load(NOR_IMAGE, Texture.class);
+		manager.load(NOT_IMAGE, Texture.class);
+		manager.load(XOR_IMAGE, Texture.class);
 		loadMusic();
 
 		manager.finishLoading();
 	}
 
-	/** Helper method to setup the mouse animation. */
-	private void setupMouseAnimation() {
-		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
-		mouseUp = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.UP_MODIFIER), PlayMode.LOOP_PINGPONG);
-		mouseDown = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.DOWN_MODIFIER), PlayMode.LOOP_PINGPONG);
-		mouseLeft = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.LEFT_MODIFIER), PlayMode.LOOP_PINGPONG);
-		mouseRight = new Animation<TextureRegion>(MOUSE_FRAME_DURATION, atlas.findRegions(Assets.MOUSE + Assets.RIGHT_MODIFIER), PlayMode.LOOP_PINGPONG);
-
-		assert mouseUp.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseUp frame count does not match MOUSE_FRAME_COUNT.";
-		assert mouseDown.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseDown frame count does not match MOUSE_FRAME_COUNT.";
-		assert mouseLeft.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseLeft frame count does not match MOUSE_FRAME_COUNT.";
-		assert mouseRight.getKeyFrames().length == MOUSE_FRAME_COUNT : "mouseRight frame count does not match MOUSE_FRAME_COUNT.";
-	}
-
 	/** Helper method to load the game's music. */
 	private void loadMusic() {
 		manager.load(MENU_SONG, Music.class);
-		manager.load(STORY_SONG, Music.class);
 		manager.load(MAZE_SONG, Music.class);
-		manager.load(MATH_SONG, Music.class);
 		manager.load(CREDITS_SONG, Music.class);
 	}
 
 	/** Helper method for loading the map resources. */
 	private void loadMapResources() {
-		manager.load(GAME_ATLAS_LOCATION, TextureAtlas.class);
-		manager.finishLoadingAsset(GAME_ATLAS_LOCATION);
-		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
+		manager.load(TILE_ATLAS_LOCATION, TextureAtlas.class);
+		manager.finishLoadingAsset(TILE_ATLAS_LOCATION);
+		TextureAtlas atlas = manager.get(Assets.TILE_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 
 		tiles = new TiledMapTileSet();
 
@@ -344,10 +280,6 @@ public class Assets implements Disposable {
 		loadFish(atlas, GREEN_MODIFIER, TileIDs.GREEN);
 		loadFish(atlas, RED_MODIFIER, TileIDs.RED);
 		loadFish(atlas, ORANGE_MODIFIER, TileIDs.ORANGE);
-
-		StaticTiledMapTile cheese = new StaticTiledMapTile(atlas.findRegion(CHEESE));
-		cheese.setId(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.CHEESE));
-		tiles.putTile(cheese.getId(), cheese);
 	}
 
 	/**
@@ -402,15 +334,11 @@ public class Assets implements Disposable {
 		skin.get(LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextButtonStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 
-		skin.get(SANS_HEADER_STYLE, LabelStyle.class).font = getFont(SANS_BOLD, LARGE_FONT_SIZE);
-		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
-		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
-		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
-		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(CREDITS_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
+		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
+		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(EMULOGIC, SMALL_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(WindowStyle.class).titleFont = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
 	}
 
 	/**
@@ -426,8 +354,7 @@ public class Assets implements Disposable {
 		}
 		FreeTypeFontLoaderParameter fontParams = new FreeTypeFontLoaderParameter();
 		fontParams.fontFileName = "fonts/" + fontName + ".ttf";
-		float screenSize = Math.min(Gdx.graphics.getWidth() / 1920f, Gdx.graphics.getHeight() / 1080f);
-		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity() * screenSize);
+		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity()); // Make sure font size scales correctly on different monitors.
 		manager.load(fontName + fontSize + ".ttf", BitmapFont.class, fontParams);
 		manager.finishLoadingAsset(fontName + fontSize + ".ttf");
 		return manager.get(fontName + fontSize + ".ttf");

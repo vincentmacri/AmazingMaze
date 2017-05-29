@@ -91,7 +91,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (helpButton.isPressed()) {
-					// HELP HERE
+					game.setScreen(new HelpScreen(game));
 				}
 			}
 		});

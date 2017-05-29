@@ -255,7 +255,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 						public void changed(ChangeEvent event, Actor actor) {
 							if (okButton.isPressed()) {
 								dialog.cancel();
-								game.setScreen(new MazeScreen(game));
+								game.setScreen(new MazeScreen(game, false));
 							}
 						}
 					});

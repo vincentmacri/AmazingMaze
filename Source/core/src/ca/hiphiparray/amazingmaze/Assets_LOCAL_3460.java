@@ -56,22 +56,21 @@ public class Assets implements Disposable {
 
 	/** The UI skin. */
 	protected Skin skin;
+	/** The location of the tile atlas. */
+	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
 
 	/** The name of the sans header style in the UI skin. */
 	protected static final String SANS_HEADER_STYLE = "header";
 	/** The name of the serif header style in the UI skin. */
-	protected static final String SERIF_HEADER_STYLE = "serif-header";
+	protected static final String SERIF_HEADER_STYLE = "credits-header";
 	/** The name of the credits contents style in the UI skin. */
-	protected static final String CREDITS_CONTENTS = "contents";
-	/** The name of the small credits contents style in the UI skin. */
-	protected static final String SMALL_CREDITS_CONTENTS = "small-contents";
-	/** The name of the tutorial label style in the UI skin. */
-	protected static final String TUTORIAL_STYLE = "tutorial";
-	/** The name of the story label style in the UI skin. */
+	protected static final String CREDITS_CONTENTS_STYLE = "contents";
+	/** The name of the credits small contents style in the UI skin. */
+	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
+	/** The name of the tutorial label style. */
+	protected static final String TUTORIAL_SYTLE = "tutorial";
+	/** The name of the story label style. */
 	protected static final String STORY_STYLE = "story";
-
-	/** The location of the tile atlas. */
-	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
 
 	/** The regular monospace font. */
 	protected static final String MONO_REGULAR = "LiberationMono-Regular";
@@ -153,16 +152,16 @@ public class Assets implements Disposable {
 	private static final String CHEESE = "cheese";
 
 	/** The string appended to the end of atlas names for their on variation. */
-	protected static final String ON_MODIFIER = "-on";
+	private static final String ON_MODIFIER = "-on";
 	/** The string appended to the end of atlas names for their off variation. */
-	protected static final String OFF_MODIFIER = "-off";
+	private static final String OFF_MODIFIER = "-off";
 	/** The string appended to the end of atlas names for their unknown variation. */
-	protected static final String UNKNOWN_MODIFIER = "-unknown";
+	private static final String UNKNOWN_MODIFIER = "-unknown";
 
 	/** The string appended to the end of atlas names for their up variation. */
-	protected static final String UP_MODIFIER = "-up";
+	private static final String UP_MODIFIER = "-up";
 	/** The string appended to the end of atlas names for their down variation. */
-	protected static final String DOWN_MODIFIER = "-down";
+	private static final String DOWN_MODIFIER = "-down";
 	/** The string appended to the end of atlas names for their left variation. */
 	private static final String LEFT_MODIFIER = "-left";
 	/** The string appended to the end of atlas names for their right variation. */
@@ -174,15 +173,15 @@ public class Assets implements Disposable {
 	private static final String TURN = "turn";
 
 	/** The atlas base name of the AND gate. */
-	protected static final String AND_GATE = "and";
+	private static final String AND_GATE = "and";
 	/** The atlas base name of the NAND gate. */
-	protected static final String NAND_GATE = "nand";
+	private static final String NAND_GATE = "nand";
 	/** The atlas base name of the OR gate. */
-	protected static final String OR_GATE = "or";
+	private static final String OR_GATE = "or";
 	/** The atlas base name of the NOR gate. */
-	protected static final String NOR_GATE = "nor";
+	private static final String NOR_GATE = "nor";
 	/** The atlas base name of the XOR gate. */
-	protected static final String XOR_GATE = "xor";
+	private static final String XOR_GATE = "xor";
 
 	/** The atlas base name of the fish. */
 	protected static final String FISH = "fish";
@@ -232,8 +231,8 @@ public class Assets implements Disposable {
 
 		loadSkin();
 		loadMapResources();
+		loadMusic();
 		setupMouseAnimation();
-
 		manager.load(GAME_LOGO, Texture.class);
 		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
@@ -244,8 +243,6 @@ public class Assets implements Disposable {
 		manager.load(HELP_BUTTON, Texture.class);
 		manager.load(CHECK_BUTTON, Texture.class);
 		manager.load(CLEAR_BUTTON, Texture.class);
-
-		loadMusic();
 
 		manager.finishLoading();
 	}
@@ -404,9 +401,9 @@ public class Assets implements Disposable {
 
 		skin.get(SANS_HEADER_STYLE, LabelStyle.class).font = getFont(SANS_BOLD, LARGE_FONT_SIZE);
 		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
-		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
-		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
+		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
+		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(TUTORIAL_SYTLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
 		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);

@@ -93,7 +93,7 @@ public class StoryScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (continueButton.isPressed()) {
-					game.setScreen(new MazeScreen(game));
+					game.setScreen(new MazeScreen(game, false));
 				}
 			}
 		});

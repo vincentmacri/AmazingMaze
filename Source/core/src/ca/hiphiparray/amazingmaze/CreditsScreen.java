@@ -152,11 +152,11 @@ public class CreditsScreen implements Screen {
 		gameLogo = new Image(game.assets.manager.get(Assets.GAME_LOGO, Texture.class));
 
 		header = new Label("", game.assets.skin, Assets.SERIF_HEADER_STYLE);
-		codeGroup = setupCreditsLabel(CODE, Assets.CREDITS_CONTENTS_STYLE);
-		artGroup = setupCreditsLabel(ART, Assets.CREDITS_CONTENTS_STYLE);
-		storyGroup = setupCreditsLabel(STORY, Assets.CREDITS_CONTENTS_STYLE);
-		musicGroup = setupCreditsLabel(MUSIC, Assets.CREDITS_SMALL_CONTENTS_STYLE);
-		thanksGroup = setupCreditsLabel(THANKS, Assets.CREDITS_CONTENTS_STYLE);
+		codeGroup = setupCreditsLabel(CODE, Assets.CREDITS_CONTENTS);
+		artGroup = setupCreditsLabel(ART, Assets.CREDITS_CONTENTS);
+		storyGroup = setupCreditsLabel(STORY, Assets.CREDITS_CONTENTS);
+		musicGroup = setupCreditsLabel(MUSIC, Assets.SMALL_CREDITS_CONTENTS);
+		thanksGroup = setupCreditsLabel(THANKS, Assets.CREDITS_CONTENTS);
 
 		companyLogo = new Image(game.assets.manager.get(Assets.COMPANY_LOGO, Texture.class));
 	}

@@ -57,21 +57,30 @@ public class Assets implements Disposable {
 	/** The UI skin. */
 	protected Skin skin;
 
-	/** The name of the sans header style in the UI skin. */
-	protected static final String SANS_HEADER_STYLE = "header";
-	/** The name of the serif header style in the UI skin. */
-	protected static final String SERIF_HEADER_STYLE = "serif-header";
+	/** The name of the credits header style in the UI skin. */
+	protected static final String CREDITS_HEADER_STYLE = "header";
 	/** The name of the credits contents style in the UI skin. */
-	protected static final String CREDITS_CONTENTS = "contents";
-	/** The name of the small credits contents style in the UI skin. */
-	protected static final String SMALL_CREDITS_CONTENTS = "small-contents";
-	/** The name of the tutorial label style in the UI skin. */
+	protected static final String CREDITS_CONTENTS_STYLE = "contents";
+	/** The name of the credits small contents style in the UI skin. */
+	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
+	/** The name of the tutorial label style. */
 	protected static final String TUTORIAL_STYLE = "tutorial";
-	/** The name of the story label style in the UI skin. */
-	protected static final String STORY_STYLE = "story";
 
 	/** The location of the tile atlas. */
 	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
+
+	/** The name of the sans header style in the UI skin. */
+	protected static final String SANS_HEADER_STYLE = "header";
+	/** The name of the serif header style in the UI skin. */
+	protected static final String SERIF_HEADER_STYLE = "credits-header";
+	/** The name of the credits contents style in the UI skin. */
+	protected static final String CREDITS_CONTENTS_STYLE = "contents";
+	/** The name of the credits small contents style in the UI skin. */
+	protected static final String CREDITS_SMALL_CONTENTS_STYLE = "small-contents";
+	/** The name of the tutorial label style. */
+	protected static final String TUTORIAL_SYTLE = "tutorial";
+	/** The name of the story label style. */
+	protected static final String STORY_STYLE = "story";
 
 	/** The regular monospace font. */
 	protected static final String MONO_REGULAR = "LiberationMono-Regular";
@@ -99,7 +108,31 @@ public class Assets implements Disposable {
 	protected static final String SERIF_ITALIC = "LiberationSerif-Italic";
 	/** The bold italic serif font. */
 	protected static final String SERIF_BOLD_ITALIC = "LiberationSerif-BoldItalic";
+	/** The font for the tutorial. */
+	protected static final String EMULOGIC = "emulogic";
 
+<<<<<<< HEAD
+=======
+	/** The game logo. */
+	protected static final String GAME_LOGO = "logos/game.png";
+	/** The company logo. */
+	protected static final String COMPANY_LOGO = "logos/company.png";
+	/** The life HUD image. */
+	protected static final String LIFE_HUD_IMAGE = "hud/life.png";
+	/** The AND gate image. */
+	protected static final String AND_IMAGE = "gates/and-unknown.png";
+	/** The NAND gate image. */
+	protected static final String NAND_IMAGE = "gates/nand-unknown.png";
+	/** The OR gate image. */
+	protected static final String OR_IMAGE = "gates/or-unknown.png";
+	/** The NOR gate image. */
+	protected static final String NOR_IMAGE = "gates/nor-unknown.png";
+	/** The NOT gate image. */
+	protected static final String NOT_IMAGE = "gates/not-unknown.png";
+	/** The XOR gate image. */
+	protected static final String XOR_IMAGE = "gates/xor-unknown.png";
+
+>>>>>>> origin/menu
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;
 	/** The font size for regular text. */
@@ -107,6 +140,7 @@ public class Assets implements Disposable {
 	/** The font size for large text. */
 	protected static final int LARGE_FONT_SIZE = 128;
 
+<<<<<<< HEAD
 	/** The game logo. */
 	protected static final String GAME_LOGO = "logos/game.png";
 	/** The company logo. */
@@ -139,6 +173,14 @@ public class Assets implements Disposable {
 	protected static final String MATH_SONG = "music/Babylon.mp3";
 	/** The file name of the song that plays during the credits. */
 	protected static final String CREDITS_SONG = "music/DigitalLemonade.mp3";
+=======
+	/** The file name of the song that plays on the menu screen. */
+	protected static final String MENU_SONG = "music/BitShift.mp3";
+	/** The file name of the song that plays in the maze. */
+	protected static final String MAZE_SONG = "music/ExitThePremises.mp3";
+	/** The file name of the song that plays during the credits. */
+	protected static final String CREDITS_SONG = "music/HalfBit.mp3";
+>>>>>>> origin/menu
 
 	/** The atlas name of the background tile. */
 	private static final String BACKGROUND = "background";
@@ -153,16 +195,16 @@ public class Assets implements Disposable {
 	private static final String CHEESE = "cheese";
 
 	/** The string appended to the end of atlas names for their on variation. */
-	protected static final String ON_MODIFIER = "-on";
+	private static final String ON_MODIFIER = "-on";
 	/** The string appended to the end of atlas names for their off variation. */
-	protected static final String OFF_MODIFIER = "-off";
+	private static final String OFF_MODIFIER = "-off";
 	/** The string appended to the end of atlas names for their unknown variation. */
-	protected static final String UNKNOWN_MODIFIER = "-unknown";
+	private static final String UNKNOWN_MODIFIER = "-unknown";
 
 	/** The string appended to the end of atlas names for their up variation. */
-	protected static final String UP_MODIFIER = "-up";
+	private static final String UP_MODIFIER = "-up";
 	/** The string appended to the end of atlas names for their down variation. */
-	protected static final String DOWN_MODIFIER = "-down";
+	private static final String DOWN_MODIFIER = "-down";
 	/** The string appended to the end of atlas names for their left variation. */
 	private static final String LEFT_MODIFIER = "-left";
 	/** The string appended to the end of atlas names for their right variation. */
@@ -174,15 +216,15 @@ public class Assets implements Disposable {
 	private static final String TURN = "turn";
 
 	/** The atlas base name of the AND gate. */
-	protected static final String AND_GATE = "and";
+	private static final String AND_GATE = "and";
 	/** The atlas base name of the NAND gate. */
-	protected static final String NAND_GATE = "nand";
+	private static final String NAND_GATE = "nand";
 	/** The atlas base name of the OR gate. */
-	protected static final String OR_GATE = "or";
+	private static final String OR_GATE = "or";
 	/** The atlas base name of the NOR gate. */
-	protected static final String NOR_GATE = "nor";
+	private static final String NOR_GATE = "nor";
 	/** The atlas base name of the XOR gate. */
-	protected static final String XOR_GATE = "xor";
+	private static final String XOR_GATE = "xor";
 
 	/** The atlas base name of the fish. */
 	protected static final String FISH = "fish";
@@ -197,6 +239,20 @@ public class Assets implements Disposable {
 	protected static final String RED_MODIFIER = "-red";
 	/** The string appended to the end of the fish atlas name for the blue variant. */
 	protected static final String ORANGE_MODIFIER = "-orange";
+
+	/** The atlas base name of the fish. */
+	private final String FISH = "fish";
+
+	/** The string appended to the end of the fish atlas name for the blue variant. */
+	private final String BLUE_MODIFIER = "-blue";
+	/** The string appended to the end of the fish atlas name for the blue variant. */
+	private final String PURPLE_MODIFIER = "-purple";
+	/** The string appended to the end of the fish atlas name for the blue variant. */
+	private final String GREEN_MODIFIER = "-green";
+	/** The string appended to the end of the fish atlas name for the blue variant. */
+	private final String RED_MODIFIER = "-red";
+	/** The string appended to the end of the fish atlas name for the blue variant. */
+	private final String ORANGE_MODIFIER = "-orange";
 
 	/** The set of tiles used in the maps. */
 	protected TiledMapTileSet tiles;
@@ -232,8 +288,9 @@ public class Assets implements Disposable {
 
 		loadSkin();
 		loadMapResources();
+<<<<<<< HEAD
+		loadMusic();
 		setupMouseAnimation();
-
 		manager.load(GAME_LOGO, Texture.class);
 		manager.load(COMPANY_LOGO, Texture.class);
 		manager.load(LIFE_HUD_IMAGE, Texture.class);
@@ -244,12 +301,23 @@ public class Assets implements Disposable {
 		manager.load(HELP_BUTTON, Texture.class);
 		manager.load(CHECK_BUTTON, Texture.class);
 		manager.load(CLEAR_BUTTON, Texture.class);
-
+=======
+		manager.load(GAME_LOGO, Texture.class);
+		manager.load(COMPANY_LOGO, Texture.class);
+		manager.load(LIFE_HUD_IMAGE, Texture.class);
+		manager.load(AND_IMAGE, Texture.class);
+		manager.load(NAND_IMAGE, Texture.class);
+		manager.load(OR_IMAGE, Texture.class);
+		manager.load(NOR_IMAGE, Texture.class);
+		manager.load(NOT_IMAGE, Texture.class);
+		manager.load(XOR_IMAGE, Texture.class);
 		loadMusic();
+>>>>>>> origin/menu
 
 		manager.finishLoading();
 	}
 
+<<<<<<< HEAD
 	/** Helper method to setup the mouse animation. */
 	private void setupMouseAnimation() {
 		TextureAtlas atlas = manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
@@ -270,6 +338,12 @@ public class Assets implements Disposable {
 		manager.load(STORY_SONG, Music.class);
 		manager.load(MAZE_SONG, Music.class);
 		manager.load(MATH_SONG, Music.class);
+=======
+	/** Helper method to load the game's music. */
+	private void loadMusic() {
+		manager.load(MENU_SONG, Music.class);
+		manager.load(MAZE_SONG, Music.class);
+>>>>>>> origin/menu
 		manager.load(CREDITS_SONG, Music.class);
 	}
 
@@ -284,11 +358,19 @@ public class Assets implements Disposable {
 		StaticTiledMapTile background = new StaticTiledMapTile(atlas.findRegion(BACKGROUND));
 		StaticTiledMapTile barrier = new StaticTiledMapTile(atlas.findRegion(BARRIER));
 		StaticTiledMapTile placeholder = new StaticTiledMapTile(atlas.findRegion(PLACEHOLDER));
+<<<<<<< HEAD
 
 		background.setId(TileIDs.computeID(TileIDs.BACKGROUND));
 		barrier.setId(TileIDs.computeID(TileIDs.BARRIER));
 		placeholder.setId(TileIDs.computeID(TileIDs.PLACEHOLDER));
 
+=======
+
+		background.setId(TileIDs.computeID(TileIDs.BACKGROUND));
+		barrier.setId(TileIDs.computeID(TileIDs.BARRIER));
+		placeholder.setId(TileIDs.computeID(TileIDs.PLACEHOLDER));
+
+>>>>>>> origin/menu
 		tiles.putTile(background.getId(), background);
 		tiles.putTile(barrier.getId(), barrier);
 		tiles.putTile(placeholder.getId(), placeholder);
@@ -344,10 +426,13 @@ public class Assets implements Disposable {
 		loadFish(atlas, GREEN_MODIFIER, TileIDs.GREEN);
 		loadFish(atlas, RED_MODIFIER, TileIDs.RED);
 		loadFish(atlas, ORANGE_MODIFIER, TileIDs.ORANGE);
+<<<<<<< HEAD
 
 		StaticTiledMapTile cheese = new StaticTiledMapTile(atlas.findRegion(CHEESE));
 		cheese.setId(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.CHEESE));
 		tiles.putTile(cheese.getId(), cheese);
+=======
+>>>>>>> origin/menu
 	}
 
 	/**
@@ -402,12 +487,19 @@ public class Assets implements Disposable {
 		skin.get(LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextButtonStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 
+<<<<<<< HEAD
 		skin.get(SANS_HEADER_STYLE, LabelStyle.class).font = getFont(SANS_BOLD, LARGE_FONT_SIZE);
 		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
-		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
-		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
+		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
+		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(TUTORIAL_SYTLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
 		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+=======
+		skin.get(CREDITS_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
+		skin.get(CREDITS_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
+		skin.get(CREDITS_SMALL_CONTENTS_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(EMULOGIC, SMALL_FONT_SIZE);
+>>>>>>> origin/menu
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(WindowStyle.class).titleFont = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
