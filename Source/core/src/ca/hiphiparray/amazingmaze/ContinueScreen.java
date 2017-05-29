@@ -60,7 +60,8 @@ public class ContinueScreen implements Screen {
 	/** The result description label. */
 	private Label resultDescriptionLabel;
 
-	/** The constructor for ContinueScreen.
+	/**
+	 * The constructor for ContinueScreen.
 	 *
 	 * @param game the {@link AmazingMazeGame} instance that is managing this screen.
 	 */
@@ -77,7 +78,7 @@ public class ContinueScreen implements Screen {
 		optionTable.bottom();
 		labelTable.background(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.MINI_BACKGROUND, Texture.class))));
 
-		if (game.set.getLevel() % 5 == 0) {
+		if ((game.set.getLevel() - 1) % 5 == 0) {
 			resultLabel = new Label("You win!", labelStyle);
 			resultDescriptionLabel = new Label("Continue playing or quit?", labelStyle);
 		} else {
@@ -90,7 +91,7 @@ public class ContinueScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (continueButton.isPressed()) {
-					game.setScreen(new MazeScreen(game));
+					game.setScreen(new MazeScreen(game, false));
 				}
 			}
 		});

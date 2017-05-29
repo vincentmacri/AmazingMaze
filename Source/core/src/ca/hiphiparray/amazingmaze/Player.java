@@ -75,8 +75,6 @@ public class Player extends Sprite {
 
 	/** The {@link MazeScreen} managing this player. */
 	private final MazeScreen maze;
-	/** The {@link AmazingMazeGame} instance that is managing this screen. */
-	private final AmazingMazeGame game;
 
 	/** The side length of the player's bounding box. */
 	protected static final int PLAYER_SIZE = 1;
@@ -98,15 +96,17 @@ public class Player extends Sprite {
 	/** How long the player has been in the current animation state. */
 	private float stateTime;
 
+	/** If the player is dead. */
+	private boolean dead;
+
 	/**
 	 * Create the player.
 	 *
 	 * @param region the player's image.
 	 * @param maze the {@link MazeScreen} instance managing this player.
 	 */
-	public Player(TextureRegion region, final MazeScreen maze, final AmazingMazeGame game) {
+	public Player(TextureRegion region, final MazeScreen maze) {
 		super(region);
-		this.game = game;
 		this.maze = maze;
 		setOrigin(0, 0);
 		setPosition(0, this.maze.mapHeight / 2);
@@ -117,6 +117,7 @@ public class Player extends Sprite {
 		this.lastVerticalDir = VerticalDirection.NONE;
 		this.lives = 3;
 		this.stateTime = 0;
+		this.dead = false;
 	}
 
 	/**
@@ -166,7 +167,7 @@ public class Player extends Sprite {
 		Rectangle thisBox = getBoundingRectangle();
 		for (int i = 0; i < maze.fishBoxes.size; i++) {
 			if (thisBox.overlaps(maze.fishBoxes.get(i))) {
-				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.POWER_LAYER);
+				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
 				int x = (int) maze.fishBoxes.get(i).x;
 				int y = (int) maze.fishBoxes.get(i).y;
 				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();
@@ -200,12 +201,15 @@ public class Player extends Sprite {
 		Rectangle thisBox = getBoundingRectangle();
 		for (Rectangle wire : maze.wireBoxes) {
 			if (thisBox.overlaps(wire)) {
-				lives--;
 				if (lives <= 0) {
-					game.setScreen(new ContinueScreen(game));
+					dead = true;
+					return;
+				}
+				if (!maze.help) {
+					lives--;
 				}
 				setPosition(0, maze.mapHeight / 2);
-				maze.loseLife();
+				maze.loseLife((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
 				break;
 			}
 		}
@@ -301,5 +305,14 @@ public class Player extends Sprite {
 				direction.x = 0;
 				break;
 		}
+	}
+
+	/**
+	 * Getter for {@link #dead}.
+	 *
+	 * @return if the player is dead.
+	 */
+	public boolean isDead() {
+		return dead;
 	}
 }

@@ -255,7 +255,12 @@ public class FishMiniGame implements Screen, InputProcessor {
 						public void changed(ChangeEvent event, Actor actor) {
 							if (okButton.isPressed()) {
 								dialog.cancel();
-								game.setScreen(new MazeScreen(game, false));
+
+								if ((game.set.getLevel() - 1) % 5 == 0) {
+									game.setScreen(new ContinueScreen(game));
+								} else {
+									game.setScreen(new MazeScreen(game, false));
+								}
 							}
 						}
 					});
@@ -389,6 +394,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 	public void dispose() {
 		stage.dispose();
 		canvas.dispose();
+		System.out.println("Dispose minigame.");
 	}
 
 	/** Custom Canvas class for Pixmap manipulation. */
