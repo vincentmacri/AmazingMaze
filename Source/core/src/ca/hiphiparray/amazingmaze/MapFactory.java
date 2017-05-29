@@ -59,7 +59,7 @@ public class MapFactory {
 	/** The name of the wire layer. */
 	public static final String WIRE_LAYER = "wires";
 	/** The name of the power-up layer. */
-	public static final String POWER_LAYER = "powers";
+	public static final String ITEM_LAYER = "items";
 
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
@@ -148,16 +148,35 @@ public class MapFactory {
 		map.getLayers().add(wireLayer);
 
 		TiledMapTileLayer powerUpLayer = new TiledMapTileLayer(width, height, MazeScreen.TILE_SIZE, MazeScreen.TILE_SIZE);
-		powerUpLayer.setName(POWER_LAYER);
-		for (int c = 0; c < width; c++) { // TODO: Ensure fish are not at level edge.
-			if (!splits.contains(c) && random.nextDouble() <= 0.25) {
-				placeFish(powerUpLayer, c, gateSpace);
-				c++;
+		powerUpLayer.setName(ITEM_LAYER);
+		for (int c = 1; c < width; c++) {
+			if (!splits.contains(c)) {
+				if (random.nextDouble() <= 0.25) {
+					placeFish(powerUpLayer, c, gateSpace);
+					c++;
+				} else if (random.nextDouble() <= 0.1) {
+					placeCheese(powerUpLayer, c, gateSpace);
+					c++;
+				}
 			}
 		}
 		map.getLayers().add(powerUpLayer);
 
 		return map;
+	}
+
+	/**
+	 * Place a piece of cheese on the map.
+	 *
+	 * @param layer the layer to add the cheese to.
+	 * @param col the column to place the cheese on.
+	 * @param gateSpace how much space to leave for gates.
+	 */
+	private void placeCheese(TiledMapTileLayer layer, int col, int gateSpace) {
+		int row = randomInt(gateSpace + 1, height - gateSpace - 1);
+		Cell cheese = new Cell();
+		cheese.setTile(assets.tiles.getTile(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.CHEESE)));
+		layer.setCell(col, row, cheese);
 	}
 
 	/**

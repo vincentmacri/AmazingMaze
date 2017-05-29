@@ -257,10 +257,15 @@ public class Save {
 
 	/**
 	 * Get the current level.
+	 * Also ensure that the level is >= 1, if not, set it to 1.
 	 *
 	 * @return the current level.
 	 */
 	public int getLevel() {
+		if (level >= 1) {
+			return level;
+		}
+		setLevel(1);
 		return level;
 	}
 

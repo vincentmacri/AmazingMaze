@@ -148,6 +148,9 @@ public class Assets implements Disposable {
 	/** The atlas name of the mouse. */
 	protected static final String MOUSE = "mouse";
 
+	/** The atlas name of the cheese tile. */
+	private static final String CHEESE = "cheese";
+
 	/** The string appended to the end of atlas names for their on variation. */
 	private static final String ON_MODIFIER = "-on";
 	/** The string appended to the end of atlas names for their off variation. */
@@ -338,6 +341,10 @@ public class Assets implements Disposable {
 		loadFish(atlas, GREEN_MODIFIER, TileIDs.GREEN);
 		loadFish(atlas, RED_MODIFIER, TileIDs.RED);
 		loadFish(atlas, ORANGE_MODIFIER, TileIDs.ORANGE);
+
+		StaticTiledMapTile cheese = new StaticTiledMapTile(atlas.findRegion(CHEESE));
+		cheese.setId(TileIDs.computeID(TileIDs.POWERUP_RANGE, TileIDs.CHEESE));
+		tiles.putTile(cheese.getId(), cheese);
 	}
 
 	/**

@@ -95,12 +95,12 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	/** Array of bounding boxes for collision with objects. */
 	protected Array<Rectangle> obstacleBoxes;
-
 	/** Array of bounding boxes for collision with electrified wires. */
 	protected Array<Rectangle> wireBoxes;
-
 	/** Array of bounding boxes for collision with fish. */
 	protected Array<Rectangle> fishBoxes;
+	/** Array of bounding boxes for collision with cheese. */
+	protected Array<Rectangle> cheeseBoxes;
 
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
@@ -122,16 +122,15 @@ public class MazeScreen implements Screen, InputProcessor {
 	public MazeScreen(final AmazingMazeGame game) {
 		final int mapSize = 2;
 		this.game = game;
-		this.mapWidth = 16 * mapSize;
+		this.mapWidth = 16 * mapSize + game.set.getLevel() * 5;
 		this.mapHeight = 9 * mapSize;
 		this.paused = false;
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, this.mapWidth, this.mapHeight);
+		camera.setToOrtho(false, 16 * mapSize, this.mapHeight);
 
 		viewport = new ExtendViewport(0, this.mapHeight, this.mapWidth, this.mapHeight, camera);
 
-		// TODO: Use current level from settings as seed.
 		MapFactory factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
 		map = factory.generateMap();
 		gateLocations = factory.getGateLocations();
@@ -197,8 +196,8 @@ public class MazeScreen implements Screen, InputProcessor {
 		hud.addActor(lives);
 
 		lifeImages = new Array<Image>(false, 8);
-		// TODO: Use static var for max lives.
 		for (int i = 0; i < 3; i++) {
+			addLife();
 			lifeImages.add(new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class)));
 		}
 		for (Image image : lifeImages) {
@@ -229,12 +228,17 @@ public class MazeScreen implements Screen, InputProcessor {
 			}
 		}
 		fishBoxes = new Array<Rectangle>(false, 16);
-		TiledMapTileLayer fishes = (TiledMapTileLayer) map.getLayers().get(MapFactory.POWER_LAYER);
+		cheeseBoxes = new Array<Rectangle>(false, 16);
+		TiledMapTileLayer items = (TiledMapTileLayer) map.getLayers().get(MapFactory.ITEM_LAYER);
 		for (int r = 0; r < mapHeight; r++) {
 			for (int c = 0; c < mapWidth; c++) {
-				FishCell fish = (FishCell) fishes.getCell(c, r);
-				if (fish != null) {
-					fishBoxes.add(new Rectangle(c, r, 1, 1));
+				Cell item = items.getCell(c, r);
+				if (item != null) {
+					if (item.getClass() == FishCell.class) {
+						fishBoxes.add(new Rectangle(c, r, 1, 1));
+					} else {
+						cheeseBoxes.add(new Rectangle(c, r, 1, 1));
+					}
 				}
 			}
 		}
@@ -473,6 +477,11 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Update the HUD to show one less life. */
 	public void loseLife() {
 		lives.removeActor(lifeImages.removeIndex(0));
+	}
+
+	/** Update the HUD to show one more life. */
+	public void addLife() {
+
 	}
 
 }

@@ -159,12 +159,32 @@ public class Player extends Sprite {
 		}
 	}
 
+	/** Handle the player collecting cheese. */
+	private void collectCheese() {
+		Rectangle thisBox = getBoundingRectangle();
+		for (int i = 0; i < maze.cheeseBoxes.size; i++) {
+			if (thisBox.overlaps(maze.cheeseBoxes.get(i))) {
+				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
+				int x = (int) maze.cheeseBoxes.get(i).x;
+				int y = (int) maze.cheeseBoxes.get(i).y;
+				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();
+				layer.setCell(x, y, null);
+				maze.cheeseBoxes.removeIndex(i);
+
+				lives++;
+				maze.addLife();
+
+				break;
+			}
+		}
+	}
+
 	/** Handle the player collecting fish. */
 	private void collectFish() {
 		Rectangle thisBox = getBoundingRectangle();
 		for (int i = 0; i < maze.fishBoxes.size; i++) {
 			if (thisBox.overlaps(maze.fishBoxes.get(i))) {
-				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.POWER_LAYER);
+				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
 				int x = (int) maze.fishBoxes.get(i).x;
 				int y = (int) maze.fishBoxes.get(i).y;
 				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();

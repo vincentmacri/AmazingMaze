@@ -45,6 +45,8 @@ public final class TileIDs {
 
 	/** The ID modifier of the fish. */
 	public static final int FISH = 100;
+	/** The ID modifier of the cheese. */
+	public static final int CHEESE = 200;
 
 	/** The value of the vertical wire property. */
 	public static final int VERTICAL = 1;
