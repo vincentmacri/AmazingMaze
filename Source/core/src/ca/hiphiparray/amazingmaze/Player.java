@@ -22,7 +22,6 @@ package ca.hiphiparray.amazingmaze;
 
 import java.awt.geom.Point2D;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -35,7 +34,6 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  * The player class.
  *
  * @author Vincent Macri
- * @author Chloe Nguyen
  */
 public class Player extends Sprite {
 
@@ -77,6 +75,8 @@ public class Player extends Sprite {
 
 	/** The {@link MazeScreen} managing this player. */
 	private final MazeScreen maze;
+	/** The {@link AmazingMazeGame} instance that is managing this screen. */
+	private final AmazingMazeGame game;
 
 	/** The side length of the player's bounding box. */
 	protected static final int PLAYER_SIZE = 1;
@@ -101,11 +101,12 @@ public class Player extends Sprite {
 	/**
 	 * Create the player.
 	 *
-	 * @param region the player's default image.
+	 * @param region the player's image.
 	 * @param maze the {@link MazeScreen} instance managing this player.
 	 */
-	public Player(TextureRegion region, final MazeScreen maze) {
+	public Player(TextureRegion region, final MazeScreen maze, final AmazingMazeGame game) {
 		super(region);
+		this.game = game;
 		this.maze = maze;
 		setOrigin(0, 0);
 		setPosition(0, this.maze.mapHeight / 2);
@@ -122,7 +123,6 @@ public class Player extends Sprite {
 	 * Update the player's status.
 	 *
 	 * @param deltaTime how much time has passed since the last frame.
-	 * @param obstacleBoxes the rectangles that the player can collide with.
 	 */
 	protected void update(float deltaTime) {
 		Point2D.Float newPos = doObjectCollision(new Vector2(direction).scl(deltaTime));
@@ -161,37 +161,14 @@ public class Player extends Sprite {
 		}
 	}
 
-	/** Handle the player collecting cheese. */
-	private void collectCheese() {
-		/*
-		Rectangle thisBox = getBoundingRectangle();
-		for (int i = 0; i < maze.cheeseBoxes.size; i++) {
-			if (thisBox.overlaps(maze.cheeseBoxes.get(i))) {
-				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
-				int x = (int) maze.cheeseBoxes.get(i).x;
-				int y = (int) maze.cheeseBoxes.get(i).y;
-				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();
-				layer.setCell(x, y, null);
-				maze.cheeseBoxes.removeIndex(i);
-
-				lives++;
-				maze.addLife();
-
-				break;
-			}
-		}
-		*/
-	}
-
 	/** Handle the player collecting fish. */
 	private void collectFish() {
 		Rectangle thisBox = getBoundingRectangle();
 		for (int i = 0; i < maze.fishBoxes.size; i++) {
 			if (thisBox.overlaps(maze.fishBoxes.get(i))) {
-				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
+				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.POWER_LAYER);
 				int x = (int) maze.fishBoxes.get(i).x;
 				int y = (int) maze.fishBoxes.get(i).y;
-
 				FishColour colour = ((FishCell) layer.getCell(x, y)).getColour();
 				layer.setCell(x, y, null);
 				maze.fishBoxes.removeIndex(i);
@@ -223,14 +200,12 @@ public class Player extends Sprite {
 		Rectangle thisBox = getBoundingRectangle();
 		for (Rectangle wire : maze.wireBoxes) {
 			if (thisBox.overlaps(wire)) {
+				lives--;
 				if (lives <= 0) {
-					Gdx.app.exit();
+					game.setScreen(new ContinueScreen(game));
 				}
-				if (!maze.help) {
-					lives--;
-				}
-				maze.loseLife((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
 				setPosition(0, maze.mapHeight / 2);
+				maze.loseLife();
 				break;
 			}
 		}
