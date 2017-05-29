@@ -255,7 +255,6 @@ public class MazeScreen implements Screen, InputProcessor {
 				if (item != null) {
 					if (item.getClass() == FishCell.class) {
 						fishBoxes.add(new Rectangle(c, r, 1, 1));
-						System.out.println("Adding new item");
 					} else {
 						cheeseBoxes.add(new Rectangle(c, r, 1, 1));
 					}
