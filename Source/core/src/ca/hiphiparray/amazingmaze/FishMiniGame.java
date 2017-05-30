@@ -125,7 +125,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 	 * @param orangeCollected the number of orange fish.
 	 */
 	public FishMiniGame(final AmazingMazeGame game, int blueCollected, int purpleCollected, int greenCollected, int redCollected, int orangeCollected) {
-		// System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
 
 		fishNumber = new int[5];
 
