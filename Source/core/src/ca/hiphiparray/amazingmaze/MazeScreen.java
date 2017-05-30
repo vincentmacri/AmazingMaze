@@ -337,7 +337,6 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		dispose();
 	}
 
 	@Override
