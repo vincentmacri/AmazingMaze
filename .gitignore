@@ -3,3 +3,17 @@ save.json
 
 # Compiled class files
 *.class
+
+# LaTeX files for manua
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+
