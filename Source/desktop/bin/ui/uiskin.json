@@ -49,7 +49,8 @@
 		contents: { fontColor: black},
 		small-contents: {fontColor: black},
 		tutorial: {fontColor: white},
-		story: {fontColor: black}
+		story: {fontColor: black},
+		hud: {fontColor: white},
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		default: { selection: selection, background: textfield, fontColor: white, cursor: cursor }

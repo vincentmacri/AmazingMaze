@@ -39,8 +39,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -111,11 +111,8 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** ArrayList of gates of wires that are on. */ // TODO: Change to Array.
 	protected ArrayList<Circuit> gateOn;
 
-	/** The HUD container showing how many lives are left. */
-	protected HorizontalGroup lives;
-
-	/** Images to show how many lives are left. */
-	private Array<Image> lifeImages;
+	/** Label to show how many lives the player has left. */
+	private Label livesLeft;
 
 	/** If the game is paused. */
 	private boolean paused;
@@ -209,19 +206,18 @@ public class MazeScreen implements Screen, InputProcessor {
 	private void setupHUD() {
 		hud = new Stage(new ScreenViewport(), game.batch);
 
-		lives = new HorizontalGroup();
-		lives.setFillParent(true);
-		lives.top().left();
-		hud.addActor(lives);
+		Table table = new Table();
+		table.setFillParent(true);
+		table.top().left();
+		hud.addActor(table);
 
-		lifeImages = new Array<Image>(false, 8);
-		for (int i = 0; i < 3; i++) {
-			// addLife();
-			lifeImages.add(new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class)));
-		}
-		for (Image image : lifeImages) {
-			lives.addActor(image);
-		}
+		Image lifeIcon = new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class));
+		table.add(lifeIcon).pad(Gdx.graphics.getWidth() / 128);
+
+		livesLeft = new Label("", game.assets.skin, Assets.HUD_STYLE);
+		table.add(livesLeft);
+
+		updateLivesLabel();
 	}
 
 	/** Create the bounding boxes for collision detection. */
@@ -496,9 +492,9 @@ public class MazeScreen implements Screen, InputProcessor {
 		return false;
 	}
 
-	/** Update the HUD to show one more life. */
-	public void addLife() {
-
+	/** Update how many lives the player has left on the HUD. */
+	public void updateLivesLabel() {
+		livesLeft.setText("x " + Integer.toString(player.getLives()));
 	}
 
 	/** Update the HUD to show one less life.
@@ -506,7 +502,6 @@ public class MazeScreen implements Screen, InputProcessor {
 	 * @param Gate that the user died at.
 	 */
 	public void loseLife(int a) {
-		lives.removeActor(lifeImages.removeIndex(0));
 	}
 
 }

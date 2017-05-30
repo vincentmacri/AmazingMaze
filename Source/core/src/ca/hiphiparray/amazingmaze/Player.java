@@ -91,7 +91,7 @@ public class Player extends Sprite {
 	protected int orangeCollected;
 
 	/** How many lives the player has left. */
-	protected int lives;
+	private int lives;
 
 	/** How long the player has been in the current animation state. */
 	private float stateTime;
@@ -130,6 +130,7 @@ public class Player extends Sprite {
 		setPosition(newPos.x, newPos.y);
 		handleDeath();
 		collectFish();
+		collectCheese();
 
 		updateImage(deltaTime);
 
@@ -196,6 +197,24 @@ public class Player extends Sprite {
 		}
 	}
 
+	/** Handle the player collecting cheese. */
+	private void collectCheese() {
+		Rectangle thisBox = getBoundingRectangle();
+		for (int i = 0; i < maze.cheeseBoxes.size; i++) {
+			if (thisBox.overlaps(maze.cheeseBoxes.get(i))) {
+				TiledMapTileLayer layer = (TiledMapTileLayer) maze.map.getLayers().get(MapFactory.ITEM_LAYER);
+				int x = (int) maze.cheeseBoxes.get(i).x;
+				int y = (int) maze.cheeseBoxes.get(i).y;
+				layer.setCell(x, y, null);
+				maze.cheeseBoxes.removeIndex(i);
+				lives++;
+				maze.updateLivesLabel();
+
+				break;
+			}
+		}
+	}
+
 	/** Handle the player dying. */
 	private void handleDeath() {
 		Rectangle thisBox = getBoundingRectangle();
@@ -210,6 +229,7 @@ public class Player extends Sprite {
 				}
 				setPosition(0, maze.mapHeight / 2);
 				maze.loseLife((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
+				maze.updateLivesLabel();
 				break;
 			}
 		}
@@ -314,5 +334,14 @@ public class Player extends Sprite {
 	 */
 	public boolean isDead() {
 		return dead;
+	}
+
+	/**
+	 * Getter for {@link #lives}.
+	 *
+	 * @return how many lives the player has left.
+	 */
+	public int getLives() {
+		return lives;
 	}
 }
