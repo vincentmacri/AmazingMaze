@@ -355,6 +355,16 @@ public class FishMiniGame implements Screen, InputProcessor {
 					}
 				}
 			});
+			dialog.addListener(new InputListener() {
+				@Override
+				public boolean keyDown(InputEvent event, int keycode) {
+					if (keycode == Keys.ENTER) {
+						dialog.hide();
+						return true;
+					}
+					return false;
+				}
+			});
 		} else {
 			Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
 			label.setScale(.5f);
@@ -375,21 +385,21 @@ public class FishMiniGame implements Screen, InputProcessor {
 					}
 				}
 			});
-		}
-		dialog.addListener(new InputListener() {
-			@Override
-			public boolean keyDown(InputEvent event, int keycode) {
-				if (keycode == Keys.ENTER) {
-					if ((game.set.getLevel() - 1) % 5 == 0) {
-						game.setScreen(new ContinueScreen(game));
-					} else {
-						game.setScreen(new MazeScreen(game, false));
+			dialog.addListener(new InputListener() {
+				@Override
+				public boolean keyDown(InputEvent event, int keycode) {
+					if (keycode == Keys.ENTER) {
+						if ((game.set.getLevel() - 1) % 5 == 0) {
+							game.setScreen(new ContinueScreen(game));
+						} else {
+							game.setScreen(new MazeScreen(game, false));
+						}
+						return true;
 					}
-					return true;
+					return false;
 				}
-				return false;
-			}
-		});
+			});
+		}
 		dialog.show(stage);
 	}
 
