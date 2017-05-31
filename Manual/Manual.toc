@@ -2,15 +2,17 @@
 \contentsline {chapter}{\numberline {2}Main Menu}{3}
 \contentsline {chapter}{\numberline {3}Settings}{5}
 \contentsline {chapter}{\numberline {4}Maze}{7}
-\contentsline {section}{\numberline {4.1}AND Gate}{8}
-\contentsline {section}{\numberline {4.2}NAND Gate}{8}
-\contentsline {section}{\numberline {4.3}OR Gate}{9}
-\contentsline {section}{\numberline {4.4}NOR Gate}{9}
-\contentsline {section}{\numberline {4.5}XOR Gate}{10}
-\contentsline {section}{\numberline {4.6}Interacting with Gates}{10}
-\contentsline {section}{\numberline {4.7}Items}{11}
-\contentsline {subsection}{\numberline {4.7.1}Fish}{11}
-\contentsline {subsection}{\numberline {4.7.2}Cheese}{11}
+\contentsline {section}{\numberline {4.1}Maze Screen}{7}
+\contentsline {section}{\numberline {4.2}Goal}{8}
+\contentsline {section}{\numberline {4.3}AND Gate}{9}
+\contentsline {section}{\numberline {4.4}NAND Gate}{9}
+\contentsline {section}{\numberline {4.5}OR Gate}{10}
+\contentsline {section}{\numberline {4.6}NOR Gate}{10}
+\contentsline {section}{\numberline {4.7}XOR Gate}{11}
+\contentsline {section}{\numberline {4.8}Interacting with Gates}{11}
+\contentsline {section}{\numberline {4.9}Items}{12}
+\contentsline {subsection}{\numberline {4.9.1}Fish}{12}
+\contentsline {subsection}{\numberline {4.9.2}Cheese}{12}
 \contentsline {chapter}{\numberline {5}Counting Points}{13}
 \contentsline {section}{\numberline {5.1}Controls}{14}
 \contentsline {section}{\numberline {5.2}Scoring}{14}

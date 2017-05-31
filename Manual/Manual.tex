@@ -81,43 +81,50 @@
 			\item Reset the settings, save, or everything
 		\end{itemize}
 	\chapter{Maze}
-		In the maze, you must navigate through logic gates.
+		\section{Maze Screen}
+			\includegraphics[width=\textwidth]{MazeScreenshot}
+			\\
+			Here we see the mouse (on the left, in the middle of the screen) at the start of a new level.
 
-		Each gate has two inputs, and one output.
-		\\
-		\textcolor{on}{Green is on, or true.}
-		\\
-		\textcolor{off}{Red is off, or false.}
-		\\
-		\textcolor{unknown}{Blue is unknown.}
+			In the top left, we see that the player has three lives remaining.
+		\section{Goal}
+			In the maze, you must navigate through logic gates.
 
-		\begin{figure}[h]
-			\centering
-			\begin{subfigure}[t]{0.3\textwidth}
+			Each gate has two inputs, and one output.
+			\\
+			\textcolor{on}{Green is on, or true.}
+			\\
+			\textcolor{off}{Red is off, or false.}
+			\\
+			\textcolor{unknown}{Blue is unknown.}
+
+			\begin{figure}[h]
 				\centering
-				\includegraphics[width=0.3\textwidth]{ON}
+				\begin{subfigure}[t]{0.3\textwidth}
+					\centering
+					\includegraphics[width=0.3\textwidth]{ON}
 
-				An on wire.
-			\end{subfigure}
-			\hspace{1mm}
-			\begin{subfigure}[t]{0.3\textwidth}
-				\centering
-				\includegraphics[width=0.3\textwidth]{OFF}
+					An on wire.
+				\end{subfigure}
+				\hspace{1mm}
+				\begin{subfigure}[t]{0.3\textwidth}
+					\centering
+					\includegraphics[width=0.3\textwidth]{OFF}
 
-				An off wire.
-			\end{subfigure}
-			\hspace{1mm}
-			\begin{subfigure}[t]{0.3\textwidth}
-				\centering
-				\includegraphics[width=0.3\textwidth]{UNKNOWN}
+					An off wire.
+				\end{subfigure}
+				\hspace{1mm}
+				\begin{subfigure}[t]{0.3\textwidth}
+					\centering
+					\includegraphics[width=0.3\textwidth]{UNKNOWN}
 
-				An unknown wire.
-			\end{subfigure}
-		\end{figure}
+					An unknown wire.
+				\end{subfigure}
+			\end{figure}
 
-		The two inputs will always be known, and \emph{you} will always need to determine the output.
+			The two inputs will always be known, and \emph{you} will always need to determine the output.
 
-		You will be working with AND, NAND, OR, NOR, and XOR gates.
+			You will be working with AND, NAND, OR, NOR, and XOR gates.
 		\section{AND Gate}
 			An AND gate is on only if both of its inputs are on.
 			\begin{figure}[h]
@@ -258,7 +265,6 @@
 				\begin{center}
 					\includegraphics[width=0.35\textwidth]{Cheese}
 				\end{center}
-		{\Huge Screenshot\\Explanation}
 	\chapter{Counting Points}
 		You count your points manually. A sketchpad is provided for you to do your work on.
 		
