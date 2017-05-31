@@ -12,3 +12,5 @@
 \contentsline {subsection}{\numberline {4.7.1}Fish}{11}
 \contentsline {subsection}{\numberline {4.7.2}Cheese}{11}
 \contentsline {chapter}{\numberline {5}Counting Points}{13}
+\contentsline {section}{\numberline {5.1}Controls}{14}
+\contentsline {section}{\numberline {5.2}Scoring}{14}
