@@ -21,18 +21,25 @@
 package ca.hiphiparray.amazingmaze;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -59,6 +66,9 @@ public class ContinueScreen implements Screen {
 	private Label resultLabel;
 	/** The result description label. */
 	private Label resultDescriptionLabel;
+
+	/** The player's name. */
+	private String name;
 
 	/**
 	 * The constructor for ContinueScreen.
@@ -101,7 +111,7 @@ public class ContinueScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (quitButton.isPressed()) {
-					// TODO: Add to high scores.
+					highScoreDialog();
 				}
 			}
 		});
@@ -114,6 +124,91 @@ public class ContinueScreen implements Screen {
 		optionTable.add(quitButton).minSize(Gdx.graphics.getWidth() / 8, Gdx.graphics.getHeight() / 20).maxSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 8).prefSize(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 10).pad(20).padBottom(40);
 		stage.addActor(labelTable);
 		stage.addActor(optionTable);
+	}
+
+	/**
+	 * Displays the high score dialog.
+	 */
+	public void highScoreDialog() {
+		Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
+		final Dialog dialog = new Dialog("High Score", game.assets.skin);
+		final TextButton okButton = new TextButton("OK", game.assets.skin);
+		dialog.getButtonTable().bottom();
+		Label label = new Label("Enter your name:", labelStyle);
+		label.setScale(.5f);
+		label.setWrap(true);
+		label.setAlignment(Align.center);
+		final TextField nameField = new TextField("", game.assets.skin);
+		dialog.add(label).width(500).pad(50);
+		dialog.add(nameField);
+		dialog.add(okButton).bottom();
+		nameField.setTextFieldListener(new TextFieldListener() {
+			@Override
+			public void keyTyped(TextField textField, char key) {
+				name = formatString(nameField.getText());
+				if (!name.equals("")) {
+					if (key == (char) 13) {
+						displayHighScores();
+					}
+				}
+			}
+		});
+		okButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				name = formatString(nameField.getText());
+				if (!name.equals("")) {
+					if (okButton.isPressed()) {
+						dialog.hide();
+						displayHighScores();
+					}
+				}
+			}
+		});
+		dialog.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				name = formatString(nameField.getText());
+				if (!name.equals("")) {
+					if (keycode == Keys.ENTER) {
+						displayHighScores();
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+		dialog.show(stage);
+	}
+
+	/**
+	 * Gets the player's name.
+	 *
+	 * @return the player name.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Displays the high scores.
+	 */
+	public void displayHighScores() {
+		// TODO: High scores.
+		game.setScreen(new MainMenuScreen(game));
+	}
+
+	/**
+	 * Formats the string.
+	 *
+	 * @param s
+	 *            The string being formatted.
+	 * @return The formatted string.
+	 */
+	public String formatString(String s) {
+		if (s == null)
+			return "";
+		return s;
 	}
 
 	@Override

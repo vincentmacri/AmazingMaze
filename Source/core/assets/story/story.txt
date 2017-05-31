@@ -6,4 +6,6 @@ You see the world around you getting bigger, but it isn't. Ms. Krasteva is turni
 
 The news wrapped up the story by mentioning that the company "Hip Hip Array" is testing an antidote. However, you do not have time to wait for this antidote, because you need to mark the fantastic ISPs your students have poured the last month of their lives into in an effort to get 100%.
 
-You take it upon yourself to break into the lab, and steal the antidote, since mice are unable to use computer mice...
+You take it upon yourself to break into the lab and steal the antidote because mice are unable to use computer mice.
+
+Unfortunately for you, the lab has a high-tech security system of boolean algebra mazes and cat security guards, meaning that you have to avoid getting electrocuted while collecting fish to bribe the cats to not to eat you.
