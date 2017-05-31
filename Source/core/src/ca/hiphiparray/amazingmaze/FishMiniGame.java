@@ -424,10 +424,10 @@ public class FishMiniGame implements Screen, InputProcessor {
 		if (message == answer) {
 			return answer;
 		}
-		if (Math.abs(message - answer) < range70) {
+		if (Math.abs(message - answer) <= range70) {
 			return (int) (answer * 0.70);
 		}
-		if (Math.abs(message - answer) < range50) {
+		if (Math.abs(message - answer) <= range50) {
 			return (int) (answer * 0.50);
 		}
 		return (int) (answer * 0.15);
