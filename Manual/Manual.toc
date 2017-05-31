@@ -1,1 +1,14 @@
 \contentsline {chapter}{\numberline {1}The Story}{1}
+\contentsline {chapter}{\numberline {2}Main Menu}{3}
+\contentsline {chapter}{\numberline {3}Settings}{5}
+\contentsline {chapter}{\numberline {4}Maze}{7}
+\contentsline {section}{\numberline {4.1}AND Gate}{8}
+\contentsline {section}{\numberline {4.2}NAND Gate}{8}
+\contentsline {section}{\numberline {4.3}OR Gate}{9}
+\contentsline {section}{\numberline {4.4}NOR Gate}{9}
+\contentsline {section}{\numberline {4.5}XOR Gate}{10}
+\contentsline {section}{\numberline {4.6}Interacting with Gates}{10}
+\contentsline {section}{\numberline {4.7}Items}{11}
+\contentsline {subsection}{\numberline {4.7.1}Fish}{11}
+\contentsline {subsection}{\numberline {4.7.2}Cheese}{11}
+\contentsline {chapter}{\numberline {5}Counting Points}{13}

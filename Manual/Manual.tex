@@ -6,7 +6,6 @@
 \usepackage{titlesec}
 \usepackage{color}
 \usepackage{subcaption}
-\usepackage{needspace}
 
 \definecolor{on}{RGB}{28, 113, 17}
 \definecolor{off}{RGB}{233, 19, 19}
@@ -119,64 +118,148 @@
 		You will be working with AND, NAND, OR, NOR, and XOR gates.
 		\section{AND Gate}
 			An AND gate is on only if both of its inputs are on.
-			\begin{center}
-				\begin{tabular}{|c|c|c|}
-					\hline
-					\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
-					\OFF & \OFF & \OFF\\\hline
-					\OFF & \ON & \OFF\\\hline
-					\ON & \OFF & \OFF\\\hline
-					\ON & \ON & \ON\\\hline
-				\end{tabular}
-			\end{center}
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}{0.75\textwidth}
+					\begin{tabular}{|c|c|c|}
+						\hline
+						\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
+						\OFF & \OFF & \OFF\\\hline
+						\OFF & \ON & \OFF\\\hline
+						\ON & \OFF & \OFF\\\hline
+						\ON & \ON & \ON\\\hline
+					\end{tabular}
+				\end{subfigure}
+				\begin{subfigure}{0.2\textwidth}
+					\centering
+					\includegraphics[width=0.75\textwidth]{AND}
+				\end{subfigure}
+			\end{figure}
+		\vspace{-20pt}
 		\section{NAND Gate}
 			A NAND gate's output is the opposite of an AND gate's with the same inputs. It is a \emph{not} AND gate.
-			\begin{center}
-				\begin{tabular}{|c|c|c|}
-					\hline
-					\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
-					\OFF & \OFF & \ON\\\hline
-					\OFF & \ON & \ON\\\hline
-					\ON & \OFF & \ON\\\hline
-					\ON & \ON & \OFF\\\hline
-				\end{tabular}
-			\end{center}
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}{0.75\textwidth}
+					\begin{tabular}{|c|c|c|}
+						\hline
+						\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
+						\OFF & \OFF & \ON\\\hline
+						\OFF & \ON & \ON\\\hline
+						\ON & \OFF & \ON\\\hline
+						\ON & \ON & \OFF\\\hline
+					\end{tabular}
+				\end{subfigure}
+				\begin{subfigure}{0.2\textwidth}
+					\centering
+					\includegraphics[width=0.75\textwidth]{NAND}
+				\end{subfigure}
+			\end{figure}
 		\section{OR Gate}
 			An OR gate is on if at least of its inputs are on.
-			\begin{center}
-				\begin{tabular}{|c|c|c|}
-					\hline
-					\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
-					\OFF & \OFF & \OFF\\\hline
-					\OFF & \ON & \ON\\\hline
-					\ON & \OFF & \ON\\\hline
-					\ON & \ON & \ON\\\hline
-				\end{tabular}
-			\end{center}
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}{0.75\textwidth}
+					\begin{tabular}{|c|c|c|}
+						\hline
+						\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
+						\OFF & \OFF & \OFF\\\hline
+						\OFF & \ON & \ON\\\hline
+						\ON & \OFF & \ON\\\hline
+						\ON & \ON & \ON\\\hline
+					\end{tabular}
+				\end{subfigure}
+				\begin{subfigure}{0.2\textwidth}
+					\centering
+					\includegraphics[width=0.75\textwidth]{OR}
+				\end{subfigure}
+			\end{figure}
+		\vspace{-20pt}
 		\section{NOR Gate}
 			A NOR gate's output is the opposite of an OR gate's with the same inputs. It is a \emph{not} OR gate.
-			\begin{center}
-				\begin{tabular}{|c|c|c|}
-					\hline
-					\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
-					\OFF & \OFF & \ON\\\hline
-					\OFF & \ON & \OFF\\\hline
-					\ON & \OFF & \OFF\\\hline
-					\ON & \ON & \OFF\\\hline
-				\end{tabular}
-			\end{center}
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}{0.75\textwidth}
+					\begin{tabular}{|c|c|c|}
+						\hline
+						\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
+						\OFF & \OFF & \ON\\\hline
+						\OFF & \ON & \OFF\\\hline
+						\ON & \OFF & \OFF\\\hline
+						\ON & \ON & \OFF\\\hline
+					\end{tabular}
+				\end{subfigure}
+				\begin{subfigure}{0.2\textwidth}
+					\centering
+					\includegraphics[width=0.75\textwidth]{NOR}
+				\end{subfigure}
+			\end{figure}
 		\section{XOR Gate}
 			An XOR gate is on if only one of its inputs are on.
-			\begin{center}
-				\begin{tabular}{|c|c|c|}
-					\hline
-					\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
-					\OFF & \OFF & \OFF\\\hline
-					\OFF & \ON & \ON\\\hline
-					\ON & \OFF & \ON\\\hline
-					\ON & \ON & \OFF\\\hline
-				\end{tabular}
-			\end{center}
+			\begin{figure}[h]
+				\centering
+				\begin{subfigure}{0.75\textwidth}
+					\begin{tabular}{|c|c|c|}
+						\hline
+						\textbf{Input A} & \textbf{Input B} & \textbf{Output}\\\hline
+						\OFF & \OFF & \OFF\\\hline
+						\OFF & \ON & \ON\\\hline
+						\ON & \OFF & \ON\\\hline
+						\ON & \ON & \OFF\\\hline
+					\end{tabular}
+				\end{subfigure}
+				\begin{subfigure}{0.2\textwidth}
+					\centering
+					\includegraphics[width=0.75\textwidth]{XOR}
+				\end{subfigure}
+			\end{figure}
+		\vspace{-20pt}
 		\section{Interacting with Gates}
 			The goal of this game is to reach the right side of the map without touching any wires that are on. While not necessary, you make click on the gates to mark them with what you think their output is. Left click a gate to mark it as on. Right click a gate to mark it as off. Middle click a gate to mark it as unknown.
+		\section{Items}
+			\subsection{Fish}
+				There are 5 fish you can collect in the game, each worth a different amount of points corresponding to Canadian money. Collecting these fish is what gets you points.
+				\begin{figure}[h]
+					\centering
+					\begin{subfigure}[t]{0.16\textwidth}
+						\centering
+						\includegraphics[width=\textwidth]{BlueFish}
+						5
+					\end{subfigure}
+					\hspace{1mm}
+					\begin{subfigure}[t]{0.16\textwidth}
+						\centering
+						\includegraphics[width=\textwidth]{PurpleFish}
+						10
+					\end{subfigure}
+					\hspace{1mm}
+					\begin{subfigure}[t]{0.16\textwidth}
+						\centering
+						\includegraphics[width=\textwidth]{GreenFish}
+						20
+					\end{subfigure}
+					\hspace{1mm}
+					\begin{subfigure}[t]{0.16\textwidth}
+						\centering
+						\includegraphics[width=\textwidth]{RedFish}
+						50
+					\end{subfigure}
+					\hspace{1mm}
+					\begin{subfigure}[t]{0.16\textwidth}
+						\centering
+						\includegraphics[width=\textwidth]{OrangeFish}
+						100
+					\end{subfigure}
+				\end{figure}
+			\subsection{Cheese}
+				Because you are a mouse, cheese is incredibly healthy. Eating cheese will give you more lives.
+				\begin{center}
+					\includegraphics[width=0.35\textwidth]{Cheese}
+				\end{center}
+	\chapter{Counting Points}
+		{\Huge Screenshot here\\Explain screenshot}
+
+		You count your points manually. A sketchpad is provided for you to do your work on. The closer you are to the correct answer, the more points you will get.
+
+		There is a help button on this screen which reminds you how many points each item is worth.
 \end{document}
