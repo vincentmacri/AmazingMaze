@@ -58,6 +58,8 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  *
  * @author Susie Son
  * @author Vincent Macri
+ * @since 0.3
+ * Time:
  */
 public class FishMiniGame implements Screen, InputProcessor {
 
@@ -69,6 +71,8 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	/** Stage that contains all of the screen components. */
 	private Stage stage;
+	/** The pause menu. */
+	private Stage pauseMenu;
 	/** Table for the top menu buttons. */
 	private Table menuTable;
 	/** Table for the fish counting. */
@@ -116,6 +120,8 @@ public class FishMiniGame implements Screen, InputProcessor {
 	private final static Color drawColor = Color.LIGHT_GRAY;
 	/** The eraser colour. */
 	private final static Color clearColor = Color.DARK_GRAY;
+	/** If the game is paused. */
+	private boolean paused;
 
 	/**
 	 * Constructor for FishMiniGame.
@@ -278,7 +284,50 @@ public class FishMiniGame implements Screen, InputProcessor {
 		}
 		fishTable.row();
 
+		setupPauseMenu();
 		input = new InputMultiplexer(stage, this);
+		input.addProcessor(pauseMenu);
+	}
+
+	/** Create the pause menu. */
+	private void setupPauseMenu() {
+		pauseMenu = new Stage(new ScreenViewport(), game.batch);
+
+		Table table = new Table();
+		table.setFillParent(true);
+		table.center();
+		pauseMenu.addActor(table);
+
+		TextButton resumeButton = new TextButton("Resume", game.assets.skin);
+		resumeButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				paused = false;
+			}
+		});
+		table.add(resumeButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
+		table.row();
+
+		TextButton settingsButton = new TextButton("Settings", game.assets.skin);
+		final Screen sourceScreen = this;
+		settingsButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.settingsScreen.setSourceScreen(sourceScreen);
+				game.setScreen(game.settingsScreen);
+			}
+		});
+		table.add(settingsButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
+		table.row();
+
+		TextButton quitButton = new TextButton("Quit", game.assets.skin);
+		quitButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(game.menuScreen);
+			}
+		});
+		table.add(quitButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
 	}
 
 	/**
@@ -400,6 +449,11 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		stage.act(delta);
 		stage.draw();
+
+		if (paused) {
+			pauseMenu.act();
+			pauseMenu.draw();
+		}
 	}
 
 	@Override
@@ -417,7 +471,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		dispose();
 	}
 
 	@Override
@@ -535,9 +588,10 @@ public class FishMiniGame implements Screen, InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.ENTER) {
 			dialog();
-			return true;
+		} else if (keycode == game.set.getPauseButton()) {
+			paused = !paused;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -552,39 +606,36 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (button == Input.Buttons.LEFT) {
+		if (!paused && button == Input.Buttons.LEFT) {
 			Vector2 current = new Vector2(screenX, screenY);
 			canvas.drawDot(current);
 			previous = current;
 			leftDown = true;
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (button == Input.Buttons.LEFT) {
+		if (!paused && button == Input.Buttons.LEFT) {
 			canvas.drawDot(new Vector2(screenX, screenY));
 			previous = null;
 			leftDown = false;
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (leftDown) {
+		if (!paused && leftDown) {
 			Vector2 current = new Vector2(screenX, screenY);
 			canvas.drawLine(previous, current);
 			previous = current;
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
