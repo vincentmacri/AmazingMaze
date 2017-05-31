@@ -34,6 +34,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -42,6 +44,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -221,51 +224,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		checkButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				message = formatString(answerField.getText());
-				Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
-				final Dialog dialog = new Dialog("Results", game.assets.skin);
-				final TextButton okButton = new TextButton("OK", game.assets.skin);
-				dialog.getButtonTable().bottom();
-				if (checkAnswer() == -1) {
-					Label label = new Label("Invalid answer. Please try again.", labelStyle);
-					label.setScale(.5f);
-					label.setWrap(true);
-					label.setAlignment(Align.center);
-					dialog.add(label).width(500).pad(50);
-					dialog.add(okButton).bottom();
-					okButton.addListener(new ChangeListener() {
-						@Override
-						public void changed(ChangeEvent event, Actor actor) {
-							if (okButton.isPressed()) {
-								dialog.hide();
-								canvas.setColor(drawColor);
-							}
-						}
-					});
-				} else {
-					Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
-					label.setScale(.5f);
-					label.setWrap(true);
-					label.setAlignment(Align.center);
-					dialog.add(label).width(500).pad(50);
-					dialog.add(okButton).bottom();
-					okButton.addListener(new ChangeListener() {
-						@Override
-						public void changed(ChangeEvent event, Actor actor) {
-							if (okButton.isPressed()) {
-								dialog.cancel();
-
-								if ((game.set.getLevel() - 1) % 5 == 0) {
-									game.setScreen(new ContinueScreen(game));
-								} else {
-									game.setScreen(new MazeScreen(game, false));
-								}
-							}
-						}
-					});
-				}
-				dialog.key(Keys.ENTER, true);
-				dialog.show(stage);
+				dialog();
 			}
 		});
 
@@ -281,6 +240,15 @@ public class FishMiniGame implements Screen, InputProcessor {
 		});
 
 		answerField = new TextField("", game.assets.skin);
+		answerField.setTextFieldListener(new TextFieldListener() {
+			@Override
+			public void keyTyped(TextField textField, char key) {
+				if (key == (char) 13) {
+					stage.unfocus(answerField);
+					dialog();
+				}
+			}
+		});
 		stage.addActor(menuTable);
 		stage.addActor(canvas);
 		stage.addActor(fishTable);
@@ -311,6 +279,69 @@ public class FishMiniGame implements Screen, InputProcessor {
 		fishTable.row();
 
 		input = new InputMultiplexer(stage, this);
+	}
+
+	/**
+	 * Displays the results dialog.
+	 */
+	public void dialog() {
+		message = formatString(answerField.getText());
+		Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
+		final Dialog dialog = new Dialog("Results", game.assets.skin);
+		final TextButton okButton = new TextButton("OK", game.assets.skin);
+		dialog.getButtonTable().bottom();
+		if (checkAnswer() == -1) {
+			Label label = new Label("Invalid answer. Please try again.", labelStyle);
+			label.setScale(.5f);
+			label.setWrap(true);
+			label.setAlignment(Align.center);
+			dialog.add(label).width(500).pad(50);
+			dialog.add(okButton).bottom();
+			okButton.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					if (okButton.isPressed()) {
+						dialog.hide();
+						canvas.setColor(drawColor);
+					}
+				}
+			});
+		} else {
+			Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
+			label.setScale(.5f);
+			label.setWrap(true);
+			label.setAlignment(Align.center);
+			dialog.add(label).width(500).pad(50);
+			dialog.add(okButton).bottom();
+			okButton.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					if (okButton.isPressed()) {
+						dialog.cancel();
+						if ((game.set.getLevel() - 1) % 5 == 0) {
+							game.setScreen(new ContinueScreen(game));
+						} else {
+							game.setScreen(new MazeScreen(game, false));
+						}
+					}
+				}
+			});
+		}
+		dialog.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if (keycode == Keys.ENTER) {
+					if ((game.set.getLevel() - 1) % 5 == 0) {
+						game.setScreen(new ContinueScreen(game));
+					} else {
+						game.setScreen(new MazeScreen(game, false));
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+		dialog.show(stage);
 	}
 
 	/**
@@ -502,6 +533,10 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (keycode == Keys.ENTER) {
+			dialog();
+			return true;
+		}
 		return false;
 	}
 
