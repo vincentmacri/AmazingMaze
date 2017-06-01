@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * The tutorial screen. This is where users learn how to play the game.
  *
  * @author Chloe Nguyen
+ * <br>
+ * Time (Chloe):
  */
 public class HelpScreen extends MazeScreen {
 

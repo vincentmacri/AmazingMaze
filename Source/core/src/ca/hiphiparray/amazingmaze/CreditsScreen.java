@@ -38,6 +38,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * The credits screen.
  *
  * @author Vincent Macri
+ * <br>
  * Time (Vincent): 2 hours
  */
 public class CreditsScreen implements Screen {

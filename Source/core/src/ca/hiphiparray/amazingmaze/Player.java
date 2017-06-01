@@ -34,6 +34,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  * The player class.
  *
  * @author Vincent Macri
+ * <br>
  * Time (Vincent): 3 hours
  */
 public class Player extends Sprite {

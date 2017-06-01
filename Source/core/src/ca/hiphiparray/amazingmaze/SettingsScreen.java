@@ -24,7 +24,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  *
  * @author Chloe Nguyen
  * @author Vincent Macri
+ * <br>
  * Time (Chloe):
+ * <br>
  * Time (Vincent): 1 hour
  */
 public class SettingsScreen implements Screen, InputProcessor {

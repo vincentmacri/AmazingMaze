@@ -59,7 +59,9 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * @author Susie Son
  * @author Vincent Macri
  * @since 0.3
+ * <br>
  * Time (Susie):
+ * <br>
  * Time (Vincent): 30 minutes
  */
 public class FishMiniGame implements Screen, InputProcessor {
