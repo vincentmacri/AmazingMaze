@@ -107,6 +107,8 @@ public class Assets implements Disposable {
 
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;
+	/** The font size for story text. */
+	protected static final int STORY_FONT_SIZE = 56;
 	/** The font size for regular text. */
 	protected static final int REGULAR_FONT_SIZE = 64;
 	/** The font size for large text. */
@@ -412,7 +414,7 @@ public class Assets implements Disposable {
 		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
-		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, STORY_FONT_SIZE);
 		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
