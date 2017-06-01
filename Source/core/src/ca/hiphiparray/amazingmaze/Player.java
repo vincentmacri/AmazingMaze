@@ -46,7 +46,7 @@ public class Player extends Sprite {
 		DOWN,
 		/** If the player is not moving vertically. */
 		NONE
-
+	}
 
 	/** The direction the player is moving horizontally. */
 	public enum HorizontalDirection {
