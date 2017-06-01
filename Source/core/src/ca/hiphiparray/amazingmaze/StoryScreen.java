@@ -40,6 +40,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * The screen that tells the background story.
  *
  * @author Vincent Macri
+ * Time (Vincent): 1 hour
  */
 public class StoryScreen implements Screen {
 

@@ -27,6 +27,7 @@ import java.util.Random;
  * Used for generating the circuits in each map.
  *
  * @author Vincent Macri
+ * Time (Vincent): 45 minutes
  */
 public class Circuit {
 

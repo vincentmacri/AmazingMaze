@@ -50,6 +50,7 @@ import com.badlogic.gdx.utils.Disposable;
  * @author Vincent Macri
  * @author Chloe Nguyen
  * @author Susie Son
+ * Time (Vincent): 4 hours
  */
 public class Assets implements Disposable {
 

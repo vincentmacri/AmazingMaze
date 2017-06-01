@@ -34,6 +34,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  * The player class.
  *
  * @author Vincent Macri
+ * Time (Vincent): 3 hours
  */
 public class Player extends Sprite {
 
@@ -45,7 +46,7 @@ public class Player extends Sprite {
 		DOWN,
 		/** If the player is not moving vertically. */
 		NONE
-	}
+
 
 	/** The direction the player is moving horizontally. */
 	public enum HorizontalDirection {

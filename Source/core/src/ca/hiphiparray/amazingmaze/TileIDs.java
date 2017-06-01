@@ -26,6 +26,7 @@ package ca.hiphiparray.amazingmaze;
  * Very basic tiles, such as the background have only one property, which is their own ID.
  *
  * @author Vincent Macri
+ * Time (Vincent): 1 hour
  */
 public final class TileIDs {
 
