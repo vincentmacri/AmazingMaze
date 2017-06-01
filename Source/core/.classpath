@@ -4,12 +4,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/libs/gdx-1.9.6.jar" sourcepath="/libs/sources/gdx-1.9.6-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/libs/docs/gdx-1.9.6-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="http://libgdx.badlogicgames.com/nightlies/docs/api/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/libs/gdx-freetype-1.9.6.jar" sourcepath="/libs/sources/gdx-freetype-1.9.6-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/libs/docs/gdx-freetype-1.9.6-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="http://libgdx.badlogicgames.com/nightlies/docs/api/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
