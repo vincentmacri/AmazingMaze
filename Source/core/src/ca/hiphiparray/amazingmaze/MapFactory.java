@@ -319,7 +319,6 @@ public class MapFactory {
 	}
 
 	/**
-	>>>>>>> origin/menu
 	 * Use {@link #random} to generate a random integer in the given range.
 	 *
 	 * @param low The lowest number that can be generated (inclusive).
