@@ -15,14 +15,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import ca.hiphiparray.amazingmaze.MusicManager.Song;
@@ -32,8 +30,10 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  *
  * @author Chloe Nguyen
  * @author Vincent Macri
- * @since 0.1
- * Time (Chloe): 6 hours
+ * <br>
+ * Time (Chloe):
+ * <br>
+ * Time (Vincent): 15 minutes
  */
 public class MainMenuScreen implements Screen {
 
@@ -177,22 +177,20 @@ public class MainMenuScreen implements Screen {
 	private void layoutMenu(int width, int height) {
 		table.clear();
 
-		table.background(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.MENU_BACKGROUND_IMAGE, Texture.class))));
-
 		// Add title
 		table.add(menuTitle).expand();
 		table.row();
 
 		// Add buttons.
-		table.add(playButton).minSize(width / 4, height / 22).maxSize(width, height / 6).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(playButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
-		table.add(helpButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(helpButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
-		table.add(settingsButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(settingsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
-		table.add(creditsButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(creditsButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 		table.row();
-		table.add(quitButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(quitButton).minSize(width / 4, height / 20).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
 	}
 
 	@Override

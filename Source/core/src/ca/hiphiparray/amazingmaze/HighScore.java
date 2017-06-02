@@ -24,6 +24,8 @@ package ca.hiphiparray.amazingmaze;
  * Represents an entry in the high scores.
  *
  * @author Vincent Macri
+ * <br>
+ * Time (Vincent): 15 minutes
  */
 public class HighScore implements Comparable<HighScore> {
 
