@@ -37,8 +37,6 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * The screen to display high scores.
  *
  * @author Vincent Macri
- * <br>
- * Time (Vincent): 1 hour
  */
 public class HighScoresScreen implements Screen {
 

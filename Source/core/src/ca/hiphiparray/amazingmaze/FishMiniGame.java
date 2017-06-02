@@ -34,8 +34,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -44,7 +42,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -58,11 +55,6 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  *
  * @author Susie Son
  * @author Vincent Macri
- * @since 0.3
- * <br>
- * Time (Susie):
- * <br>
- * Time (Vincent): 30 minutes
  */
 public class FishMiniGame implements Screen, InputProcessor {
 
@@ -74,8 +66,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	/** Stage that contains all of the screen components. */
 	private Stage stage;
-	/** The pause menu. */
-	private Stage pauseMenu;
 	/** Table for the top menu buttons. */
 	private Table menuTable;
 	/** Table for the fish counting. */
@@ -118,13 +108,13 @@ public class FishMiniGame implements Screen, InputProcessor {
 	private Vector2 previous;
 	/** Whether the mouse has been pressed and left down. */
 	private boolean leftDown;
+	/** The {@link MazeScreen} managing this player. */
+	private final MazeScreen maze;
 
 	/** The pencil colour. */
 	private final static Color drawColor = Color.LIGHT_GRAY;
 	/** The eraser colour. */
 	private final static Color clearColor = Color.DARK_GRAY;
-	/** If the game is paused. */
-	private boolean paused;
 
 	/**
 	 * Constructor for FishMiniGame.
@@ -136,8 +126,9 @@ public class FishMiniGame implements Screen, InputProcessor {
 	 * @param redCollected the number of red fish.
 	 * @param orangeCollected the number of orange fish.
 	 */
-	public FishMiniGame(final AmazingMazeGame game, int blueCollected, int purpleCollected, int greenCollected, int redCollected, int orangeCollected) {
-
+	public FishMiniGame(final AmazingMazeGame game, int blueCollected, int purpleCollected, int greenCollected, int redCollected, int orangeCollected, MazeScreen mazeIn) {
+		// System.setProperty("org.lwjgl.opengl.Display.allowSoftwareOpenGL", "true");
+		this.maze = mazeIn;
 		fishNumber = new int[5];
 
 		fishNumber[0] = blueCollected;
@@ -233,7 +224,52 @@ public class FishMiniGame implements Screen, InputProcessor {
 		checkButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				dialog();
+				message = formatString(answerField.getText());
+				Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
+				final Dialog dialog = new Dialog("Results", game.assets.skin);
+				final TextButton okButton = new TextButton("OK", game.assets.skin);
+				dialog.getButtonTable().bottom();
+				if (checkAnswer() == -1) {
+					Label label = new Label("Invalid answer. Please try again.", labelStyle);
+					label.setScale(.5f);
+					label.setWrap(true);
+					label.setAlignment(Align.center);
+					dialog.add(label).width(500).pad(50);
+					dialog.add(okButton).bottom();
+					okButton.addListener(new ChangeListener() {
+						@Override
+						public void changed(ChangeEvent event, Actor actor) {
+							if (okButton.isPressed()) {
+								dialog.hide();
+								canvas.setColor(drawColor);
+							}
+						}
+					});
+				} else {
+					Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
+					label.setScale(.5f);
+					label.setWrap(true);
+					label.setAlignment(Align.center);
+					dialog.add(label).width(500).pad(50);
+					dialog.add(okButton).bottom();
+					okButton.addListener(new ChangeListener() {
+						@Override
+						public void changed(ChangeEvent event, Actor actor) {
+							if (okButton.isPressed()) {
+								dialog.cancel();
+								if (maze.help) {
+									game.setScreen(game.menuScreen);
+									System.out.print("menu");
+								} else {
+									game.setScreen(new MazeScreen(game, false));
+									System.out.print("level");
+								}
+							}
+						}
+					});
+				}
+				dialog.key(Keys.ENTER, true);
+				dialog.show(stage);
 			}
 		});
 
@@ -249,15 +285,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 		});
 
 		answerField = new TextField("", game.assets.skin);
-		answerField.setTextFieldListener(new TextFieldListener() {
-			@Override
-			public void keyTyped(TextField textField, char key) {
-				if (key == (char) 13) {
-					stage.unfocus(answerField);
-					dialog();
-				}
-			}
-		});
 		stage.addActor(menuTable);
 		stage.addActor(canvas);
 		stage.addActor(fishTable);
@@ -287,123 +314,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		}
 		fishTable.row();
 
-		setupPauseMenu();
 		input = new InputMultiplexer(stage, this);
-		input.addProcessor(pauseMenu);
-	}
-
-	/** Create the pause menu. */
-	private void setupPauseMenu() {
-		pauseMenu = new Stage(new ScreenViewport(), game.batch);
-
-		Table table = new Table();
-		table.setFillParent(true);
-		table.center();
-		pauseMenu.addActor(table);
-
-		TextButton resumeButton = new TextButton("Resume", game.assets.skin);
-		resumeButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				paused = false;
-			}
-		});
-		table.add(resumeButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
-		table.row();
-
-		TextButton settingsButton = new TextButton("Settings", game.assets.skin);
-		final Screen sourceScreen = this;
-		settingsButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.settingsScreen.setSourceScreen(sourceScreen);
-				game.setScreen(game.settingsScreen);
-			}
-		});
-		table.add(settingsButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
-		table.row();
-
-		TextButton quitButton = new TextButton("Quit", game.assets.skin);
-		quitButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(game.menuScreen);
-			}
-		});
-		table.add(quitButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
-	}
-
-	/**
-	 * Displays the results dialog.
-	 */
-	public void dialog() {
-		message = formatString(answerField.getText());
-		Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.MONO_REGULAR, Assets.SMALL_FONT_SIZE), Color.WHITE);
-		final Dialog dialog = new Dialog("Results", game.assets.skin);
-		final TextButton okButton = new TextButton("OK", game.assets.skin);
-		dialog.getButtonTable().bottom();
-		if (checkAnswer() == -1) {
-			Label label = new Label("Invalid answer. Please try again.", labelStyle);
-			label.setScale(.5f);
-			label.setWrap(true);
-			label.setAlignment(Align.center);
-			dialog.add(label).width(500).pad(50);
-			dialog.add(okButton).bottom();
-			okButton.addListener(new ChangeListener() {
-				@Override
-				public void changed(ChangeEvent event, Actor actor) {
-					if (okButton.isPressed()) {
-						dialog.hide();
-						canvas.setColor(drawColor);
-					}
-				}
-			});
-			dialog.addListener(new InputListener() {
-				@Override
-				public boolean keyDown(InputEvent event, int keycode) {
-					if (keycode == Keys.ENTER) {
-						dialog.hide();
-						return true;
-					}
-					return false;
-				}
-			});
-		} else {
-			Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
-			label.setScale(.5f);
-			label.setWrap(true);
-			label.setAlignment(Align.center);
-			dialog.add(label).width(500).pad(50);
-			dialog.add(okButton).bottom();
-			okButton.addListener(new ChangeListener() {
-				@Override
-				public void changed(ChangeEvent event, Actor actor) {
-					if (okButton.isPressed()) {
-						dialog.cancel();
-						if ((game.set.getLevel() - 1) % 5 == 0) {
-							game.setScreen(new ContinueScreen(game));
-						} else {
-							game.setScreen(new MazeScreen(game, false));
-						}
-					}
-				}
-			});
-			dialog.addListener(new InputListener() {
-				@Override
-				public boolean keyDown(InputEvent event, int keycode) {
-					if (keycode == Keys.ENTER) {
-						if ((game.set.getLevel() - 1) % 5 == 0) {
-							game.setScreen(new ContinueScreen(game));
-						} else {
-							game.setScreen(new MazeScreen(game, false));
-						}
-						return true;
-					}
-					return false;
-				}
-			});
-		}
-		dialog.show(stage);
 	}
 
 	/**
@@ -437,10 +348,10 @@ public class FishMiniGame implements Screen, InputProcessor {
 		if (message == answer) {
 			return answer;
 		}
-		if (Math.abs(message - answer) <= range70) {
+		if (Math.abs(message - answer) < range70) {
 			return (int) (answer * 0.70);
 		}
-		if (Math.abs(message - answer) <= range50) {
+		if (Math.abs(message - answer) < range50) {
 			return (int) (answer * 0.50);
 		}
 		return (int) (answer * 0.15);
@@ -462,11 +373,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 		stage.act(delta);
 		stage.draw();
-
-		if (paused) {
-			pauseMenu.act();
-			pauseMenu.draw();
-		}
 	}
 
 	@Override
@@ -484,13 +390,13 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
+		dispose();
 	}
 
 	@Override
 	public void dispose() {
 		stage.dispose();
 		canvas.dispose();
-		System.out.println("Dispose minigame.");
 	}
 
 	/** Custom Canvas class for Pixmap manipulation. */
@@ -599,12 +505,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.ENTER) {
-			dialog();
-		} else if (keycode == game.set.getPauseButton()) {
-			paused = !paused;
-		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -619,36 +520,39 @@ public class FishMiniGame implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (!paused && button == Input.Buttons.LEFT) {
+		if (button == Input.Buttons.LEFT) {
 			Vector2 current = new Vector2(screenX, screenY);
 			canvas.drawDot(current);
 			previous = current;
 			leftDown = true;
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (!paused && button == Input.Buttons.LEFT) {
+		if (button == Input.Buttons.LEFT) {
 			canvas.drawDot(new Vector2(screenX, screenY));
 			previous = null;
 			leftDown = false;
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (!paused && leftDown) {
+		if (leftDown) {
 			Vector2 current = new Vector2(screenX, screenY);
 			canvas.drawLine(previous, current);
 			previous = current;
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	@Override
