@@ -183,7 +183,6 @@ public class MapFactory {
 	}
 
 	/**
-	<<<<<<< HEAD
 	 * Place a piece of cheese on the map.
 	 *
 	 * @param layer the layer to add the cheese to.
@@ -198,8 +197,6 @@ public class MapFactory {
 	}
 
 	/**
-	=======
-	>>>>>>> origin/menu
 	 * Place a fish on the map.
 	 *
 	 * @param layer the layer to add the fish to.
@@ -313,8 +310,6 @@ public class MapFactory {
 	}
 
 	/**
-	<<<<<<< HEAD
-	=======
 	 * Get the {@link ArrayList} of gates of the wires that are on.
 	 *
 	 * @return the gates of the wires that are on.
