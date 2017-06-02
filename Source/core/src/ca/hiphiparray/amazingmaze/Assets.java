@@ -70,7 +70,7 @@ public class Assets implements Disposable {
 	/** The name of the small credits contents style in the UI skin. */
 	protected static final String SMALL_CREDITS_CONTENTS = "small-contents";
 	/** The name of the hud label style in the UI skin. */
-	protected static final String HUD_STYLE = "tutorial";
+	protected static final String HUD_STYLE = "hud";
 	/** The name of the story label style in the UI skin. */
 	protected static final String STORY_STYLE = "story";
 
