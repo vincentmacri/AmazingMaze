@@ -5,16 +5,17 @@ import java.util.Arrays;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
 
 /**
  * This class saves the game state.
  *
  * @author Chloe Nguyen
  * @author Vincent Macri
- * @since 0.2
+ * <br>
  * Time (Chloe): 2 hours
+ * <br>
+ * Time (Vincent): 3 hours
+ * @since 0.2
  */
 public class Save {
 
@@ -31,6 +32,22 @@ public class Save {
 	private static final String SAVE_FILE = "ca.hiphiparray.amazingmaze.save";
 	/** The name of the high scores file. */
 	private static final String SCORES_FILE = "ca.hiphiparray.amazingmaze.highscores";
+
+	/** The name of the up button setting. */
+	private static final String UP_SETTING = "upButton";
+	/** The name of the down button setting. */
+	private static final String DOWN_SETTING = "downButton";
+	/** The name of the left button setting. */
+	private static final String LEFT_SETTING = "leftButton";
+	/** The name of the right button setting. */
+	private static final String RIGHT_SETTING = "rightButton";
+	/** The name of the music level setting. */
+	private static final String MUSIC_SETTING = "musicLevel";
+
+	/** The name of the saved level. */
+	private static final String LEVEL_SAVE = "level";
+	/** The name of the saved score. */
+	private static final String SCORE_SAVE = "score";
 
 	/** The number of high score entries. */
 	private static final int MAX_HIGH_SCORES = 10;
@@ -51,20 +68,57 @@ public class Save {
 
 	/** The level the player is currently on. */
 	private int level;
+	/** The score the player currently has. */
+	private int score;
 
 	/** The array of high scores. */
 	private HighScore[] highScores;
 
 	/** Create the Save instance. */
 	public Save() {
-
 		gameSettings = Gdx.app.getPreferences(SETTINGS_FILE);
 		gameSave = Gdx.app.getPreferences(SAVE_FILE);
 		gameScores = Gdx.app.getPreferences(SCORES_FILE);
 
 		readSettings();
-		// resetSettings();
-		// writeSave();
+	}
+
+	/** Write the save file. */
+	public void writeSave() {
+		gameSave.putInteger(LEVEL_SAVE, getLevel());
+		gameSave.putInteger(SCORE_SAVE, getScore());
+		gameSave.flush();
+	}
+
+	/** Write the high scores file. */
+	public void writeScores() {
+		gameScores.flush();
+	}
+
+	/** Write the settings file. */
+	public void writeSettings() {
+		gameSettings.putInteger(UP_SETTING, getUpButton());
+		gameSettings.putInteger(DOWN_SETTING, getDownButton());
+		gameSettings.putInteger(LEFT_SETTING, getLeftButton());
+		gameSettings.putInteger(RIGHT_SETTING, getRightButton());
+		gameSettings.putFloat(MUSIC_SETTING, getMusicLevel());
+		gameSettings.flush();
+	}
+
+	/**
+	 * Write all {@link Preferences} instances.
+	 *
+	 * These are: {@link #gameSave}, {@link #gameScores}, and {@link #gameSettings}.
+	 */
+	public void writeAll() {
+		writeSave();
+		writeScores();
+		writeSettings();
+	}
+
+	/** Reset the save state. */
+	public void resetSave() {
+		this.level = 1;
 	}
 
 	/** Reset all of the settings to the default values. */
@@ -78,15 +132,16 @@ public class Save {
 		this.musicLevel = 1f;
 	}
 
-	/** Reset the save state. */
-	public void resetSave() {
-		this.level = 1;
+	/** Wipe the high scores. */
+	public void resetScores() {
+
 	}
 
 	/** Reset the settings and the save state. */
 	public void resetAll() {
-		resetSettings();
 		resetSave();
+		resetScores();
+		resetSettings();
 	}
 
 	/**
@@ -199,25 +254,12 @@ public class Save {
 
 	/** Load settings from file. */
 	public void readSettings() {
-		upButton = gameSettings.getInteger("upButton", Keys.UP);
-		downButton = gameSettings.getInteger("downButton", Keys.DOWN);
-		leftButton = gameSettings.getInteger("leftButton", Keys.LEFT);
-		rightButton = gameSettings.getInteger("rightButton", Keys.RIGHT);
-		musicLevel = gameSettings.getFloat("musicLevel", 1f);
-	}
-
-	/**
-	 * Write all {@link Preferences} instances.
-	 *
-	 * These are: {@link #gameSave}, {@link #gameScores}, and {@link #gameSettings}.
-	 */
-	public void writeSave() {
-		FileHandle f = Gdx.files.local(SAVE_FILE);
-
-		Json json = new Json();
-		json.setUsePrototypes(false);
-
-		f.writeString(json.prettyPrint(json.toJson(this)), false);
+		upButton = gameSettings.getInteger(UP_SETTING, Keys.UP);
+		downButton = gameSettings.getInteger(DOWN_SETTING, Keys.DOWN);
+		leftButton = gameSettings.getInteger(LEFT_SETTING, Keys.LEFT);
+		rightButton = gameSettings.getInteger(RIGHT_SETTING, Keys.RIGHT);
+		musicLevel = gameSettings.getFloat(MUSIC_SETTING, 1f);
+		writeSettings();
 	}
 
 	/**
@@ -280,5 +322,32 @@ public class Save {
 		for (i = 0; i < highScores.length; i++) {
 			highScores[i] = newScores[newScores.length - 1 - i];
 		}
+	}
+
+	/**
+	 * Getter for {@link #score}.
+	 *
+	 * @return the player's current score.
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * Setter for {@link #score}.
+	 *
+	 * @param score the new score of the player.
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	/**
+	 * Increase the player's score by the given amount.
+	 *
+	 * @param deltaScore how much to increase {@link #score} by.
+	 */
+	public void addScore(int deltaScore) {
+		score += deltaScore;
 	}
 }

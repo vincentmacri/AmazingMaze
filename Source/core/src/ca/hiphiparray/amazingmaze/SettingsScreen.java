@@ -121,9 +121,9 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		actionControls = new TextButton[] {
 				new TextButton(Keys.toString(game.set.getUpButton()), skin),
-				new TextButton(Keys.toString(game.set.getRightButton()), skin),
-				new TextButton(Keys.toString(game.set.getLeftButton()), skin),
 				new TextButton(Keys.toString(game.set.getDownButton()), skin),
+				new TextButton(Keys.toString(game.set.getLeftButton()), skin),
+				new TextButton(Keys.toString(game.set.getRightButton()), skin),
 				new TextButton(Keys.toString(game.set.getPauseButton()), skin)};
 
 		actionControls[0].addListener(new ChangeListener() {
@@ -327,7 +327,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 	public void hide() {
 		System.out.println("Hiding SettingsScreen.");
 		actionBeingSet = -1;
-		game.set.writeSave();
+		game.set.writeSettings();
 	}
 
 	@Override
@@ -343,15 +343,15 @@ public class SettingsScreen implements Screen, InputProcessor {
 					game.set.setUpButton(keycode);
 					break;
 
-				case 1: // Right
-					game.set.setRightButton(keycode);
+				case 1: // Down
+					game.set.setDownButton(keycode);
 					break;
 				case 2: // Left
 					game.set.setLeftButton(keycode);
 					break;
 
-				case 3: // Down
-					game.set.setDownButton(keycode);
+				case 3: // Right
+					game.set.setRightButton(keycode);
 					break;
 				case 4: // Pause
 					game.set.setPauseButton(keycode);

@@ -12,7 +12,6 @@
 package ca.hiphiparray.amazingmaze;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -46,10 +45,7 @@ public class AmazingMazeGame extends Game {
 
 	@Override
 	public void create() {
-		set = new Save(true);
-		if (!set.isFullscreen()) {
-			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
-		}
+		set = new Save();
 		batch = new SpriteBatch();
 		assets = new Assets();
 		music = new MusicManager(this);
