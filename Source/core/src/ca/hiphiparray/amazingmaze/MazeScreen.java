@@ -219,7 +219,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		livesLeft = new Label("", game.assets.skin, Assets.HUD_STYLE);
 		table.add(livesLeft);
 
-		updateLivesLabel();
+		updateLives(-2);
 	}
 
 	/** Create the bounding boxes for collision detection. */
@@ -494,16 +494,14 @@ public class MazeScreen implements Screen, InputProcessor {
 		return false;
 	}
 
-	/** Update how many lives the player has left on the HUD. */
-	public void updateLivesLabel() {
-		livesLeft.setText("x " + Integer.toString(player.getLives()));
-	}
-
-	/** Update the HUD to show one less life.
+	/**
+	 * Called on item collision events to update UI.
 	 *
-	 * @param Gate that the user died at.
+	 * @param gate the gate that the user collided at.
+	 *             Will be -1 if collided with cheese, and some other negative value for any other non-gate calls.
 	 */
-	public void loseLife(int a) {
+	public void updateLives(int gate) {
+		livesLeft.setText("x " + Integer.toString(player.getLives()));
 	}
 
 }

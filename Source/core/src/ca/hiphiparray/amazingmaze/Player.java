@@ -210,7 +210,7 @@ public class Player extends Sprite {
 				layer.setCell(x, y, null);
 				maze.cheeseBoxes.removeIndex(i);
 				lives++;
-				maze.updateLivesLabel();
+				maze.updateLives(-1);
 
 				break;
 			}
@@ -230,8 +230,7 @@ public class Player extends Sprite {
 					lives--;
 				}
 				setPosition(0, maze.mapHeight / 2);
-				maze.loseLife((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
-				maze.updateLivesLabel();
+				maze.updateLives((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
 				break;
 			}
 		}

@@ -122,10 +122,10 @@ public class HelpScreen extends MazeScreen {
 	}
 
 	@Override
-	/** Tells user what they've done wrong.
-	 * @param Gate that the user died at */
-	public void loseLife(int i) {
-		instruct.setText("That doesn't work!\nThe gate type: " + super.gateOn.get(i).getGate() + "         The inputs: " + super.gateOn.get(i).isInputA() + " and " + super.gateOn.get(i).isInputB() + "\nThis means that the wire is electrified and you would've died.");
+	public void updateLives(int gate) {
+		if (gate >= 0) {
+			instruct.setText("That doesn't work!\nThe gate type: " + super.gateOn.get(gate).getGate() + "         The inputs: " + super.gateOn.get(gate).isInputA() + " and " + super.gateOn.get(gate).isInputB() + "\nThis means that the wire is electrified and you would've died.");
+		}
 	}
 
 }
