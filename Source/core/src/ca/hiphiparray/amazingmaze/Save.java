@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
@@ -19,8 +20,19 @@ import com.badlogic.gdx.utils.Json;
  */
 public class Save {
 
+	/** The save preferences. */
+	private Preferences gameSave;
+	/** The high scores preferences. */
+	private Preferences gameScores;
+	/** The settings preferences. */
+	private Preferences gameSettings;
+
+	/** The name of the settings file. */
+	private static final String SETTINGS_FILE = "ca.hiphiparray.amazingmaze.settings";
 	/** The name of the save file. */
-	private static final String SAVE_FILE = "save.json";
+	private static final String SAVE_FILE = "ca.hiphiparray.amazingmaze.save";
+	/** The name of the high scores file. */
+	private static final String SCORES_FILE = "ca.hiphiparray.amazingmaze.highscores";
 
 	/** The number of high score entries. */
 	private static final int MAX_HIGH_SCORES = 10;
@@ -39,26 +51,22 @@ public class Save {
 	/** The volume of the game music, in the range [0, 1]. */
 	private float musicLevel;
 
-	/** If the game is in fullscreen mode. */
-	private boolean fullscreen;
-
 	/** The level the player is currently on. */
 	private int level;
 
 	/** The array of high scores. */
 	private HighScore[] highScores;
 
-	/** Default constructor to be used by JSON parser. */
+	/** Create the Save instance. */
 	public Save() {
-	}
 
-	public Save(boolean readFromFile) {
-		if (readFromFile) {
-			readSettings();
-		} else {
-			resetSettings();
-			writeSave();
-		}
+		gameSettings = Gdx.app.getPreferences(SETTINGS_FILE);
+		gameSave = Gdx.app.getPreferences(SAVE_FILE);
+		gameScores = Gdx.app.getPreferences(SCORES_FILE);
+
+		readSettings();
+		// resetSettings();
+		// writeSave();
 	}
 
 	/** Reset all of the settings to the default values. */
@@ -70,7 +78,6 @@ public class Save {
 		this.pauseButton = Keys.ESCAPE;
 
 		this.musicLevel = 1f;
-		this.fullscreen = true;
 	}
 
 	/** Reset the save state. */
@@ -192,63 +199,19 @@ public class Save {
 		this.musicLevel = musicLevel;
 	}
 
-	/**
-	 * If the game's settings are set to fullscreen mode.
-	 *
-	 * @return if the game should be in fullscreen mode.
-	 */
-	public boolean isFullscreen() {
-		return fullscreen;
-	}
-
-	/**
-	 * Sets whether the game should be in fullscreen or not.
-	 *
-	 * @param fullscreen the new value of fullscreen.
-	 */
-	public void setFullscreen(boolean fullscreen) {
-		this.fullscreen = fullscreen;
-	}
-
-	/**
-	 * Reads from file for the values for the settings. If they're valid, use them, if not, reset the settings.
-	 */
+	/** Load settings from file. */
 	public void readSettings() {
-		FileHandle f = Gdx.files.local(SAVE_FILE);
-		Json json = new Json();
-		Save savedSettings;
-		try {
-			savedSettings = json.fromJson(Save.class, f);
-		} catch (Exception e) {
-			System.out.println("Invalid save file.");
-			resetAll();
-			writeSave();
-			return;
-		}
-
-		upButton = savedSettings.upButton;
-		rightButton = savedSettings.rightButton;
-		leftButton = savedSettings.leftButton;
-		downButton = savedSettings.downButton;
-		pauseButton = savedSettings.pauseButton;
-
-		musicLevel = savedSettings.musicLevel;
-		fullscreen = savedSettings.fullscreen;
-
-		level = savedSettings.level;
-
-		highScores = savedSettings.highScores;
-
-		if (highScores == null || highScores.length != MAX_HIGH_SCORES) {
-			System.out.println("Invalid high scores file.");
-			resetHighScores();
-		}
-
-		Arrays.sort(highScores);
+		upButton = gameSettings.getInteger("upButton", Keys.UP);
+		downButton = gameSettings.getInteger("downButton", Keys.DOWN);
+		leftButton = gameSettings.getInteger("leftButton", Keys.LEFT);
+		rightButton = gameSettings.getInteger("rightButton", Keys.RIGHT);
+		musicLevel = gameSettings.getFloat("musicLevel", 1f);
 	}
 
 	/**
-	 * Write settings to Settings.json.
+	 * Write all {@link Preferences} instances.
+	 *
+	 * These are: {@link #gameSave}, {@link #gameScores}, and {@link #gameSettings}.
 	 */
 	public void writeSave() {
 		FileHandle f = Gdx.files.local(SAVE_FILE);

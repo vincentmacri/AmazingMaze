@@ -1,8 +1,6 @@
 package ca.hiphiparray.amazingmaze;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -10,7 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -51,9 +48,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 	/** Button to go back to the previous screen. */
 	private TextButton backButton;
-
-	/** CheckBox for whether game's in fullscreen or not */
-	private CheckBox fullscreenCheckBox;
 
 	/** Table for game controls */
 	private Table controlsTable;
@@ -117,37 +111,14 @@ public class SettingsScreen implements Screen, InputProcessor {
 			}
 		});
 		musicSliderLabel = new Label("Music Volume", game.assets.skin);
-		fullscreenCheckBox = new CheckBox("Fullscreen", game.assets.skin);
-		fullscreenCheckBox.setChecked(Gdx.graphics.isFullscreen());
-		fullscreenCheckBox.addListener(new ChangeListener() {
-
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				if (fullscreenCheckBox.isChecked()) {
-					Monitor currentMonitor = Gdx.graphics.getMonitor();
-					DisplayMode currentDisplayMode = Gdx.graphics.getDisplayMode(currentMonitor);
-					if (!Gdx.graphics.setFullscreenMode(currentDisplayMode)) {
-						System.out.println("Failed to change to fullscreen mode.");
-					} else {
-						game.set.setFullscreen(true);
-					}
-				} else {
-					if (!Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height)) {
-						System.out.println("Failed to change to windowed mode.");
-					} else {
-						game.set.setFullscreen(false);
-					}
-				}
-			}
-		});
 
 		controlsHeader = new Label("Controls", game.assets.skin);
 
 		actions = new Label[] {
 				new Label("Up", game.assets.skin),
-				new Label("Right", game.assets.skin),
-				new Label("Left", game.assets.skin),
 				new Label("Down", game.assets.skin),
+				new Label("Left", game.assets.skin),
+				new Label("Right", game.assets.skin),
 				new Label("Pause", game.assets.skin)};
 
 		actionControls = new TextButton[] {
@@ -218,7 +189,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 				if (resetSettingsButton.isPressed()) {
 					game.set.resetSettings();
 					musicSlider.setValue(game.set.getMusicLevel());
-					fullscreenCheckBox.setChecked(game.set.isFullscreen());
 					resetActionControlsLabels();
 				}
 			}
@@ -243,7 +213,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 				if (resetAllButton.isPressed()) {
 					game.set.resetAll();
 					musicSlider.setValue(game.set.getMusicLevel());
-					fullscreenCheckBox.setChecked(game.set.isFullscreen());
 					resetActionControlsLabels();
 				}
 			}
@@ -258,9 +227,9 @@ public class SettingsScreen implements Screen, InputProcessor {
 	 */
 	protected void resetActionControlsLabels() {
 		actionControls[0].setText(Keys.toString(game.set.getUpButton()));
-		actionControls[1].setText(Keys.toString(game.set.getRightButton()));
+		actionControls[1].setText(Keys.toString(game.set.getDownButton()));
 		actionControls[2].setText(Keys.toString(game.set.getLeftButton()));
-		actionControls[3].setText(Keys.toString(game.set.getDownButton()));
+		actionControls[3].setText(Keys.toString(game.set.getRightButton()));
 		actionControls[4].setText(Keys.toString(game.set.getPauseButton()));
 	}
 
@@ -291,9 +260,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 		table.row();
 
 		table.add(musicSlider).pad(10f).colspan(3);
-		table.row();
-
-		table.add(fullscreenCheckBox).colspan(3);
 		table.row();
 
 		table.add(controlsHeader).pad(10f).colspan(3);
