@@ -60,7 +60,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * @author Vincent Macri
  * @since 0.3
  * <br>
- * Time (Susie):
+ * Time (Susie): 8 hours.
  * <br>
  * Time (Vincent): 30 minutes
  */
