@@ -50,8 +50,8 @@ import com.badlogic.gdx.utils.Disposable;
  * @author Vincent Macri
  * @author Chloe Nguyen
  * @author Susie Son
- * <br>
- * Time (Vincent): 4 hours
+ * @since 0.1
+ * Time (Chloe): 30 min
  */
 public class Assets implements Disposable {
 
@@ -69,12 +69,10 @@ public class Assets implements Disposable {
 	protected static final String CREDITS_CONTENTS = "contents";
 	/** The name of the small credits contents style in the UI skin. */
 	protected static final String SMALL_CREDITS_CONTENTS = "small-contents";
-	/** The name of the tutorial label style in the UI skin. */
-	protected static final String TUTORIAL_STYLE = "tutorial";
+	/** The name of the hud label style in the UI skin. */
+	protected static final String HUD_STYLE = "tutorial";
 	/** The name of the story label style in the UI skin. */
 	protected static final String STORY_STYLE = "story";
-	/** The name of the hud label style in the UI skin. */
-	protected static final String HUD_STYLE = "hud";
 
 	/** The location of the tile atlas. */
 	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
@@ -108,8 +106,6 @@ public class Assets implements Disposable {
 
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;
-	/** The font size for story text. */
-	protected static final int STORY_FONT_SIZE = 56;
 	/** The font size for regular text. */
 	protected static final int REGULAR_FONT_SIZE = 64;
 	/** The font size for large text. */
@@ -402,21 +398,20 @@ public class Assets implements Disposable {
 
 	/** Load the UI skin. */
 	private void loadSkin() {
-		manager.load("ui/uiskin.json", Skin.class);
-		manager.finishLoadingAsset("ui/uiskin.json"); // Make sure the skin is loaded before continuing.
-		skin = manager.get("ui/uiskin.json", Skin.class); // Retrieve the skin.
+		manager.load("ui/flat-earth-ui.json", Skin.class);
+		manager.finishLoadingAsset("ui/flat-earth-ui.json"); // Make sure the skin is loaded before continuing.
+		skin = manager.get("ui/flat-earth-ui.json", Skin.class); // Retrieve the skin.
 
 		// Set the fonts. This is not done in the .json in order to allow easier adjusting of font size
 		skin.get(LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(TextButtonStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(TextButtonStyle.class).font = getFont(MONO_REGULAR, REGULAR_FONT_SIZE);
 
 		skin.get(SANS_HEADER_STYLE, LabelStyle.class).font = getFont(SANS_BOLD, LARGE_FONT_SIZE);
 		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
 		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(TUTORIAL_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
-		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, STORY_FONT_SIZE);
-		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(MONO_REGULAR, SMALL_FONT_SIZE);
+		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(WindowStyle.class).titleFont = getFont(SANS_REGULAR, SMALL_FONT_SIZE);
