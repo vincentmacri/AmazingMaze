@@ -42,8 +42,8 @@ public class HelpScreen extends MazeScreen {
 	 */
 	public HelpScreen(final AmazingMazeGame game) {
 		super(game, true);
-		instruct = new Label("Check the logic gates to find the state of each wire and make your way through the maze. Be careful to avoid\nany wires that are on, as that means that they are electrified!", game.assets.skin, Assets.TUTORIAL_STYLE);
-		clicks = new Label("Mark the wires by clicking on the gates. Left click = on. Right click = off. Middle click = unknown.", game.assets.skin, Assets.TUTORIAL_STYLE);
+		instruct = new Label("Check the logic gates to find the state of each wire and make your way through the maze. Be careful to avoid\nany wires that are on, as that means that they are electrified!", game.assets.skin, Assets.HUD_STYLE);
+		clicks = new Label("Mark the wires by clicking on the gates. Left click = on. Right click = off. Middle click = unknown.", game.assets.skin, Assets.HUD_STYLE);
 
 		gatesTable = new Table();
 		truthTable = new Table();
@@ -58,11 +58,11 @@ public class HelpScreen extends MazeScreen {
 		super.hud.addActor(tableBottom);
 		table.add(instruct).pad(45);
 		gates = new Label[] {
-				new Label("AND Gate", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("NAND Gate", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("OR Gate", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("NOR Gate", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("XOR Gate", game.assets.skin, Assets.TUTORIAL_STYLE)};
+				new Label("AND Gate", game.assets.skin, Assets.HUD_STYLE),
+				new Label("NAND Gate", game.assets.skin, Assets.HUD_STYLE),
+				new Label("OR Gate", game.assets.skin, Assets.HUD_STYLE),
+				new Label("NOR Gate", game.assets.skin, Assets.HUD_STYLE),
+				new Label("XOR Gate", game.assets.skin, Assets.HUD_STYLE)};
 
 		TextureAtlas atlas = game.assets.manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 		gatePics = new Image[] {
@@ -87,26 +87,26 @@ public class HelpScreen extends MazeScreen {
 		}
 
 		truth = new Label[][] {{
-				new Label("false and false", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE),
-				new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE)},
+				new Label("false and false", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE)},
 				{
-						new Label("true and false", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE)},
+						new Label("true and false", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE)},
 				{
-						new Label("true and true", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("on", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE),
-						new Label("off", game.assets.skin, Assets.TUTORIAL_STYLE)}};
+						new Label("true and true", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE)}};
 
 		for (int x = 0; x < truth.length; x++) {
 			// gatesTable.left();

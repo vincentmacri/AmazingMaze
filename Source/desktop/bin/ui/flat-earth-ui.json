@@ -417,7 +417,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		serif-header: { fontColor: black },
 		contents: { fontColor: black},
 		small-contents: {fontColor: black},
-		hud: {fontColor: white},
+		tutorial: {fontColor: white},
 		story: {fontColor: black}
 	},
 }

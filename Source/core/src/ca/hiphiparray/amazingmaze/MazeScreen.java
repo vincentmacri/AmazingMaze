@@ -39,8 +39,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -57,7 +57,8 @@ import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
  *
  * @author Vincent Macri
  * @author Chloe Nguyen
- * Time (Chloe): 1 hour
+ * <br>
+ * Time (Vincent): 5 hours
  */
 public class MazeScreen implements Screen, InputProcessor {
 
@@ -81,7 +82,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** The number of tiles wide the map is. */
 	protected final int mapWidth;
 	/** The number of tiles high the map is. */
-	protected int mapHeight;
+	protected final int mapHeight;
 
 	/** The level's map. */
 	protected TiledMap map;
@@ -112,11 +113,8 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** ArrayList of gates of wires that are on. */ // TODO: Change to Array.
 	protected ArrayList<Circuit> gateOn;
 
-	/** The HUD container showing how many lives are left. */
-	protected HorizontalGroup lives;
-
-	/** Images to show how many lives are left. */
-	private Array<Image> lifeImages;
+	/** Label to show how many lives the player has left. */
+	private Label livesLeft;
 
 	/** If the game is paused. */
 	private boolean paused;
@@ -134,7 +132,6 @@ public class MazeScreen implements Screen, InputProcessor {
 		final int mapSize = 2;
 		this.game = game;
 		this.paused = false;
-		this.help = help;
 
 		this.mapWidth = 16 * mapSize + game.set.getLevel() * 5;
 		this.mapHeight = 9 * mapSize;
@@ -148,8 +145,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		if (!help) {
 			factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
 		} else {
-			this.mapHeight = this.mapHeight * 5 / 8;
-			factory = new MapFactory(game, -2, this.mapWidth, this.mapHeight, TILE_SIZE);
+			factory = new MapFactory(game, 3, this.mapWidth, this.mapHeight, TILE_SIZE);
 		}
 		map = factory.generateMap();
 		gateLocations = factory.getGateLocations();
@@ -212,19 +208,18 @@ public class MazeScreen implements Screen, InputProcessor {
 	private void setupHUD() {
 		hud = new Stage(new ScreenViewport(), game.batch);
 
-		lives = new HorizontalGroup();
-		lives.setFillParent(true);
-		lives.top().left();
-		hud.addActor(lives);
+		Table table = new Table();
+		table.setFillParent(true);
+		table.top().left();
+		hud.addActor(table);
 
-		lifeImages = new Array<Image>(false, 8);
-		for (int i = 0; i < 3; i++) {
-			// addLife();
-			lifeImages.add(new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class)));
-		}
-		for (Image image : lifeImages) {
-			lives.addActor(image);
-		}
+		Image lifeIcon = new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class));
+		table.add(lifeIcon).pad(Gdx.graphics.getWidth() / 128);
+
+		livesLeft = new Label("", game.assets.skin, Assets.HUD_STYLE);
+		table.add(livesLeft);
+
+		updateLivesLabel();
 	}
 
 	/** Create the bounding boxes for collision detection. */
@@ -316,7 +311,10 @@ public class MazeScreen implements Screen, InputProcessor {
 
 		if (player.getX() + 1 * Player.PLAYER_SIZE >= mapWidth) {
 			game.set.setLevel(game.set.getLevel() + 1);
-			game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected, this));
+			game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
+			dispose();
+		} else if (player.isDead()) {
+			game.setScreen(new ContinueScreen(game));
 			dispose();
 		}
 	}
@@ -337,7 +335,6 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-
 	}
 
 	@Override
@@ -497,15 +494,16 @@ public class MazeScreen implements Screen, InputProcessor {
 		return false;
 	}
 
-	/** Update the HUD to show one more life. */
-	public void addLife() {
-
+	/** Update how many lives the player has left on the HUD. */
+	public void updateLivesLabel() {
+		livesLeft.setText("x " + Integer.toString(player.getLives()));
 	}
 
 	/** Update the HUD to show one less life.
-	 * @param Gate that the user died at*/
+	 *
+	 * @param Gate that the user died at.
+	 */
 	public void loseLife(int a) {
-		lives.removeActor(lifeImages.removeIndex(0));
 	}
 
 }
