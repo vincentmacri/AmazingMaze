@@ -46,6 +46,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * The ContinueScreen class.
  *
  * @author Susie Son
+ *
+ * Time (Susie): 3 hours.
  */
 public class ContinueScreen implements Screen {
 

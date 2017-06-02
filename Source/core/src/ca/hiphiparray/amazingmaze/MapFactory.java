@@ -36,8 +36,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  *
  * @author Vincent Macri
  * @author Chloe Nguyen
- * <br>
- * Time (Vincent): 10 hours
+ * Time (Chloe): 30 mins
  */
 public class MapFactory {
 
@@ -184,7 +183,6 @@ public class MapFactory {
 	}
 
 	/**
-	<<<<<<< HEAD
 	 * Place a piece of cheese on the map.
 	 *
 	 * @param layer the layer to add the cheese to.
@@ -199,8 +197,6 @@ public class MapFactory {
 	}
 
 	/**
-	=======
-	>>>>>>> origin/menu
 	 * Place a fish on the map.
 	 *
 	 * @param layer the layer to add the fish to.
@@ -314,8 +310,6 @@ public class MapFactory {
 	}
 
 	/**
-	<<<<<<< HEAD
-	=======
 	 * Get the {@link ArrayList} of gates of the wires that are on.
 	 *
 	 * @return the gates of the wires that are on.
@@ -325,7 +319,6 @@ public class MapFactory {
 	}
 
 	/**
-	>>>>>>> origin/menu
 	 * Use {@link #random} to generate a random integer in the given range.
 	 *
 	 * @param low The lowest number that can be generated (inclusive).
