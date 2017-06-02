@@ -26,8 +26,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
  * A simple class that adds an on/off property to {@link Cell} for use in wire cells.
  *
  * @author Vincent Macri
- * <br>
- * Time (Vincent): 5 minutes
  */
 public class WireCell extends Cell {
 
