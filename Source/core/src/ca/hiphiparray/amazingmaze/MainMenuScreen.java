@@ -56,6 +56,8 @@ public class MainMenuScreen implements Screen {
 	private TextButton highScoresButton;
 	/** Credits button. */
 	private TextButton creditsButton;
+	/** License button. */
+	private TextButton licenseButton;
 	/** Quit button. */
 	private TextButton quitButton;
 
@@ -123,6 +125,16 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
+		// License
+		licenseButton = new TextButton("License", game.assets.skin);
+		licenseButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (licenseButton.isPressed()) {
+				}
+			}
+		});
+
 		// High scores
 		highScoresButton = new TextButton("High Scores", game.assets.skin);
 		highScoresButton.addListener(new ChangeListener() {
@@ -185,15 +197,19 @@ public class MainMenuScreen implements Screen {
 		table.row();
 
 		// Add buttons.
-		table.add(playButton).minSize(width / 4, height / 22).maxSize(width, height / 6).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(playButton).minSize(width / 4, height / 22).maxSize(width, height / 6).prefSize(width / 2.5f, height / 10).padBottom(10);
 		table.row();
-		table.add(helpButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(helpButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2.5f, height / 10).padBottom(10);
 		table.row();
-		table.add(settingsButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(highScoresButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2.5f, height / 10).padBottom(10);
 		table.row();
-		table.add(creditsButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(settingsButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2.5f, height / 10).padBottom(10);
 		table.row();
-		table.add(quitButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2, height / 10).padBottom(10);
+		table.add(creditsButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2.5f, height / 10).padBottom(10);
+		table.row();
+		table.add(licenseButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2.5f, height / 10).padBottom(10);
+		table.row();
+		table.add(quitButton).minSize(width / 4, height / 22).maxSize(width, height / 8).prefSize(width / 2.5f, height / 10).padBottom(10);
 	}
 
 	@Override
