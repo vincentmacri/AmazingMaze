@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-
 package ca.hiphiparray.amazingmaze;
 
 import com.badlogic.gdx.Gdx;
@@ -87,30 +86,30 @@ public class CreditsScreen implements Screen {
 
 	/** Who coded the game. */
 	private static final String[] CODE = {
-			"Vincent Macri",
-			"Chloe Nguyen",
-			"Susie Son"
+		"Vincent Macri",
+		"Chloe Nguyen",
+		"Susie Son"
 	};
 	/** Who did the art. */
 	private static final String[] ART = {"Susie Son"};
 	/** Who wrote the story. */
 	private static final String[] STORY = {
-			"Vincent Macri",
-			"Chloe Nguyen",
-			"Susie Son"
+		"Vincent Macri",
+		"Chloe Nguyen",
+		"Susie Son"
 	};
 	/** Who did the music. */
 	private static final String[] MUSIC = {
-			"\"Babylon\", \"Digital Lemonade\", \"Lightless Dawn\", \"Secrets of the Schoolyard\", \"Vanes\"",
-			"Kevin MacLeod (incompetech.com)",
-			"Licensed under Creative Commons: By Attribution 3.0",
-			"http://creativecommons.org/licenses/by/3.0/",
+		"\"Babylon\", \"Digital Lemonade\", \"Lightless Dawn\", \"Secrets of the Schoolyard\", \"Vanes\"",
+		"Kevin MacLeod (incompetech.com)",
+		"Licensed under Creative Commons: By Attribution 3.0",
+		"http://creativecommons.org/licenses/by/3.0/",
 	};
 
 	/** Who to thank. */
 	private static final String[] THANKS = {
-			"The libGDX Team",
-			"Ms. Krasteva"
+		"The libGDX Team",
+		"Ms. Krasteva"
 	};
 
 	/**
