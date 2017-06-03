@@ -52,6 +52,9 @@ public class HighScore implements Comparable<HighScore> {
 	 * @param score the score they got.
 	 */
 	public HighScore(String name, int score) {
+		if (name.length() > 50) {
+			name = name.substring(0, 50) + "...";
+		}
 		this.name = name;
 		this.score = score;
 	}

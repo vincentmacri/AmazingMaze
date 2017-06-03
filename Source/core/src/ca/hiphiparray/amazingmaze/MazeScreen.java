@@ -198,7 +198,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		table.add(settingsButton).pad(10).width(Gdx.graphics.getWidth() / 4).height(Gdx.graphics.getHeight() / 8);
 		table.row();
 
-		TextButton quitButton = new TextButton("Quit", game.assets.skin);
+		TextButton quitButton = new TextButton("Main Menu", game.assets.skin);
 		quitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -328,7 +328,8 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Advance the game to the next screen. */
 	public void nextScreen() {
 		game.save.setLevel(game.save.getLevel() + 1);
-		game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
+		game.save.setLives(player.getLives());
+		game.setScreen(new FishMiniGame(game, player));
 	}
 
 	@Override
@@ -510,7 +511,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	 * Called on item collision events to update UI.
 	 *
 	 * @param gate the gate that the user collided at.
-	 *             Will be -1 if collided with cheese, and some other negative value for any other non-gate calls.
+	 * Will be -1 if collided with cheese, and some other negative value for any other non-gate calls.
 	 */
 	public void updateLives(int gate) {
 		livesLeft.setText("x " + Integer.toString(player.getLives()));

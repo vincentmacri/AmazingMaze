@@ -63,7 +63,7 @@ public class Player extends Sprite {
 	}
 
 	/** The speed of the player. */
-	private float SPEED = 10f;
+	private float SPEED = 15f;
 
 	/** The current vertical direction of the player. */
 	private VerticalDirection verticalDir;
@@ -120,7 +120,7 @@ public class Player extends Sprite {
 		this.verticalDir = VerticalDirection.NONE;
 		this.lastHorizontalDir = HorizontalDirection.NONE;
 		this.lastVerticalDir = VerticalDirection.NONE;
-		this.lives = 3;
+		this.lives = maze.game.save.getLives();
 		this.stateTime = 0;
 		this.dead = false;
 	}

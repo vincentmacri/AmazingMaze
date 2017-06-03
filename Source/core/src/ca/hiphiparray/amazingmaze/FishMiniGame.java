@@ -62,7 +62,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * <br>
  * Time (Susie): 8 hours.
  * <br>
- * Time (Vincent): 30 minutes
+ * Time (Vincent): 1 hour
  */
 public class FishMiniGame implements Screen, InputProcessor {
 
@@ -126,32 +126,30 @@ public class FishMiniGame implements Screen, InputProcessor {
 	/** If the game is paused. */
 	private boolean paused;
 
+	/** The {@link Player} instance that completed the last level. */
+	private Player player;
+
 	/**
 	 * Constructor for FishMiniGame.
 	 *
 	 * @param game the {@link AmazingMazeGame} instance that is managing this screen.
-	 * @param blueCollected the number of blue fish.
-	 * @param purpleCollected the number of purple fish.
-	 * @param greenCollected the number of green fish.
-	 * @param redCollected the number of red fish.
-	 * @param orangeCollected the number of orange fish.
+	 * @param player the {@link Player} instance that completed the last level.
 	 */
-	public FishMiniGame(final AmazingMazeGame game, int blueCollected, int purpleCollected, int greenCollected, int redCollected, int orangeCollected) {
-
+	public FishMiniGame(final AmazingMazeGame game, Player player) {
+		this.game = game;
+		this.player = player;
 		fishNumber = new int[5];
 
-		fishNumber[0] = blueCollected;
-		fishNumber[1] = purpleCollected;
-		fishNumber[2] = greenCollected;
-		fishNumber[3] = redCollected;
-		fishNumber[4] = orangeCollected;
+		fishNumber[0] = this.player.blueCollected;
+		fishNumber[1] = this.player.purpleCollected;
+		fishNumber[2] = this.player.greenCollected;
+		fishNumber[3] = this.player.redCollected;
+		fishNumber[4] = this.player.orangeCollected;
 
 		answer = 0;
 		for (int i = 0; i < fishNumber.length; i++) {
 			answer += fishNumber[i] * fishValue[i];
 		}
-
-		this.game = game;
 
 		stage = new Stage(new ScreenViewport(), this.game.batch);
 
@@ -327,6 +325,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		quitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				game.save.setLevel(game.save.getLevel() - 1);
 				game.setScreen(game.menuScreen);
 			}
 		});
@@ -371,6 +370,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 		} else {
 			Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
 			game.save.addScore(checkAnswer());
+			game.save.setLives(player.getLives());
 			label.setScale(.5f);
 			label.setWrap(true);
 			label.setAlignment(Align.center);

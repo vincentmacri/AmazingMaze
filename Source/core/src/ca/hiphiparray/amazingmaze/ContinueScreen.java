@@ -83,7 +83,7 @@ public class ContinueScreen implements Screen {
 	 * @param game the {@link AmazingMazeGame} instance that is managing this screen.
 	 * @param won if the player won.
 	 */
-	public ContinueScreen(final AmazingMazeGame game, boolean won) {
+	public ContinueScreen(final AmazingMazeGame game, final boolean won) {
 		this.game = game;
 
 		stage = new Stage(new ScreenViewport(), this.game.batch);
@@ -96,8 +96,8 @@ public class ContinueScreen implements Screen {
 		labelTable.background(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.MINI_BACKGROUND, Texture.class))));
 
 		if (won) {
-			resultLabel = new Label("You win!", game.assets.skin, Assets.WHITE_SANS_STYLE);
-			resultDescriptionLabel = new Label("Continue playing or quit?", game.assets.skin, Assets.WHITE_SANS_STYLE);
+			resultLabel = new Label("You got the antidote!", game.assets.skin, Assets.WHITE_SANS_STYLE);
+			resultDescriptionLabel = new Label("Continute searching for more to help others or quit the maze?", game.assets.skin, Assets.WHITE_SANS_STYLE);
 		} else {
 			resultLabel = new Label("You lose!", game.assets.skin, Assets.WHITE_SANS_STYLE);
 			resultDescriptionLabel = new Label("Go back to last checkpoint or quit?", game.assets.skin, Assets.WHITE_SANS_STYLE);
@@ -109,6 +109,16 @@ public class ContinueScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (continueButton.isPressed()) {
+					if (!won) {
+						int nextLevel = 5 * (game.save.getLevel() / 5) + 1;
+						int startScore = game.save.getStartScore();
+						game.save.resetSave();
+						game.save.setLevel(nextLevel);
+						game.save.setStartScore(startScore);
+						game.save.setScore(startScore);
+					} else {
+						game.save.setStartScore(game.save.getScore());
+					}
 					game.setScreen(new MazeScreen(game, false));
 				}
 			}

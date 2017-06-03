@@ -187,7 +187,8 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (quitButton.isPressed()) {
-					game.save.writeAll();
+					game.save.writeScores();
+					game.save.writeSettings();
 					Gdx.app.exit();
 				}
 			}

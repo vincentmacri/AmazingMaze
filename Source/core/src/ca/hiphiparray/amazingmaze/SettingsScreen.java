@@ -276,7 +276,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 		settings.draw();
 
 		if (backButton.isPressed()) {
-			game.save.writeSave();
+			game.save.writeScores();
 			game.setScreen(sourceScreen);
 			setSourceScreen(game.menuScreen);
 		}

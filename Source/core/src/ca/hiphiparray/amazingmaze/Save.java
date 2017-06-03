@@ -21,8 +21,6 @@ import com.badlogic.gdx.Preferences;
  */
 public class Save {
 
-	/** The save preferences. */
-	private Preferences gameSave;
 	/** The high scores preferences. */
 	private Preferences gameScores;
 	/** The settings preferences. */
@@ -30,28 +28,8 @@ public class Save {
 
 	/** The name of the settings file. */
 	private static final String SETTINGS_FILE = "ca.hiphiparray.amazingmaze.settings";
-	/** The name of the save file. */
-	private static final String SAVE_FILE = "ca.hiphiparray.amazingmaze.save";
 	/** The name of the high scores file. */
 	private static final String SCORES_FILE = "ca.hiphiparray.amazingmaze.highscores";
-
-	/** The name of the up button setting. */
-	private static final String UP_SETTING = "upButton";
-	/** The name of the down button setting. */
-	private static final String DOWN_SETTING = "downButton";
-	/** The name of the left button setting. */
-	private static final String LEFT_SETTING = "leftButton";
-	/** The name of the right button setting. */
-	private static final String RIGHT_SETTING = "rightButton";
-	/** The name of the pause button setting. */
-	private static final String PAUSE_SETTING = "pauseButton";
-	/** The name of the music level setting. */
-	private static final String MUSIC_SETTING = "musicLevel";
-
-	/** The name of the saved level. */
-	private static final String LEVEL_SAVE = "level";
-	/** The name of the saved score. */
-	private static final String SCORE_SAVE = "score";
 
 	/** The number of high score entries. */
 	private static final int MAX_HIGH_SCORES = 10;
@@ -69,14 +47,30 @@ public class Save {
 	private int downButton;
 	/** The button for when the player pauses the game. */
 	private int pauseButton;
-
 	/** The volume of the game music, in the range [0, 1]. */
 	private float musicLevel;
+
+	/** The name of the up button setting. */
+	private static final String UP_SETTING = "upButton";
+	/** The name of the down button setting. */
+	private static final String DOWN_SETTING = "downButton";
+	/** The name of the left button setting. */
+	private static final String LEFT_SETTING = "leftButton";
+	/** The name of the right button setting. */
+	private static final String RIGHT_SETTING = "rightButton";
+	/** The name of the pause button setting. */
+	private static final String PAUSE_SETTING = "pauseButton";
+	/** The name of the music level setting. */
+	private static final String MUSIC_SETTING = "musicLevel";
 
 	/** The level the player is currently on. */
 	private int level;
 	/** The score the player currently has. */
 	private int score;
+	/** The score the player had at the start of this set of levels. */
+	private int startScore;
+	/** How many lives the player currently has left. */
+	private int lives;
 
 	/** The array of high scores. */
 	private HighScore[] highScores;
@@ -84,11 +78,10 @@ public class Save {
 	/** Create the Save instance. */
 	public Save() {
 		gameSettings = Gdx.app.getPreferences(SETTINGS_FILE);
-		gameSave = Gdx.app.getPreferences(SAVE_FILE);
 		gameScores = Gdx.app.getPreferences(SCORES_FILE);
 
+		resetSave();
 		loadSettings();
-		loadSave();
 		loadScores();
 	}
 
@@ -101,11 +94,6 @@ public class Save {
 		pauseButton = gameSettings.getInteger(PAUSE_SETTING, Keys.ESCAPE);
 		musicLevel = gameSettings.getFloat(MUSIC_SETTING, 1f);
 		writeSettings();
-	}
-
-	/** Load save from file. */
-	public void loadSave() {
-		writeSave();
 	}
 
 	/** Load scores from file. */
@@ -133,16 +121,7 @@ public class Save {
 				}
 			}
 		}
-
 		writeScores();
-	}
-
-	/** Write the save file. */
-	public void writeSave() {
-		gameSave.clear();
-		gameSave.putInteger(LEVEL_SAVE, getLevel());
-		gameSave.putInteger(SCORE_SAVE, getScore());
-		gameSave.flush();
 	}
 
 	/** Write the high scores file. */
@@ -167,20 +146,12 @@ public class Save {
 		gameSettings.flush();
 	}
 
-	/**
-	 * Write all {@link Preferences} instances.
-	 *
-	 * These are: {@link #gameSave}, {@link #gameScores}, and {@link #gameSettings}.
-	 */
-	public void writeAll() {
-		writeSave();
-		writeScores();
-		writeSettings();
-	}
-
 	/** Reset the save state. */
 	public void resetSave() {
 		this.level = 1;
+		this.score = 0;
+		this.lives = 3;
+		this.startScore = 0;
 	}
 
 	/** Reset all of the settings to the default values. */
@@ -396,5 +367,41 @@ public class Save {
 	 */
 	public void addScore(int deltaScore) {
 		score += deltaScore;
+	}
+
+	/**
+	 * Getter for {@link #lives}.
+	 *
+	 * @return how many lives the player has left.
+	 */
+	public int getLives() {
+		return lives;
+	}
+
+	/**
+	 * Setter for {@link #lives}.
+	 *
+	 * @param lives how many lives the player now has.
+	 */
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+
+	/**
+	 * Getter for {@link #startScore}.
+	 *
+	 * @return the score the player had at the start of the set of levels.
+	 */
+	public int getStartScore() {
+		return startScore;
+	}
+
+	/**
+	 * Setter for {@link #startScore}.
+	 *
+	 * @param startScore the new value of {@link #startScore}.
+	 */
+	public void setStartScore(int startScore) {
+		this.startScore = startScore;
 	}
 }
