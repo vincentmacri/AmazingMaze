@@ -59,6 +59,8 @@ import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
  * @author Chloe Nguyen
  * <br>
  * Time (Vincent): 5 hours
+ * <br>
+ * Time (Chloe): 30 minutes
  */
 public class MazeScreen implements Screen, InputProcessor {
 
