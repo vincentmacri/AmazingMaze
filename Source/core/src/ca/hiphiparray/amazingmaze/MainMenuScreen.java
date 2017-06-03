@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -139,21 +140,24 @@ public class MainMenuScreen implements Screen {
 
 		licenseDialog = new Dialog("License Information", game.assets.skin);
 		licenseDialog.button("Okay");
-		licenseDialog.text("Amazing Maze is an educational game created in Java with the libGDX library.\n"
-			+ "Copyright (C) 2017 Hip Hip Array\n"
-			+ "\n"
-			+ "Amazing Maze is free software: you can redistribute it and/or modify "
-			+ "it under the terms of the GNU General Public License as published by"
-			+ "the Free Software Foundation, either version 3 of the License, or"
-			+ "(at your option) any later version.\n"
-			+ "\n"
-			+ "Amazing Maze is distributed in the hope that it will be useful,"
-			+ "but WITHOUT ANY WARRANTY; without even the implied warranty of"
-			+ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
-			+ "GNU General Public License for more details.\n"
-			+ "\n"
-			+ "You should have received a copy of the GNU General Public License"
-			+ "along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.");
+
+		licenseDialog.text(
+			"Amazing Maze is an educational game created in Java with the libGDX library.\n"
+				+ "Copyright (C) 2017 Hip Hip Array\n"
+				+ "\n"
+				+ "Amazing Maze is free software: you can redistribute it and/or modify\n"
+				+ "it under the terms of the GNU General Public License as published by\n"
+				+ "the Free Software Foundation, either version 3 of the License, or\n"
+				+ "(at your option) any later version.\n"
+				+ "\n"
+				+ "Amazing Maze is distributed in the hope that it will be useful,\n"
+				+ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+				+ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n"
+				+ "GNU General Public License for more details.\n"
+				+ "\n"
+				+ "You should have received a copy of the GNU General Public License\n"
+				+ "along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.",
+			game.assets.skin.get(Assets.POPUP_STYLE, LabelStyle.class));
 
 		// License
 		licenseButton = new TextButton("License", game.assets.skin);
