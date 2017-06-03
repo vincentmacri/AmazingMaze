@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.26)  31 MAY 2017 18:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.26)  3 JUN 2017 11:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -247,10 +247,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 29.
 Package epstopdf Info: Source file: <CompanyLogo.eps>
-(epstopdf)                    date: 2017-05-30 18:07:18
+(epstopdf)                    date: 2017-06-03 11:06:08
 (epstopdf)                    size: 9085 bytes
 (epstopdf)             Output file: <CompanyLogo-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-05-30 23:08:20
+(epstopdf)                    date: 2017-06-03 11:06:08
 (epstopdf)                    size: 4697 bytes
 (epstopdf)             Command: <repstopdf --outfile=CompanyLogo-eps-converted-
 to.pdf CompanyLogo.eps>
@@ -317,151 +317,161 @@ Package pdftex.def Info: Mouse.png used on input line 51.
 (pdftex.def)             Requested size: 91.0584pt x 39.85095pt.
  [2 <./Cat.png> <./Mouse.png>]
 Chapter 2.
+
+Overfull \hbox (9.53049pt too wide) in paragraph at lines 59--60
+[]\OT1/cmr/m/n/12 Click this but-ton to change the game
+ []
+
 [3
 
-] [4]
+] <MainMenu.png, id=35, 1927.2pt x 1084.05pt>
+File: MainMenu.png Graphic file (type png)
+ <use MainMenu.png>
+Package pdftex.def Info: MainMenu.png used on input line 66.
+(pdftex.def)             Requested size: 227.64949pt x 128.0458pt.
+ [4 <./MainMenu.png>]
 Chapter 3.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 78.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 76.
 [5
 
 ] [6
 
 ]
 Chapter 4.
-<MazeScreenshot.png, id=46, 1371.1225pt x 770.88pt>
+<MazeScreenshot.png, id=48, 1371.1225pt x 770.88pt>
 File: MazeScreenshot.png Graphic file (type png)
  <use MazeScreenshot.png>
-Package pdftex.def Info: MazeScreenshot.png used on input line 85.
+Package pdftex.def Info: MazeScreenshot.png used on input line 83.
 (pdftex.def)             Requested size: 227.64949pt x 127.98956pt.
 
 Underfull \vbox (badness 2103) has occurred while \output is active []
 
- [7 <./MazeScreenshot.png>] <ON.png, id=51, 6.0225pt x 16.06pt>
+ [7 <./MazeScreenshot.png>] <ON.png, id=53, 6.0225pt x 16.06pt>
 File: ON.png Graphic file (type png)
  <use ON.png>
-Package pdftex.def Info: ON.png used on input line 105.
+Package pdftex.def Info: ON.png used on input line 103.
 (pdftex.def)             Requested size: 20.48886pt x 54.64587pt.
 
-<OFF.png, id=52, 6.0225pt x 16.06pt>
+<OFF.png, id=54, 6.0225pt x 16.06pt>
 File: OFF.png Graphic file (type png)
  <use OFF.png>
-Package pdftex.def Info: OFF.png used on input line 112.
+Package pdftex.def Info: OFF.png used on input line 110.
 (pdftex.def)             Requested size: 20.48886pt x 54.64587pt.
 
-<UNKNOWN.png, id=53, 6.0225pt x 16.06pt>
+<UNKNOWN.png, id=55, 6.0225pt x 16.06pt>
 File: UNKNOWN.png Graphic file (type png)
  <use UNKNOWN.png>
-Package pdftex.def Info: UNKNOWN.png used on input line 119.
+Package pdftex.def Info: UNKNOWN.png used on input line 117.
 (pdftex.def)             Requested size: 20.48886pt x 54.64587pt.
 
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 133--141
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 131--139
 [][] 
  []
 
-<AND.png, id=54, 16.06pt x 16.06pt>
+<AND.png, id=56, 16.06pt x 16.06pt>
 File: AND.png Graphic file (type png)
  <use AND.png>
-Package pdftex.def Info: AND.png used on input line 144.
+Package pdftex.def Info: AND.png used on input line 142.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
 
 Underfull \vbox (badness 1009) has occurred while \output is active []
 
  [8 <./ON.png> <./OFF.png> <./UNKNOWN.png>]
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 153--161
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 151--159
 [][] 
  []
 
-<NAND.png, id=62, 16.06pt x 16.06pt>
+<NAND.png, id=64, 16.06pt x 16.06pt>
 File: NAND.png Graphic file (type png)
  <use NAND.png>
-Package pdftex.def Info: NAND.png used on input line 164.
+Package pdftex.def Info: NAND.png used on input line 162.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
 
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 172--180
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 170--178
 [][] 
  []
 
-<OR.png, id=63, 16.06pt x 16.06pt>
+<OR.png, id=65, 16.06pt x 16.06pt>
 File: OR.png Graphic file (type png)
  <use OR.png>
-Package pdftex.def Info: OR.png used on input line 183.
+Package pdftex.def Info: OR.png used on input line 181.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
  [9 <./AND.png> <./NAND.png>]
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 192--200
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 190--198
 [][] 
  []
 
-<NOR.png, id=69, 16.06pt x 16.06pt>
+<NOR.png, id=71, 16.06pt x 16.06pt>
 File: NOR.png Graphic file (type png)
  <use NOR.png>
-Package pdftex.def Info: NOR.png used on input line 203.
+Package pdftex.def Info: NOR.png used on input line 201.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
 
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 211--219
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 209--217
 [][] 
  []
 
-<XOR.png, id=70, 16.06pt x 16.06pt>
+<XOR.png, id=72, 16.06pt x 16.06pt>
 File: XOR.png Graphic file (type png)
  <use XOR.png>
-Package pdftex.def Info: XOR.png used on input line 222.
+Package pdftex.def Info: XOR.png used on input line 220.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
  [10 <./OR.png> <./NOR.png>]
-Overfull \hbox (5.33838pt too wide) in paragraph at lines 226--226
+Overfull \hbox (5.33838pt too wide) in paragraph at lines 224--224
 |[]\OT1/cmr/bx/n/17.28 Interacting with Gates| 
  []
 
-<BlueFish.png, id=77, 16.06pt x 13.04875pt>
+<BlueFish.png, id=79, 16.06pt x 13.04875pt>
 File: BlueFish.png Graphic file (type png)
  <use BlueFish.png>
-Package pdftex.def Info: BlueFish.png used on input line 235.
+Package pdftex.def Info: BlueFish.png used on input line 233.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<PurpleFish.png, id=78, 16.06pt x 13.04875pt>
+<PurpleFish.png, id=80, 16.06pt x 13.04875pt>
 File: PurpleFish.png Graphic file (type png)
  <use PurpleFish.png>
-Package pdftex.def Info: PurpleFish.png used on input line 241.
+Package pdftex.def Info: PurpleFish.png used on input line 239.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<GreenFish.png, id=79, 16.06pt x 13.04875pt>
+<GreenFish.png, id=81, 16.06pt x 13.04875pt>
 File: GreenFish.png Graphic file (type png)
  <use GreenFish.png>
-Package pdftex.def Info: GreenFish.png used on input line 247.
+Package pdftex.def Info: GreenFish.png used on input line 245.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<RedFish.png, id=80, 16.06pt x 13.04875pt>
+<RedFish.png, id=82, 16.06pt x 13.04875pt>
 File: RedFish.png Graphic file (type png)
  <use RedFish.png>
-Package pdftex.def Info: RedFish.png used on input line 253.
+Package pdftex.def Info: RedFish.png used on input line 251.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<OrangeFish.png, id=81, 16.06pt x 13.04875pt>
+<OrangeFish.png, id=83, 16.06pt x 13.04875pt>
 File: OrangeFish.png Graphic file (type png)
  <use OrangeFish.png>
-Package pdftex.def Info: OrangeFish.png used on input line 259.
+Package pdftex.def Info: OrangeFish.png used on input line 257.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
- [11 <./XOR.png>] <Cheese.png, id=86, 12.045pt x 8.03pt>
+ [11 <./XOR.png>] <Cheese.png, id=88, 12.045pt x 8.03pt>
 File: Cheese.png Graphic file (type png)
  <use Cheese.png>
-Package pdftex.def Info: Cheese.png used on input line 266.
+Package pdftex.def Info: Cheese.png used on input line 264.
 (pdftex.def)             Requested size: 79.67871pt x 53.14511pt.
  [12 <./BlueFish.png> <./PurpleFish.png> <./GreenFish.png> <./RedFish.png> <./O
 rangeFish.png> <./Cheese.png>]
 Chapter 5.
-<Counting.png, id=96, 1154.3125pt x 742.775pt>
+<Counting.png, id=98, 1154.3125pt x 742.775pt>
 File: Counting.png Graphic file (type png)
  <use Counting.png>
-Package pdftex.def Info: Counting.png used on input line 271.
+Package pdftex.def Info: Counting.png used on input line 269.
 (pdftex.def)             Requested size: 227.64949pt x 146.47827pt.
  [13
 
  <./Counting.png>] [14] (./Manual.aux) ) 
 Here is how much of TeX's memory you used:
- 3582 strings out of 494946
- 55179 string characters out of 6180981
+ 3587 strings out of 494946
+ 55258 string characters out of 6180981
  119706 words of memory out of 5000000
- 6816 multiletter control sequences out of 15000+600000
+ 6820 multiletter control sequences out of 15000+600000
  10113 words of font info for 35 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  42i,11n,40p,331b,383s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -472,10 +482,10 @@ sfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsl12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
 y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pf
 b>
-Output written on Manual.pdf (17 pages, 154614 bytes).
+Output written on Manual.pdf (17 pages, 243721 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
+ 127 PDF objects out of 1000 (max. 8388607)
  60 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
 
