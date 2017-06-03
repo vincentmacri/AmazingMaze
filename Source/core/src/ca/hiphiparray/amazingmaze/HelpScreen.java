@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -62,12 +63,13 @@ public class HelpScreen extends MazeScreen {
 	public HelpScreen(final AmazingMazeGame game) {
 		super(game, true);
 		instruct = new Label("Check the logic gates to find the state of each wire and make your way through the maze. Be careful to avoid\nany wires that are on, as that means that they are electrified!", game.assets.skin, Assets.HUD_STYLE);
+		instruct.setAlignment(Align.center);
 		clicks = new Label("Mark the wires by clicking on the gates. Left click = on. Right click = off. Middle click = unknown.", game.assets.skin, Assets.HUD_STYLE);
+		clicks.setAlignment(Align.center);
 
 		super.hud = new Stage(new ScreenViewport(), game.batch);
 
 		table = new Table();
-		table.debug();
 		table.top();
 		table.setFillParent(true);
 		super.hud.addActor(table);
@@ -97,26 +99,27 @@ public class HelpScreen extends MazeScreen {
 
 		truthTable = new Table();
 		truthTable.top().center();
-		truthTable.debug();
+		table.add(truthTable).bottom().pad(10);
 
 		truthTable.add();
 		for (int x = 0; x < gatePics.length; x++) {
-			gatePics[x].setScale(2);
-			truthTable.add(gatePics[x]).pad(10);
+			truthTable.add(gatePics[x]).size(gatePics[x].getWidth() * 2, gatePics[x].getHeight() * 2).pad(5);
 		}
 		truthTable.row();
 		truthTable.add();
 		for (int x = 0; x < gates.length; x++) {
-			truthTable.add(gates[x]).pad(10);
+			truthTable.add(gates[x]).pad(5);
 		}
+		truthTable.row();
 
-		truth = new Label[][] {{
-				new Label("false and false", game.assets.skin, Assets.HUD_STYLE),
-				new Label("off", game.assets.skin, Assets.HUD_STYLE),
-				new Label("on", game.assets.skin, Assets.HUD_STYLE),
-				new Label("off", game.assets.skin, Assets.HUD_STYLE),
-				new Label("on", game.assets.skin, Assets.HUD_STYLE),
-				new Label("off", game.assets.skin, Assets.HUD_STYLE)},
+		truth = new Label[][] {
+				{
+						new Label("false and false", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE),
+						new Label("on", game.assets.skin, Assets.HUD_STYLE),
+						new Label("off", game.assets.skin, Assets.HUD_STYLE)},
 				{
 						new Label("true and false", game.assets.skin, Assets.HUD_STYLE),
 						new Label("off", game.assets.skin, Assets.HUD_STYLE),
@@ -130,15 +133,15 @@ public class HelpScreen extends MazeScreen {
 						new Label("off", game.assets.skin, Assets.HUD_STYLE),
 						new Label("on", game.assets.skin, Assets.HUD_STYLE),
 						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE)}};
+						new Label("off", game.assets.skin, Assets.HUD_STYLE)}
+		};
 
 		for (int x = 0; x < truth.length; x++) {
-			for (int y = 0; y < truth[0].length; y++) {
-				truthTable.add(truth[x][y]);
+			for (int y = 0; y < truth[x].length; y++) {
+				truthTable.add(truth[x][y]).pad(5);
 			}
 			truthTable.row();
 		}
-		table.add(truthTable).bottom().pad(10);
 	}
 
 	@Override
