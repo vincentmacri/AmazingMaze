@@ -60,7 +60,7 @@ import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
  * <br>
  * Time (Vincent): 5 hours
  * <br>
- * Time (Chloe): 30 minutes
+ * Time (Chloe): 3o minutes
  */
 public class MazeScreen implements Screen, InputProcessor {
 
@@ -84,7 +84,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** The number of tiles wide the map is. */
 	protected final int mapWidth;
 	/** The number of tiles high the map is. */
-	protected final int mapHeight;
+	protected int mapHeight;
 
 	/** The level's map. */
 	protected TiledMap map;
@@ -147,7 +147,8 @@ public class MazeScreen implements Screen, InputProcessor {
 		if (!help) {
 			factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
 		} else {
-			factory = new MapFactory(game, 3, this.mapWidth, this.mapHeight, TILE_SIZE);
+			this.mapHeight = this.mapHeight * 5 / 8;
+			factory = new MapFactory(game, -3, this.mapWidth, this.mapHeight, TILE_SIZE);
 		}
 		map = factory.generateMap();
 		gateLocations = factory.getGateLocations();
