@@ -1,6 +1,7 @@
 package ca.hiphiparray.amazingmaze;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -41,6 +42,8 @@ public class Save {
 	private static final String LEFT_SETTING = "leftButton";
 	/** The name of the right button setting. */
 	private static final String RIGHT_SETTING = "rightButton";
+	/** The name of the pause button setting. */
+	private static final String PAUSE_SETTING = "pauseButton";
 	/** The name of the music level setting. */
 	private static final String MUSIC_SETTING = "musicLevel";
 
@@ -51,6 +54,9 @@ public class Save {
 
 	/** The number of high score entries. */
 	private static final int MAX_HIGH_SCORES = 10;
+
+	/** The offset of high scores from names in the save file. */
+	private static final int HIGH_SCORES_OFFSET = 100;
 
 	/** For when the user moves up. */
 	private int upButton;
@@ -80,11 +86,59 @@ public class Save {
 		gameSave = Gdx.app.getPreferences(SAVE_FILE);
 		gameScores = Gdx.app.getPreferences(SCORES_FILE);
 
-		readSettings();
+		loadSettings();
+		loadSave();
+		loadScores();
+	}
+
+	/** Load settings from file. */
+	public void loadSettings() {
+		upButton = gameSettings.getInteger(UP_SETTING, Keys.UP);
+		downButton = gameSettings.getInteger(DOWN_SETTING, Keys.DOWN);
+		leftButton = gameSettings.getInteger(LEFT_SETTING, Keys.LEFT);
+		rightButton = gameSettings.getInteger(RIGHT_SETTING, Keys.RIGHT);
+		pauseButton = gameSettings.getInteger(PAUSE_SETTING, Keys.ESCAPE);
+		musicLevel = gameSettings.getFloat(MUSIC_SETTING, 1f);
+		writeSettings();
+	}
+
+	/** Load save from file. */
+	public void loadSave() {
+		writeSave();
+	}
+
+	/** Load scores from file. */
+	public void loadScores() {
+		resetScores();
+		Map<String, ?> scores = gameScores.get();
+
+		for (int i = 0; i < MAX_HIGH_SCORES; i++) {
+			Object nameObj = scores.get(Integer.toString(i));
+			Object scoreObj = scores.get(Integer.toString(i + HIGH_SCORES_OFFSET));
+			if (nameObj == null || scoreObj == null) {
+				System.out.println("Nonexistant or corrupt high scores file.");
+				resetScores();
+				break;
+			} else {
+				try {
+					String name = (String) nameObj;
+					int score = Integer.parseInt((String) scoreObj);
+					addHighScore(new HighScore(name, score));
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Nonexistant or corrupt high scores file.");
+					resetScores();
+					break;
+				}
+			}
+		}
+
+		writeScores();
 	}
 
 	/** Write the save file. */
 	public void writeSave() {
+		gameSave.clear();
 		gameSave.putInteger(LEVEL_SAVE, getLevel());
 		gameSave.putInteger(SCORE_SAVE, getScore());
 		gameSave.flush();
@@ -92,15 +146,22 @@ public class Save {
 
 	/** Write the high scores file. */
 	public void writeScores() {
+		gameScores.clear();
+		for (int i = 0; i < MAX_HIGH_SCORES; i++) {
+			gameScores.putString(Integer.toString(i), highScores[i].getName());
+			gameScores.putInteger(Integer.toString(i + HIGH_SCORES_OFFSET), highScores[i].getScore());
+		}
 		gameScores.flush();
 	}
 
 	/** Write the settings file. */
 	public void writeSettings() {
+		gameSettings.clear();
 		gameSettings.putInteger(UP_SETTING, getUpButton());
 		gameSettings.putInteger(DOWN_SETTING, getDownButton());
 		gameSettings.putInteger(LEFT_SETTING, getLeftButton());
 		gameSettings.putInteger(RIGHT_SETTING, getRightButton());
+		gameSettings.putInteger(PAUSE_SETTING, getPauseButton());
 		gameSettings.putFloat(MUSIC_SETTING, getMusicLevel());
 		gameSettings.flush();
 	}
@@ -132,9 +193,12 @@ public class Save {
 		this.musicLevel = 1f;
 	}
 
-	/** Wipe the high scores. */
+	/** Reset the high scores to 10 default values. */
 	public void resetScores() {
-
+		highScores = new HighScore[MAX_HIGH_SCORES];
+		for (int i = 0; i < highScores.length; i++) {
+			highScores[i] = new HighScore();
+		}
 	}
 
 	/** Reset the settings and the save state. */
@@ -252,16 +316,6 @@ public class Save {
 		this.musicLevel = musicLevel;
 	}
 
-	/** Load settings from file. */
-	public void readSettings() {
-		upButton = gameSettings.getInteger(UP_SETTING, Keys.UP);
-		downButton = gameSettings.getInteger(DOWN_SETTING, Keys.DOWN);
-		leftButton = gameSettings.getInteger(LEFT_SETTING, Keys.LEFT);
-		rightButton = gameSettings.getInteger(RIGHT_SETTING, Keys.RIGHT);
-		musicLevel = gameSettings.getFloat(MUSIC_SETTING, 1f);
-		writeSettings();
-	}
-
 	/**
 	 * Get the current level.
 	 * Also ensure that the level is >= 1, if not, set it to 1.
@@ -292,14 +346,6 @@ public class Save {
 	 */
 	public HighScore[] getHighScores() {
 		return highScores;
-	}
-
-	/** Reset the high scores to 10 default values. */
-	public void resetHighScores() {
-		highScores = new HighScore[MAX_HIGH_SCORES];
-		for (int i = 0; i < highScores.length; i++) {
-			highScores[i] = new HighScore();
-		}
 	}
 
 	/**
