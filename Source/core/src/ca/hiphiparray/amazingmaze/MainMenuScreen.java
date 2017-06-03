@@ -1,13 +1,21 @@
 /********************************************************************************
- * Amazing Maze is an educational game created in Java with the libGDX library. Copyright (C) 2017 Hip Hip Array
+ * Amazing Maze is an educational game created in Java with the libGDX library.
+ * Copyright (C) 2017 Hip Hip Array
  *
  * This file is part of Amazing Maze.
  *
- * Amazing Maze is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * Amazing Maze is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Amazing Maze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * Amazing Maze is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
@@ -18,6 +26,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -60,6 +69,9 @@ public class MainMenuScreen implements Screen {
 	private TextButton licenseButton;
 	/** Quit button. */
 	private TextButton quitButton;
+
+	/** The copyright notice dialog. */
+	private Dialog licenseDialog;
 
 	/** Title of menu. */
 	private Image menuTitle;
@@ -125,12 +137,31 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
+		licenseDialog = new Dialog("License Information", game.assets.skin);
+		licenseDialog.button("Okay");
+		licenseDialog.text("Amazing Maze is an educational game created in Java with the libGDX library.\n"
+			+ "Copyright (C) 2017 Hip Hip Array\n"
+			+ "\n"
+			+ "Amazing Maze is free software: you can redistribute it and/or modify "
+			+ "it under the terms of the GNU General Public License as published by"
+			+ "the Free Software Foundation, either version 3 of the License, or"
+			+ "(at your option) any later version.\n"
+			+ "\n"
+			+ "Amazing Maze is distributed in the hope that it will be useful,"
+			+ "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+			+ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
+			+ "GNU General Public License for more details.\n"
+			+ "\n"
+			+ "You should have received a copy of the GNU General Public License"
+			+ "along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.");
+
 		// License
 		licenseButton = new TextButton("License", game.assets.skin);
 		licenseButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (licenseButton.isPressed()) {
+					licenseDialog.show(menu);
 				}
 			}
 		});

@@ -82,19 +82,19 @@ public class HelpScreen extends MazeScreen {
 		table.row();
 
 		gates = new Label[] {
-				new Label("AND Gate", game.assets.skin, Assets.HUD_STYLE),
-				new Label("NAND Gate", game.assets.skin, Assets.HUD_STYLE),
-				new Label("OR Gate", game.assets.skin, Assets.HUD_STYLE),
-				new Label("NOR Gate", game.assets.skin, Assets.HUD_STYLE),
-				new Label("XOR Gate", game.assets.skin, Assets.HUD_STYLE)};
+			new Label("AND Gate", game.assets.skin, Assets.HUD_STYLE),
+			new Label("NAND Gate", game.assets.skin, Assets.HUD_STYLE),
+			new Label("OR Gate", game.assets.skin, Assets.HUD_STYLE),
+			new Label("NOR Gate", game.assets.skin, Assets.HUD_STYLE),
+			new Label("XOR Gate", game.assets.skin, Assets.HUD_STYLE)};
 
 		TextureAtlas atlas = game.assets.manager.get(Assets.GAME_ATLAS_LOCATION, TextureAtlas.class); // Reference used for readability.
 		gatePics = new Image[] {
-				new Image(atlas.findRegion(Assets.AND_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
-				new Image(atlas.findRegion(Assets.NAND_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
-				new Image(atlas.findRegion(Assets.OR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
-				new Image(atlas.findRegion(Assets.NOR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
-				new Image(atlas.findRegion(Assets.XOR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
+			new Image(atlas.findRegion(Assets.AND_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
+			new Image(atlas.findRegion(Assets.NAND_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
+			new Image(atlas.findRegion(Assets.OR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
+			new Image(atlas.findRegion(Assets.NOR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
+			new Image(atlas.findRegion(Assets.XOR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
 		};
 
 		truthTable = new Table();
@@ -113,27 +113,27 @@ public class HelpScreen extends MazeScreen {
 		truthTable.row();
 
 		truth = new Label[][] {
-				{
-						new Label("false and false", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE)},
-				{
-						new Label("true and false", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE)},
-				{
-						new Label("true and true", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("on", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE),
-						new Label("off", game.assets.skin, Assets.HUD_STYLE)}
+			{
+				new Label("false and false", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE)},
+			{
+				new Label("true and false", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE)},
+			{
+				new Label("true and true", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("on", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE),
+				new Label("off", game.assets.skin, Assets.HUD_STYLE)}
 		};
 
 		for (int x = 0; x < truth.length; x++) {
