@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.26)  3 JUN 2017 11:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.26)  3 JUN 2017 11:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -332,160 +332,194 @@ Package pdftex.def Info: MainMenu.png used on input line 66.
  [4 <./MainMenu.png>]
 Chapter 3.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 76.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
 [5
 
-] [6
+] <SettingsScreen.png, id=44, 731.73375pt x 1050.92625pt>
+File: SettingsScreen.png Graphic file (type png)
 
-]
+<use SettingsScreen.png>
+Package pdftex.def Info: SettingsScreen.png used on input line 77.
+(pdftex.def)             Requested size: 227.64949pt x 326.95439pt.
+ [6 <./SettingsScreen.png>]
 Chapter 4.
-<MazeScreenshot.png, id=48, 1371.1225pt x 770.88pt>
-File: MazeScreenshot.png Graphic file (type png)
- <use MazeScreenshot.png>
-Package pdftex.def Info: MazeScreenshot.png used on input line 83.
-(pdftex.def)             Requested size: 227.64949pt x 127.98956pt.
+<MazeScreen.png, id=49, 1927.2pt x 1084.05pt>
+File: MazeScreen.png Graphic file (type png)
+ <use MazeScreen.png>
+Package pdftex.def Info: MazeScreen.png used on input line 80.
+(pdftex.def)             Requested size: 227.64949pt x 128.0458pt.
 
-Underfull \vbox (badness 2103) has occurred while \output is active []
+Underfull \vbox (badness 2096) has occurred while \output is active []
 
- [7 <./MazeScreenshot.png>] <ON.png, id=53, 6.0225pt x 16.06pt>
+ [7
+
+ <./MazeScreen.png>] <ON.png, id=54, 6.0225pt x 16.06pt>
 File: ON.png Graphic file (type png)
  <use ON.png>
-Package pdftex.def Info: ON.png used on input line 103.
+Package pdftex.def Info: ON.png used on input line 100.
 (pdftex.def)             Requested size: 20.48886pt x 54.64587pt.
 
-<OFF.png, id=54, 6.0225pt x 16.06pt>
+<OFF.png, id=55, 6.0225pt x 16.06pt>
 File: OFF.png Graphic file (type png)
  <use OFF.png>
-Package pdftex.def Info: OFF.png used on input line 110.
+Package pdftex.def Info: OFF.png used on input line 107.
 (pdftex.def)             Requested size: 20.48886pt x 54.64587pt.
 
-<UNKNOWN.png, id=55, 6.0225pt x 16.06pt>
+<UNKNOWN.png, id=56, 6.0225pt x 16.06pt>
 File: UNKNOWN.png Graphic file (type png)
  <use UNKNOWN.png>
-Package pdftex.def Info: UNKNOWN.png used on input line 117.
+Package pdftex.def Info: UNKNOWN.png used on input line 114.
 (pdftex.def)             Requested size: 20.48886pt x 54.64587pt.
 
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 131--139
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 128--136
 [][] 
  []
 
-<AND.png, id=56, 16.06pt x 16.06pt>
+<AND.png, id=57, 16.06pt x 16.06pt>
 File: AND.png Graphic file (type png)
  <use AND.png>
-Package pdftex.def Info: AND.png used on input line 142.
+Package pdftex.def Info: AND.png used on input line 139.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
 
 Underfull \vbox (badness 1009) has occurred while \output is active []
 
  [8 <./ON.png> <./OFF.png> <./UNKNOWN.png>]
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 151--159
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 148--156
 [][] 
  []
 
-<NAND.png, id=64, 16.06pt x 16.06pt>
+<NAND.png, id=65, 16.06pt x 16.06pt>
 File: NAND.png Graphic file (type png)
  <use NAND.png>
-Package pdftex.def Info: NAND.png used on input line 162.
+Package pdftex.def Info: NAND.png used on input line 159.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
 
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 170--178
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 167--175
 [][] 
  []
 
-<OR.png, id=65, 16.06pt x 16.06pt>
+<OR.png, id=66, 16.06pt x 16.06pt>
 File: OR.png Graphic file (type png)
  <use OR.png>
-Package pdftex.def Info: OR.png used on input line 181.
+Package pdftex.def Info: OR.png used on input line 178.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
  [9 <./AND.png> <./NAND.png>]
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 190--198
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 187--195
 [][] 
  []
 
-<NOR.png, id=71, 16.06pt x 16.06pt>
+<NOR.png, id=72, 16.06pt x 16.06pt>
 File: NOR.png Graphic file (type png)
  <use NOR.png>
-Package pdftex.def Info: NOR.png used on input line 201.
+Package pdftex.def Info: NOR.png used on input line 198.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
 
-Overfull \hbox (2.74901pt too wide) in paragraph at lines 209--217
+Overfull \hbox (2.74901pt too wide) in paragraph at lines 206--214
 [][] 
  []
 
-<XOR.png, id=72, 16.06pt x 16.06pt>
+<XOR.png, id=73, 16.06pt x 16.06pt>
 File: XOR.png Graphic file (type png)
  <use XOR.png>
-Package pdftex.def Info: XOR.png used on input line 220.
+Package pdftex.def Info: XOR.png used on input line 217.
 (pdftex.def)             Requested size: 34.14688pt x 34.14969pt.
  [10 <./OR.png> <./NOR.png>]
-Overfull \hbox (5.33838pt too wide) in paragraph at lines 224--224
+Overfull \hbox (5.33838pt too wide) in paragraph at lines 221--221
 |[]\OT1/cmr/bx/n/17.28 Interacting with Gates| 
  []
 
-<BlueFish.png, id=79, 16.06pt x 13.04875pt>
+<BlueFish.png, id=80, 16.06pt x 13.04875pt>
 File: BlueFish.png Graphic file (type png)
  <use BlueFish.png>
-Package pdftex.def Info: BlueFish.png used on input line 233.
+Package pdftex.def Info: BlueFish.png used on input line 230.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<PurpleFish.png, id=80, 16.06pt x 13.04875pt>
+<PurpleFish.png, id=81, 16.06pt x 13.04875pt>
 File: PurpleFish.png Graphic file (type png)
  <use PurpleFish.png>
-Package pdftex.def Info: PurpleFish.png used on input line 239.
+Package pdftex.def Info: PurpleFish.png used on input line 236.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<GreenFish.png, id=81, 16.06pt x 13.04875pt>
+<GreenFish.png, id=82, 16.06pt x 13.04875pt>
 File: GreenFish.png Graphic file (type png)
  <use GreenFish.png>
-Package pdftex.def Info: GreenFish.png used on input line 245.
+Package pdftex.def Info: GreenFish.png used on input line 242.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<RedFish.png, id=82, 16.06pt x 13.04875pt>
+<RedFish.png, id=83, 16.06pt x 13.04875pt>
 File: RedFish.png Graphic file (type png)
  <use RedFish.png>
-Package pdftex.def Info: RedFish.png used on input line 251.
+Package pdftex.def Info: RedFish.png used on input line 248.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
 
-<OrangeFish.png, id=83, 16.06pt x 13.04875pt>
+<OrangeFish.png, id=84, 16.06pt x 13.04875pt>
 File: OrangeFish.png Graphic file (type png)
  <use OrangeFish.png>
-Package pdftex.def Info: OrangeFish.png used on input line 257.
+Package pdftex.def Info: OrangeFish.png used on input line 254.
 (pdftex.def)             Requested size: 36.42474pt x 29.59752pt.
- [11 <./XOR.png>] <Cheese.png, id=88, 12.045pt x 8.03pt>
+ [11 <./XOR.png>] <Cheese.png, id=89, 12.045pt x 8.03pt>
 File: Cheese.png Graphic file (type png)
  <use Cheese.png>
-Package pdftex.def Info: Cheese.png used on input line 264.
+Package pdftex.def Info: Cheese.png used on input line 261.
 (pdftex.def)             Requested size: 79.67871pt x 53.14511pt.
  [12 <./BlueFish.png> <./PurpleFish.png> <./GreenFish.png> <./RedFish.png> <./O
 rangeFish.png> <./Cheese.png>]
 Chapter 5.
-<Counting.png, id=98, 1154.3125pt x 742.775pt>
-File: Counting.png Graphic file (type png)
- <use Counting.png>
-Package pdftex.def Info: Counting.png used on input line 269.
-(pdftex.def)             Requested size: 227.64949pt x 146.47827pt.
+<CountingScreen.png, id=99, 1927.2pt x 1084.05pt>
+File: CountingScreen.png Graphic file (type png)
+ <use CountingScreen.png>
+Package pdftex.def Info: CountingScreen.png used on input line 266.
+(pdftex.def)             Requested size: 227.64949pt x 128.0458pt.
+
+<Pencil.png, id=100, 16.06pt x 16.06pt>
+File: Pencil.png Graphic file (type png)
+ <use Pencil.png>
+Package pdftex.def Info: Pencil.png used on input line 272.
+(pdftex.def)             Requested size: 14.50017pt x 14.5pt.
+
+<Eraser.png, id=101, 16.06pt x 16.06pt>
+File: Eraser.png Graphic file (type png)
+ <use Eraser.png>
+Package pdftex.def Info: Eraser.png used on input line 272.
+(pdftex.def)             Requested size: 14.50017pt x 14.5pt.
  [13
 
- <./Counting.png>] [14] (./Manual.aux) ) 
+ <./CountingScreen.png>] <Clear.png, id=106, 16.06pt x 16.06pt>
+File: Clear.png Graphic file (type png)
+ <use Clear.png>
+Package pdftex.def Info: Clear.png used on input line 274.
+(pdftex.def)             Requested size: 14.50017pt x 14.5pt.
+
+<Check.png, id=107, 16.06pt x 16.06pt>
+File: Check.png Graphic file (type png)
+ <use Check.png>
+Package pdftex.def Info: Check.png used on input line 276.
+(pdftex.def)             Requested size: 14.50017pt x 14.5pt.
+
+<Help.png, id=108, 16.06pt x 16.06pt>
+File: Help.png Graphic file (type png)
+ <use Help.png>
+Package pdftex.def Info: Help.png used on input line 278.
+(pdftex.def)             Requested size: 14.50017pt x 14.5pt.
+ [14 <./Pencil.png> <./Eraser.png> <./Clear.png> <./Check.png> <./Help.png>] (.
+/Manual.aux) ) 
 Here is how much of TeX's memory you used:
- 3587 strings out of 494946
- 55258 string characters out of 6180981
+ 3617 strings out of 494946
+ 55702 string characters out of 6180981
  119706 words of memory out of 5000000
- 6820 multiletter control sequences out of 15000+600000
+ 6844 multiletter control sequences out of 15000+600000
  10113 words of font info for 35 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  42i,11n,40p,331b,383s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsl12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pf
-b>
-Output written on Manual.pdf (17 pages, 243721 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
+x12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Manual.pdf (17 pages, 297865 bytes).
 PDF statistics:
- 127 PDF objects out of 1000 (max. 8388607)
- 60 compressed objects within 1 object stream
+ 135 PDF objects out of 1000 (max. 8388607)
+ 57 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 106 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 136 words of extra memory for PDF output out of 10000 (max. 10000000)
 
