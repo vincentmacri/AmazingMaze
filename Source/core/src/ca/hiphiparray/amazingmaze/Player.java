@@ -32,6 +32,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
 /**
  * The player class.
  *
+ * @since 0.2
  * @author Vincent Macri
  * @author Chloe Nguyen
  * <br>

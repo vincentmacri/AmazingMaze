@@ -24,6 +24,7 @@ package ca.hiphiparray.amazingmaze;
  * Tile's IDs are kept track of by adding up the IDs of their properties.
  * Very basic tiles, such as the background have only one property, which is their own ID.
  *
+ * @since 0.2
  * @author Vincent Macri
  * <br>
  * Time (Vincent): 1 hour

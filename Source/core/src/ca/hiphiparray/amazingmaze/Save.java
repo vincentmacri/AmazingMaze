@@ -29,14 +29,13 @@ import com.badlogic.gdx.Preferences;
 /**
  * This class saves the game state.
  *
+ * @since 0.2
  * @author Chloe Nguyen
  * @author Vincent Macri
- * @since 0.2
  * <br>
  * Time (Chloe): 2 hours
  * <br>
  * Time (Vincent): 3 hours
- * @since 0.2
  */
 public class Save {
 

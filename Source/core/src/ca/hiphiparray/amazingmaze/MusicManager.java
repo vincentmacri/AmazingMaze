@@ -25,6 +25,7 @@ import com.badlogic.gdx.math.MathUtils;
 /**
  * Manages the game's music.
  *
+ * @since 0.2
  * @author Vincent Macri
  * <br>
  * Time (Vincent): 10 minutes

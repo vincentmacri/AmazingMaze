@@ -22,6 +22,7 @@ package ca.hiphiparray.amazingmaze;
 /**
  * Represents an entry in the high scores.
  *
+ * @since 0.4
  * @author Vincent Macri
  * <br>
  * Time (Vincent): 15 minutes

@@ -56,9 +56,9 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
 /**
  * The fish minigame.
  *
+ * @since 0.3
  * @author Susie Son
  * @author Vincent Macri
- * @since 0.3
  * <br>
  * Time (Susie): 8 hours.
  * <br>

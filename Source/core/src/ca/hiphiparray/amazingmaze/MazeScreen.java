@@ -55,12 +55,16 @@ import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
 /**
  * The maze screen. This is where most of the gameplay takes place.
  *
+ * @since 0.1
  * @author Vincent Macri
  * @author Chloe Nguyen
+ * @author Susie Son
  * <br>
  * Time (Vincent): 5 hours
  * <br>
- * Time (Chloe): 3o minutes
+ * Time (Chloe): 30 minutes
+ * <br>
+ * Time (Susie): 5 minutes
  */
 public class MazeScreen implements Screen, InputProcessor {
 

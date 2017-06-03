@@ -35,6 +35,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
 /**
  * The screen to display high scores.
  *
+ * @since 0.4
  * @author Vincent Macri
  * <br>
  * Time (Vincent): 1 hour

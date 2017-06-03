@@ -25,6 +25,7 @@ import java.util.Random;
  * Represents a single boolean circuit.
  * Used for generating the circuits in each map.
  *
+ * @since 0.2
  * @author Vincent Macri
  * <br>
  * Time (Vincent): 45 minutes

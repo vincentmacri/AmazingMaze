@@ -25,6 +25,14 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import ca.hiphiparray.amazingmaze.AmazingMazeGame;
 
+/**
+ * The main class.
+ *
+ * @since 0.1
+ * @author Vincent Macri
+ * <br>
+ * Time (Vincent): 10 minutes
+ */
 public class DesktopLauncher {
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

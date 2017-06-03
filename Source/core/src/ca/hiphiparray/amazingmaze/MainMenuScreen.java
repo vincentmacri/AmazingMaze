@@ -40,11 +40,13 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
 /**
  * The menu screen for the game.
  *
+ * @since 0.1
  * @author Chloe Nguyen
  * @author Vincent Macri
- * @since 0.1
  * <br>
  * Time (Chloe): 6 hours
+ * <br>
+ * Time (Vincent): 1 hour
  */
 public class MainMenuScreen implements Screen {
 

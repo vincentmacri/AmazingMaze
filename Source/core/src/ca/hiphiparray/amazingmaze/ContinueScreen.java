@@ -44,12 +44,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * The ContinueScreen class.
  *
+ * @since 0.4
  * @author Susie Son
  * @author Vincent Macri
  * <br>
  * Time (Susie): 3 hours.
  * <br>
- * Time (Vincent): 30 minutes
+ * Time (Vincent): 45 minutes
  */
 public class ContinueScreen implements Screen {
 

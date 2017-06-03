@@ -38,11 +38,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * SettingsScreen allows users to adjust the settings for the game.
  *
+ * @since 0.2
  * @author Chloe Nguyen
  * @author Vincent Macri
- * @since 0.2
  * <br>
  * Time (Chloe): 3 hours
+ * <br>
+ * Time (Vincent: 1 hour
  */
 public class SettingsScreen implements Screen, InputProcessor {
 

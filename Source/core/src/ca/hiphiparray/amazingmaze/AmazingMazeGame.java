@@ -25,9 +25,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Main game class. Manages program flow.
  *
+ * @since 0.1
  * @author Vincent Macri
  * @author Chloe Nguyen
- * @since 0.1
  * <br>
  * Time (Chloe): 15 minutes
  * <br>

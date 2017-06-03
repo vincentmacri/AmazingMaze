@@ -34,10 +34,13 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
 /**
  * Class to procedurally generate maps.
  *
+ * @since 0.1
  * @author Vincent Macri
  * @author Chloe Nguyen
  * <br>
  * Time (Chloe): 30 mins
+ * <br>
+ * Time (Vincent): 20 hours
  */
 public class MapFactory {
 

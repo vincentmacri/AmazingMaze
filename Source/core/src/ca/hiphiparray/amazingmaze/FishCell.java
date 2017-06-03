@@ -25,9 +25,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 /**
  * A simple class for fish cells that allows us to keep track of the fish types.
  *
+ * @since 0.2
  * @author Vincent Macri
  * <br>
- * Time (Vincent): 30 minutes
+ * Time (Vincent): 15 minutes
  */
 public class FishCell extends Cell {
 
