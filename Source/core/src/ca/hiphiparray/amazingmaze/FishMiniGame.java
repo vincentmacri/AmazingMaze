@@ -381,7 +381,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 					if (okButton.isPressed()) {
 						dialog.cancel();
 						if ((game.set.getLevel() - 1) % 5 == 0) {
-							game.setScreen(new ContinueScreen(game));
+							game.setScreen(new ContinueScreen(game, true));
 						} else {
 							game.setScreen(new MazeScreen(game, false));
 						}
@@ -393,7 +393,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 				public boolean keyDown(InputEvent event, int keycode) {
 					if (keycode == Keys.ENTER) {
 						if ((game.set.getLevel() - 1) % 5 == 0) {
-							game.setScreen(new ContinueScreen(game));
+							game.setScreen(new ContinueScreen(game, true));
 						} else {
 							game.setScreen(new MazeScreen(game, false));
 						}

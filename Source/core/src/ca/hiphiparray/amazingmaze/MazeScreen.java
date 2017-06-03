@@ -320,7 +320,7 @@ public class MazeScreen implements Screen, InputProcessor {
 			game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
 			dispose();
 		} else if (player.isDead()) {
-			game.setScreen(new ContinueScreen(game));
+			game.setScreen(new ContinueScreen(game, false));
 			dispose();
 		}
 	}
