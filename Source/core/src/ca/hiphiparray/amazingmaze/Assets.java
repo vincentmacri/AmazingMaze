@@ -74,8 +74,8 @@ public class Assets implements Disposable {
 	protected static final String HUD_STYLE = "hud";
 	/** The name of the story label style in the UI skin. */
 	protected static final String STORY_STYLE = "story";
-	/** The name of the popup label style in the UI skin. */
-	protected static final String POPUP_STYLE = "popup";
+	/** The name of the white sans label style in the UI skin. */
+	protected static final String WHITE_SANS_STYLE = "white-sans";
 
 	/** The location of the tile atlas. */
 	protected static final String GAME_ATLAS_LOCATION = "game/pack.atlas";
@@ -415,7 +415,7 @@ public class Assets implements Disposable {
 		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(MONO_REGULAR, SMALL_FONT_SIZE);
 		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(POPUP_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(WHITE_SANS_STYLE, LabelStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);

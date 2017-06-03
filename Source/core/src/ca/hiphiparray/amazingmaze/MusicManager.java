@@ -78,7 +78,7 @@ public class MusicManager {
 		mathMusic.setLooping(true);
 		creditsMusic.setLooping(true);
 
-		setVolume(game.set.getMusicLevel());
+		setVolume(game.save.getMusicLevel());
 	}
 
 	/**

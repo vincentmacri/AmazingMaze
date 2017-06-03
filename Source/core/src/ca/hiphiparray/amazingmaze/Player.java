@@ -232,8 +232,8 @@ public class Player extends Sprite {
 				if (!maze.help) {
 					lives--;
 				}
-				setPosition(0, maze.mapHeight / 2);
 				maze.updateLives((int) ((getX() - MapFactory.START_DISTANCE + 1) / MapFactory.WIRE_DISTANCE));
+				setPosition(0, maze.mapHeight / 2);
 				break;
 			}
 		}

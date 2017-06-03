@@ -97,14 +97,14 @@ public class SettingsScreen implements Screen, InputProcessor {
 		screenHeader = new Label("Settings", game.assets.skin, Assets.SANS_HEADER_STYLE);
 
 		musicSlider = new Slider(0, 1, 0.1f, false, game.assets.skin);
-		musicSlider.setValue(game.set.getMusicLevel());
+		musicSlider.setValue(game.save.getMusicLevel());
 		musicSlider.setAnimateDuration(0.25f);
 
 		musicSlider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.music.setVolume(musicSlider.getValue());
-				game.set.setMusicLevel(game.music.getVolume());
+				game.save.setMusicLevel(game.music.getVolume());
 			}
 		});
 		musicSliderLabel = new Label("Music Volume", game.assets.skin);
@@ -112,18 +112,18 @@ public class SettingsScreen implements Screen, InputProcessor {
 		controlsHeader = new Label("Controls", game.assets.skin);
 
 		actions = new Label[] {
-				new Label("Up", game.assets.skin),
-				new Label("Down", game.assets.skin),
-				new Label("Left", game.assets.skin),
-				new Label("Right", game.assets.skin),
-				new Label("Pause", game.assets.skin)};
+			new Label("Up", game.assets.skin),
+			new Label("Down", game.assets.skin),
+			new Label("Left", game.assets.skin),
+			new Label("Right", game.assets.skin),
+			new Label("Pause", game.assets.skin)};
 
 		actionControls = new TextButton[] {
-				new TextButton(Keys.toString(game.set.getUpButton()), skin),
-				new TextButton(Keys.toString(game.set.getDownButton()), skin),
-				new TextButton(Keys.toString(game.set.getLeftButton()), skin),
-				new TextButton(Keys.toString(game.set.getRightButton()), skin),
-				new TextButton(Keys.toString(game.set.getPauseButton()), skin)};
+			new TextButton(Keys.toString(game.save.getUpButton()), skin),
+			new TextButton(Keys.toString(game.save.getDownButton()), skin),
+			new TextButton(Keys.toString(game.save.getLeftButton()), skin),
+			new TextButton(Keys.toString(game.save.getRightButton()), skin),
+			new TextButton(Keys.toString(game.save.getPauseButton()), skin)};
 
 		actionControls[0].addListener(new ChangeListener() {
 
@@ -184,8 +184,8 @@ public class SettingsScreen implements Screen, InputProcessor {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (resetSettingsButton.isPressed()) {
-					game.set.resetSettings();
-					musicSlider.setValue(game.set.getMusicLevel());
+					game.save.resetSettings();
+					musicSlider.setValue(game.save.getMusicLevel());
 					resetActionControlsLabels();
 				}
 			}
@@ -197,7 +197,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (resetSaveButton.isPressed()) {
-					game.set.resetSave();
+					game.save.resetSave();
 				}
 			}
 		});
@@ -210,11 +210,11 @@ public class SettingsScreen implements Screen, InputProcessor {
 	 * Reset Labels for elements in actionControl array.
 	 */
 	protected void resetActionControlsLabels() {
-		actionControls[0].setText(Keys.toString(game.set.getUpButton()));
-		actionControls[1].setText(Keys.toString(game.set.getDownButton()));
-		actionControls[2].setText(Keys.toString(game.set.getLeftButton()));
-		actionControls[3].setText(Keys.toString(game.set.getRightButton()));
-		actionControls[4].setText(Keys.toString(game.set.getPauseButton()));
+		actionControls[0].setText(Keys.toString(game.save.getUpButton()));
+		actionControls[1].setText(Keys.toString(game.save.getDownButton()));
+		actionControls[2].setText(Keys.toString(game.save.getLeftButton()));
+		actionControls[3].setText(Keys.toString(game.save.getRightButton()));
+		actionControls[4].setText(Keys.toString(game.save.getPauseButton()));
 	}
 
 	/**
@@ -276,7 +276,7 @@ public class SettingsScreen implements Screen, InputProcessor {
 		settings.draw();
 
 		if (backButton.isPressed()) {
-			game.set.writeSave();
+			game.save.writeSave();
 			game.setScreen(sourceScreen);
 			setSourceScreen(game.menuScreen);
 		}
@@ -310,9 +310,8 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		System.out.println("Hiding SettingsScreen.");
 		actionBeingSet = -1;
-		game.set.writeSettings();
+		game.save.writeSettings();
 	}
 
 	@Override
@@ -325,21 +324,21 @@ public class SettingsScreen implements Screen, InputProcessor {
 		if (actionBeingSet >= 0 && actionBeingSet < actionControls.length) {
 			switch (actionBeingSet) {
 				case 0: // Up.
-					game.set.setUpButton(keycode);
+					game.save.setUpButton(keycode);
 					break;
 
 				case 1: // Down
-					game.set.setDownButton(keycode);
+					game.save.setDownButton(keycode);
 					break;
 				case 2: // Left
-					game.set.setLeftButton(keycode);
+					game.save.setLeftButton(keycode);
 					break;
 
 				case 3: // Right
-					game.set.setRightButton(keycode);
+					game.save.setRightButton(keycode);
 					break;
 				case 4: // Pause
-					game.set.setPauseButton(keycode);
+					game.save.setPauseButton(keycode);
 					break;
 			}
 			actionControls[actionBeingSet].setText(Keys.toString(keycode));

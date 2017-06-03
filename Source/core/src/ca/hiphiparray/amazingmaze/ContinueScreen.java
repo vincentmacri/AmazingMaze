@@ -46,8 +46,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * The ContinueScreen class.
  *
  * @author Susie Son
- *
+ * @author Vincent Macri
+ * <br>
  * Time (Susie): 3 hours.
+ * <br>
+ * Time (Vincent): 30 minutes
  */
 public class ContinueScreen implements Screen {
 
@@ -68,6 +71,8 @@ public class ContinueScreen implements Screen {
 	private Label resultLabel;
 	/** The result description label. */
 	private Label resultDescriptionLabel;
+	/** The current score label. */
+	private Label currentScoreLabel;
 
 	/** The player's name. */
 	private String name;
@@ -80,7 +85,6 @@ public class ContinueScreen implements Screen {
 	 */
 	public ContinueScreen(final AmazingMazeGame game, boolean won) {
 		this.game = game;
-		Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.getFont(Assets.SANS_REGULAR, Assets.REGULAR_FONT_SIZE), Color.WHITE);
 
 		stage = new Stage(new ScreenViewport(), this.game.batch);
 		labelTable = new Table();
@@ -92,12 +96,13 @@ public class ContinueScreen implements Screen {
 		labelTable.background(new TextureRegionDrawable(new TextureRegion(this.game.assets.manager.get(Assets.MINI_BACKGROUND, Texture.class))));
 
 		if (won) {
-			resultLabel = new Label("You win!", labelStyle);
-			resultDescriptionLabel = new Label("Continue playing or quit?", labelStyle);
+			resultLabel = new Label("You win!", game.assets.skin, Assets.WHITE_SANS_STYLE);
+			resultDescriptionLabel = new Label("Continue playing or quit?", game.assets.skin, Assets.WHITE_SANS_STYLE);
 		} else {
-			resultLabel = new Label("You lose!", labelStyle);
-			resultDescriptionLabel = new Label("Go back to last checkpoint or quit?", labelStyle);
+			resultLabel = new Label("You lose!", game.assets.skin, Assets.WHITE_SANS_STYLE);
+			resultDescriptionLabel = new Label("Go back to last checkpoint or quit?", game.assets.skin, Assets.WHITE_SANS_STYLE);
 		}
+		currentScoreLabel = new Label("Your current score: " + game.save.getScore(), game.assets.skin, Assets.WHITE_SANS_STYLE);
 
 		continueButton = new TextButton("Continue", game.assets.skin);
 		continueButton.addListener(new ChangeListener() {
@@ -122,6 +127,8 @@ public class ContinueScreen implements Screen {
 		labelTable.add(resultLabel).pad(20);
 		labelTable.row();
 		labelTable.add(resultDescriptionLabel).pad(20);
+		labelTable.row();
+		labelTable.add(currentScoreLabel).pad(20);
 		optionTable.add(continueButton).minSize(Gdx.graphics.getWidth() / 8, Gdx.graphics.getHeight() / 20).maxSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 8).prefSize(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 10).padBottom(10).pad(20);
 		optionTable.row();
 		optionTable.add(quitButton).minSize(Gdx.graphics.getWidth() / 8, Gdx.graphics.getHeight() / 20).maxSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 8).prefSize(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 10).pad(20).padBottom(40);
@@ -151,7 +158,7 @@ public class ContinueScreen implements Screen {
 				name = formatString(nameField.getText());
 				if (!name.equals("")) {
 					if (key == (char) 13) {
-						displayHighScores();
+						displayHighScores(name);
 					}
 				}
 			}
@@ -163,7 +170,7 @@ public class ContinueScreen implements Screen {
 				if (!name.equals("")) {
 					if (okButton.isPressed()) {
 						dialog.hide();
-						displayHighScores();
+						displayHighScores(name);
 					}
 				}
 			}
@@ -174,7 +181,7 @@ public class ContinueScreen implements Screen {
 				name = formatString(nameField.getText());
 				if (!name.equals("")) {
 					if (keycode == Keys.ENTER) {
-						displayHighScores();
+						displayHighScores(name);
 						return true;
 					}
 				}
@@ -193,20 +200,18 @@ public class ContinueScreen implements Screen {
 		return name;
 	}
 
-	/**
-	 * Displays the high scores.
-	 */
-	public void displayHighScores() {
-		// TODO: High scores.
-		game.setScreen(new MainMenuScreen(game));
+	/** Add the score to the high scores list, reset the save file, then go to the high scores screen. */
+	public void displayHighScores(String name) {
+		game.save.addHighScore(new HighScore(name, game.save.getScore()));
+		game.save.resetSave();
+		game.setScreen(game.highScoresScreen);
 	}
 
 	/**
 	 * Formats the string.
 	 *
-	 * @param s
-	 *            The string being formatted.
-	 * @return The formatted string.
+	 * @param s the string being formatted.
+	 * @return the formatted string.
 	 */
 	public String formatString(String s) {
 		if (s == null)
@@ -236,22 +241,18 @@ public class ContinueScreen implements Screen {
 
 	@Override
 	public void pause() {
-
 	}
 
 	@Override
 	public void resume() {
-
 	}
 
 	@Override
 	public void hide() {
-
 	}
 
 	@Override
 	public void dispose() {
-
+		stage.dispose();
 	}
-
 }

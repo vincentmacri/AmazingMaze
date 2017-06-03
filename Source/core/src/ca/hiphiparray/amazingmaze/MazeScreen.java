@@ -65,7 +65,7 @@ import ca.hiphiparray.amazingmaze.Player.VerticalDirection;
 public class MazeScreen implements Screen, InputProcessor {
 
 	/** The {@link AmazingMazeGame} instance that is managing this screen. */
-	private final AmazingMazeGame game;
+	protected final AmazingMazeGame game;
 
 	/** Handle passing input around to different components. */
 	private InputMultiplexer input;
@@ -112,7 +112,7 @@ public class MazeScreen implements Screen, InputProcessor {
 	/** Array of locations of the gates. */
 	private Array<Point> gateLocations;
 
-	/** ArrayList of gates of wires that are on. */ // TODO: Change to Array.
+	/** ArrayList of gates of wires that are on. */
 	protected ArrayList<Circuit> gateOn;
 
 	/** Label to show how many lives the player has left. */
@@ -134,8 +134,9 @@ public class MazeScreen implements Screen, InputProcessor {
 		final int mapSize = 2;
 		this.game = game;
 		this.paused = false;
+		this.help = help;
 
-		this.mapWidth = 16 * mapSize + game.set.getLevel() * 5;
+		this.mapWidth = 16 * mapSize + game.save.getLevel() * 5;
 		this.mapHeight = 9 * mapSize;
 
 		camera = new OrthographicCamera();
@@ -145,7 +146,7 @@ public class MazeScreen implements Screen, InputProcessor {
 
 		MapFactory factory;
 		if (!help) {
-			factory = new MapFactory(game, game.set.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
+			factory = new MapFactory(game, game.save.getLevel(), this.mapWidth, this.mapHeight, TILE_SIZE);
 		} else {
 			this.mapHeight = this.mapHeight * 5 / 8;
 			factory = new MapFactory(game, -3, this.mapWidth, this.mapHeight, TILE_SIZE);
@@ -216,7 +217,7 @@ public class MazeScreen implements Screen, InputProcessor {
 		table.top().left();
 		hud.addActor(table);
 
-		Label level = new Label("Level " + game.set.getLevel(), game.assets.skin, Assets.HUD_STYLE);
+		Label level = new Label("Level " + game.save.getLevel(), game.assets.skin, Assets.HUD_STYLE);
 		table.add(level).colspan(2);
 		table.row();
 
@@ -315,15 +316,19 @@ public class MazeScreen implements Screen, InputProcessor {
 	 */
 	private void update(float delta) {
 		player.update(delta);
-
 		if (player.getX() + 1 * Player.PLAYER_SIZE >= mapWidth) {
-			game.set.setLevel(game.set.getLevel() + 1);
-			game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
+			nextScreen();
 			dispose();
 		} else if (player.isDead()) {
 			game.setScreen(new ContinueScreen(game, false));
 			dispose();
 		}
+	}
+
+	/** Advance the game to the next screen. */
+	public void nextScreen() {
+		game.save.setLevel(game.save.getLevel() + 1);
+		game.setScreen(new FishMiniGame(game, player.blueCollected, player.purpleCollected, player.greenCollected, player.redCollected, player.orangeCollected));
 	}
 
 	@Override
@@ -353,15 +358,15 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == game.set.getLeftButton()) {
+		if (keycode == game.save.getLeftButton()) {
 			player.setHorizontalDir(HorizontalDirection.LEFT);
-		} else if (keycode == game.set.getRightButton()) {
+		} else if (keycode == game.save.getRightButton()) {
 			player.setHorizontalDir(HorizontalDirection.RIGHT);
-		} else if (keycode == game.set.getUpButton()) {
+		} else if (keycode == game.save.getUpButton()) {
 			player.setVerticalDir(VerticalDirection.UP);
-		} else if (keycode == game.set.getDownButton()) {
+		} else if (keycode == game.save.getDownButton()) {
 			player.setVerticalDir(VerticalDirection.DOWN);
-		} else if (keycode == game.set.getPauseButton()) {
+		} else if (keycode == game.save.getPauseButton()) {
 			paused = !paused;
 		}
 		return true;
@@ -369,42 +374,42 @@ public class MazeScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == game.set.getLeftButton()) {
-			if (Gdx.input.isKeyPressed(game.set.getRightButton())) {
+		if (keycode == game.save.getLeftButton()) {
+			if (Gdx.input.isKeyPressed(game.save.getRightButton())) {
 				player.setHorizontalDir(HorizontalDirection.RIGHT);
-			} else if (Gdx.input.isKeyPressed(game.set.getUpButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getUpButton())) {
 				player.setVerticalDir(VerticalDirection.UP);
-			} else if (Gdx.input.isKeyPressed(game.set.getDownButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getDownButton())) {
 				player.setVerticalDir(VerticalDirection.DOWN);
 			} else {
 				player.setHorizontalDir(HorizontalDirection.NONE);
 			}
-		} else if (keycode == game.set.getRightButton()) {
-			if (Gdx.input.isKeyPressed(game.set.getLeftButton())) {
+		} else if (keycode == game.save.getRightButton()) {
+			if (Gdx.input.isKeyPressed(game.save.getLeftButton())) {
 				player.setHorizontalDir(HorizontalDirection.LEFT);
-			} else if (Gdx.input.isKeyPressed(game.set.getUpButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getUpButton())) {
 				player.setVerticalDir(VerticalDirection.UP);
-			} else if (Gdx.input.isKeyPressed(game.set.getDownButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getDownButton())) {
 				player.setVerticalDir(VerticalDirection.DOWN);
 			} else {
 				player.setHorizontalDir(HorizontalDirection.NONE);
 			}
-		} else if (keycode == game.set.getUpButton()) {
-			if (Gdx.input.isKeyPressed(game.set.getDownButton())) {
+		} else if (keycode == game.save.getUpButton()) {
+			if (Gdx.input.isKeyPressed(game.save.getDownButton())) {
 				player.setVerticalDir(VerticalDirection.DOWN);
-			} else if (Gdx.input.isKeyPressed(game.set.getLeftButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getLeftButton())) {
 				player.setHorizontalDir(HorizontalDirection.LEFT);
-			} else if (Gdx.input.isKeyPressed(game.set.getRightButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getRightButton())) {
 				player.setHorizontalDir(HorizontalDirection.RIGHT);
 			} else {
 				player.setVerticalDir(VerticalDirection.NONE);
 			}
-		} else if (keycode == game.set.getDownButton()) {
-			if (Gdx.input.isKeyPressed(game.set.getUpButton())) {
+		} else if (keycode == game.save.getDownButton()) {
+			if (Gdx.input.isKeyPressed(game.save.getUpButton())) {
 				player.setVerticalDir(VerticalDirection.UP);
-			} else if (Gdx.input.isKeyPressed(game.set.getLeftButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getLeftButton())) {
 				player.setHorizontalDir(HorizontalDirection.LEFT);
-			} else if (Gdx.input.isKeyPressed(game.set.getRightButton())) {
+			} else if (Gdx.input.isKeyPressed(game.save.getRightButton())) {
 				player.setHorizontalDir(HorizontalDirection.RIGHT);
 			} else {
 				player.setVerticalDir(VerticalDirection.NONE);

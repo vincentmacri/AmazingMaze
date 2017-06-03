@@ -419,6 +419,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		small-contents: {fontColor: black},
 		hud: {fontColor: white},
 		story: {fontColor: black},
-		popup: {fontColor: white},
+		white-sans: {fontColor: white},
 	},
 }

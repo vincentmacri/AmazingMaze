@@ -370,6 +370,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 			});
 		} else {
 			Label label = new Label("Your answer was: " + message + ". " + "The correct answer was: " + answer + ". " + "You get " + checkAnswer() + " back!", labelStyle);
+			game.save.addScore(checkAnswer());
 			label.setScale(.5f);
 			label.setWrap(true);
 			label.setAlignment(Align.center);
@@ -380,7 +381,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 				public void changed(ChangeEvent event, Actor actor) {
 					if (okButton.isPressed()) {
 						dialog.cancel();
-						if ((game.set.getLevel() - 1) % 5 == 0) {
+						if ((game.save.getLevel() - 1) % 5 == 0) {
 							game.setScreen(new ContinueScreen(game, true));
 						} else {
 							game.setScreen(new MazeScreen(game, false));
@@ -392,7 +393,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 				@Override
 				public boolean keyDown(InputEvent event, int keycode) {
 					if (keycode == Keys.ENTER) {
-						if ((game.set.getLevel() - 1) % 5 == 0) {
+						if ((game.save.getLevel() - 1) % 5 == 0) {
 							game.setScreen(new ContinueScreen(game, true));
 						} else {
 							game.setScreen(new MazeScreen(game, false));
@@ -409,9 +410,8 @@ public class FishMiniGame implements Screen, InputProcessor {
 	/**
 	 * Formats the string into an integer.
 	 *
-	 * @param s
-	 *            The string being formatted.
-	 * @return The formatted string.
+	 * @param s the string being formatted.
+	 * @return the formatted string.
 	 */
 	public int formatString(String s) {
 		if (s == null)
@@ -490,7 +490,6 @@ public class FishMiniGame implements Screen, InputProcessor {
 	public void dispose() {
 		stage.dispose();
 		canvas.dispose();
-		System.out.println("Dispose minigame.");
 	}
 
 	/** Custom Canvas class for Pixmap manipulation. */
@@ -601,7 +600,7 @@ public class FishMiniGame implements Screen, InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.ENTER) {
 			dialog();
-		} else if (keycode == game.set.getPauseButton()) {
+		} else if (keycode == game.save.getPauseButton()) {
 			paused = !paused;
 		}
 		return true;

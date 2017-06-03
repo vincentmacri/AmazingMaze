@@ -64,6 +64,7 @@ public class HighScoresScreen implements Screen {
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		game.music.setSong(Song.MENU);
+		stage.clear();
 
 		table = new Table();
 		table.setFillParent(true);
@@ -74,13 +75,12 @@ public class HighScoresScreen implements Screen {
 		table.add(header).pad(Gdx.graphics.getHeight() / 20).colspan(3);
 		table.row();
 
-		HighScore[] scores = game.set.getHighScores();
-		for (int i = scores.length - 1; i >= 0; i--) {
-			Label position = new Label(Integer.toString(scores.length - i) + ". ", game.assets.skin);
+		HighScore[] scores = game.save.getHighScores();
+		for (int i = 0; i < scores.length; i++) {
+			Label position = new Label(Integer.toString(i + 1) + ". ", game.assets.skin);
 			Label name = new Label(scores[i].getName(), game.assets.skin);
 			Label score = new Label(Integer.toString(scores[i].getScore()), game.assets.skin);
 			if (scores[i].getScore() < 0) {
-				position.setText("");
 				score.setText("");
 			}
 
@@ -90,15 +90,29 @@ public class HighScoresScreen implements Screen {
 			table.row();
 		}
 
-		TextButton menuButton = new TextButton("Main Menu", game.assets.skin);
-		menuButton.addListener(new ChangeListener() {
-
+		final TextButton resetButton = new TextButton("Reset High Scores", game.assets.skin);
+		resetButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				// TODO Auto-generated method stub
-
+				if (resetButton.isPressed()) {
+					game.save.resetScores();
+					game.setScreen(game.highScoresScreen);
+				}
 			}
 		});
+		table.add(resetButton).colspan(3);
+		table.row();
+
+		final TextButton menuButton = new TextButton("Main Menu", game.assets.skin);
+		menuButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (menuButton.isPressed()) {
+					game.setScreen(game.menuScreen);
+				}
+			}
+		});
+		table.add(menuButton).colspan(3).pad(10);
 	}
 
 	@Override

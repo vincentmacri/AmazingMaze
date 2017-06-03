@@ -157,7 +157,7 @@ public class MainMenuScreen implements Screen {
 				+ "\n"
 				+ "You should have received a copy of the GNU General Public License\n"
 				+ "along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.",
-			game.assets.skin.get(Assets.POPUP_STYLE, LabelStyle.class));
+			game.assets.skin.get(Assets.WHITE_SANS_STYLE, LabelStyle.class));
 
 		// License
 		licenseButton = new TextButton("License", game.assets.skin);
@@ -187,7 +187,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				if (quitButton.isPressed()) {
-					game.set.writeSave();
+					game.save.writeAll();
 					Gdx.app.exit();
 				}
 			}

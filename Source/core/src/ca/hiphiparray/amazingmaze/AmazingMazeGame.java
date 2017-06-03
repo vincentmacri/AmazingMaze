@@ -42,11 +42,11 @@ public class AmazingMazeGame extends Game {
 	protected HighScoresScreen highScoresScreen;
 
 	/** The settings for the game. */
-	protected Save set; // TODO: Rename to save.
+	protected Save save;
 
 	@Override
 	public void create() {
-		set = new Save();
+		save = new Save();
 		batch = new SpriteBatch();
 		assets = new Assets();
 		music = new MusicManager(this);
@@ -54,11 +54,11 @@ public class AmazingMazeGame extends Game {
 		settingsScreen = new SettingsScreen(this);
 		menuScreen = new MainMenuScreen(this);
 		storyScreen = new StoryScreen(this);
+		highScoresScreen = new HighScoresScreen(this);
 
 		settingsScreen.setSourceScreen(menuScreen);
 
 		this.setScreen(menuScreen);
-		// setScreen(new HighScoresScreen(this));
 	}
 
 	@Override
@@ -68,6 +68,10 @@ public class AmazingMazeGame extends Game {
 
 	@Override
 	public void dispose() {
+		settingsScreen.dispose();
+		menuScreen.dispose();
+		storyScreen.dispose();
+		highScoresScreen.dispose();
 		batch.dispose();
 		assets.dispose();
 		super.dispose();

@@ -35,7 +35,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * <br>
  * Time (Chloe): 11 hours
  * <br>
- * Time (Vincent): 45 minutes
+ * Time (Vincent): 1 hour
  * @since 0.3
  */
 public class HelpScreen extends MazeScreen {
@@ -142,6 +142,11 @@ public class HelpScreen extends MazeScreen {
 			}
 			truthTable.row();
 		}
+	}
+
+	@Override
+	public void nextScreen() {
+		super.game.setScreen(super.game.menuScreen);
 	}
 
 	@Override
