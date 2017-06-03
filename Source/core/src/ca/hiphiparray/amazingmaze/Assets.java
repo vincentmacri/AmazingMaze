@@ -411,7 +411,7 @@ public class Assets implements Disposable {
 		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
 		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(MONO_REGULAR, REGULAR_FONT_SIZE);
+		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(MONO_REGULAR, SMALL_FONT_SIZE);
 		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);

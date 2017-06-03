@@ -61,8 +61,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 	private TextButton resetSettingsButton;
 	/** Button to reset save. */
 	private TextButton resetSaveButton;
-	/** Button to reset save and settings. */
-	private TextButton resetAllButton;
 
 	/** Action currently being set. This is -1 when no actions are being set. */
 	private int actionBeingSet = -1;
@@ -204,19 +202,6 @@ public class SettingsScreen implements Screen, InputProcessor {
 			}
 		});
 
-		// Reset all button.
-		resetAllButton = new TextButton("Reset All", skin);
-		resetAllButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				if (resetAllButton.isPressed()) {
-					game.set.resetAll();
-					musicSlider.setValue(game.set.getMusicLevel());
-					resetActionControlsLabels();
-				}
-			}
-		});
-
 		backButton = new TextButton("Back", skin);
 
 	}
@@ -252,19 +237,19 @@ public class SettingsScreen implements Screen, InputProcessor {
 	private void layoutSettings(int width, int height) {
 		table.clear();
 
-		table.add(screenHeader).pad(10f).colspan(3);
+		table.add(screenHeader).pad(10f).colspan(2);
 		table.row();
 
-		table.add(musicSliderLabel).colspan(3);
+		table.add(musicSliderLabel).colspan(2);
 		table.row();
 
-		table.add(musicSlider).pad(10f).colspan(3);
+		table.add(musicSlider).pad(10f).colspan(2);
 		table.row();
 
-		table.add(controlsHeader).pad(10f).colspan(3);
+		table.add(controlsHeader).pad(10f).colspan(2);
 		table.row();
 
-		table.add(controlsTable).colspan(3);
+		table.add(controlsTable).colspan(2);
 
 		controlsTable.clear();
 		for (int i = 0; i < actions.length; i++) {
@@ -276,11 +261,10 @@ public class SettingsScreen implements Screen, InputProcessor {
 
 		table.add(resetSettingsButton).prefSize(width / 6, height / 15).padLeft(width / 64).padRight(width / 64).expandY();
 		table.add(resetSaveButton).prefSize(width / 6, height / 15).padLeft(width / 64).padRight(width / 64).expandY();
-		table.add(resetAllButton).prefSize(width / 6, height / 15).padLeft(width / 64).padRight(width / 64).expandY();
 
 		table.row();
 
-		table.add(backButton).padBottom(10f).minSize(width / 4, height / 20).maxSize(width, height / 5).prefSize(width / 3, height / 15).colspan(3);
+		table.add(backButton).padBottom(10f).minSize(width / 4, height / 20).maxSize(width, height / 5).prefSize(width / 3, height / 15).colspan(2);
 	}
 
 	@Override
