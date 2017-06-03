@@ -36,6 +36,7 @@ import ca.hiphiparray.amazingmaze.FishCell.FishColour;
  *
  * @author Vincent Macri
  * @author Chloe Nguyen
+ * <br>
  * Time (Chloe): 30 mins
  */
 public class MapFactory {

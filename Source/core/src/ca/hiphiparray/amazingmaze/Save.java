@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Json;
  * @author Chloe Nguyen
  * @author Vincent Macri
  * @since 0.2
+ * <br>
  * Time (Chloe): 2 hours
  */
 public class Save {

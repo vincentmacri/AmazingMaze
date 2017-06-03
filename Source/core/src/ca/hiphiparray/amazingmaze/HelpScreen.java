@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  *
  * @author Chloe Nguyen
  * @since 0.3
+ * <br>
  * Time (Chloe): 11 hours
  */
 public class HelpScreen extends MazeScreen {
