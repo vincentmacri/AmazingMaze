@@ -215,8 +215,12 @@ public class MazeScreen implements Screen, InputProcessor {
 		table.top().left();
 		hud.addActor(table);
 
+		Label level = new Label("Level " + game.set.getLevel(), game.assets.skin, Assets.HUD_STYLE);
+		table.add(level).colspan(2);
+		table.row();
+
 		Image lifeIcon = new Image(game.assets.manager.get(Assets.LIFE_HUD_IMAGE, Texture.class));
-		table.add(lifeIcon).pad(Gdx.graphics.getWidth() / 128);
+		table.add(lifeIcon).pad(Gdx.graphics.getWidth() / 128).left();
 
 		livesLeft = new Label("", game.assets.skin, Assets.HUD_STYLE);
 		table.add(livesLeft);

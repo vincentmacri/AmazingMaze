@@ -411,7 +411,7 @@ public class Assets implements Disposable {
 		skin.get(SERIF_HEADER_STYLE, LabelStyle.class).font = getFont(SERIF_BOLD, LARGE_FONT_SIZE);
 		skin.get(CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, LARGE_FONT_SIZE);
 		skin.get(SMALL_CREDITS_CONTENTS, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
-		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(MONO_REGULAR, SMALL_FONT_SIZE);
+		skin.get(HUD_STYLE, LabelStyle.class).font = getFont(MONO_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(STORY_STYLE, LabelStyle.class).font = getFont(SERIF_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(CheckBoxStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
 		skin.get(TextFieldStyle.class).font = getFont(SANS_REGULAR, REGULAR_FONT_SIZE);
@@ -431,8 +431,14 @@ public class Assets implements Disposable {
 		}
 		FreeTypeFontLoaderParameter fontParams = new FreeTypeFontLoaderParameter();
 		fontParams.fontFileName = "fonts/" + fontName + ".ttf";
-		float screenSize = Math.min(Gdx.graphics.getWidth() / 1920f, Gdx.graphics.getHeight() / 1080f);
+
+		float horizontalAdjust = Gdx.graphics.getWidth() / 1920f;
+		float verticalAdjust = Gdx.graphics.getHeight() / 1080f;
+		float totalAdjust = horizontalAdjust * verticalAdjust * 1.25f;
+		float screenSize = Math.min(horizontalAdjust, Math.min(verticalAdjust, totalAdjust));
+
 		fontParams.fontParameters.size = (int) (fontSize * Gdx.graphics.getDensity() * screenSize);
+
 		manager.load(fontName + fontSize + ".ttf", BitmapFont.class, fontParams);
 		manager.finishLoadingAsset(fontName + fontSize + ".ttf");
 		return manager.get(fontName + fontSize + ".ttf");
