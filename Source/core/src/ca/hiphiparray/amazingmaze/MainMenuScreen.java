@@ -33,6 +33,7 @@ import ca.hiphiparray.amazingmaze.MusicManager.Song;
  * @author Chloe Nguyen
  * @author Vincent Macri
  * @since 0.1
+ * <br>
  * Time (Chloe): 6 hours
  */
 public class MainMenuScreen implements Screen {
