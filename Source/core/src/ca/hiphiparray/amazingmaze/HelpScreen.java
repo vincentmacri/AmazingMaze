@@ -1,3 +1,22 @@
+/********************************************************************************
+ * Amazing Maze is an educational game created in Java with the libGDX library.
+ * Copyright (C) 2017 Hip Hip Array
+ *
+ * This file is part of Amazing Maze.
+ *
+ * Amazing Maze is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Amazing Maze is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Amazing Maze. If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package ca.hiphiparray.amazingmaze;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,9 +30,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * The tutorial screen. This is where users learn how to play the game.
  *
  * @author Chloe Nguyen
- * @since 0.3
+ * @author Vincent Macri
  * <br>
  * Time (Chloe): 11 hours
+ * <br>
+ * Time (Vincent): 45 minutes
+ * @since 0.3
  */
 public class HelpScreen extends MazeScreen {
 
@@ -29,10 +51,6 @@ public class HelpScreen extends MazeScreen {
 	private Image[] gatePics;
 	/** The table at the top for the instructions. */
 	private Table table;
-	/** The table at the bottom for information on how to play. */
-	private Table tableBottom;
-	/** The table for the different types of gates. */
-	private Table gatesTable;
 	/** The table for the truth table. */
 	private Table truthTable;
 
@@ -46,18 +64,21 @@ public class HelpScreen extends MazeScreen {
 		instruct = new Label("Check the logic gates to find the state of each wire and make your way through the maze. Be careful to avoid\nany wires that are on, as that means that they are electrified!", game.assets.skin, Assets.HUD_STYLE);
 		clicks = new Label("Mark the wires by clicking on the gates. Left click = on. Right click = off. Middle click = unknown.", game.assets.skin, Assets.HUD_STYLE);
 
-		gatesTable = new Table();
-		truthTable = new Table();
-		table = new Table();
-		tableBottom = new Table();
-		table.top().left();
-		tableBottom.bottom().left();
-		table.setFillParent(true);
-		tableBottom.setFillParent(true);
 		super.hud = new Stage(new ScreenViewport(), game.batch);
+
+		table = new Table();
+		table.debug();
+		table.top();
+		table.setFillParent(true);
 		super.hud.addActor(table);
-		super.hud.addActor(tableBottom);
-		table.add(instruct).pad(45);
+
+		table.add(instruct).top().pad(10);
+		table.row();
+		table.add(clicks).pad(10);
+		table.row();
+		table.add().expand();
+		table.row();
+
 		gates = new Label[] {
 				new Label("AND Gate", game.assets.skin, Assets.HUD_STYLE),
 				new Label("NAND Gate", game.assets.skin, Assets.HUD_STYLE),
@@ -73,18 +94,20 @@ public class HelpScreen extends MazeScreen {
 				new Image(atlas.findRegion(Assets.NOR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
 				new Image(atlas.findRegion(Assets.XOR_GATE + Assets.UNKNOWN_MODIFIER + Assets.UP_MODIFIER)),
 		};
-		tableBottom.add(gatesTable).center().right().padRight(205);
-		tableBottom.row();
-		truthTable.top().left();
-		tableBottom.add(truthTable).left().padLeft(195);
 
+		truthTable = new Table();
+		truthTable.top().center();
+		truthTable.debug();
+
+		truthTable.add();
 		for (int x = 0; x < gatePics.length; x++) {
 			gatePics[x].setScale(2);
-			gatesTable.add(gatePics[x]).left().padLeft(50);
+			truthTable.add(gatePics[x]).pad(10);
 		}
-		gatesTable.row();
-		for (int x = 0; x < gatePics.length; x++) {
-			gatesTable.add(gates[x]).left().padLeft(46);
+		truthTable.row();
+		truthTable.add();
+		for (int x = 0; x < gates.length; x++) {
+			truthTable.add(gates[x]).pad(10);
 		}
 
 		truth = new Label[][] {{
@@ -110,16 +133,12 @@ public class HelpScreen extends MazeScreen {
 						new Label("off", game.assets.skin, Assets.HUD_STYLE)}};
 
 		for (int x = 0; x < truth.length; x++) {
-			// gatesTable.left();
 			for (int y = 0; y < truth[0].length; y++) {
-
-				truthTable.add(truth[x][y]).left().padLeft(129);
-
+				truthTable.add(truth[x][y]);
 			}
 			truthTable.row();
 		}
-		tableBottom.row();
-		tableBottom.add(clicks).padLeft(45).padTop(10);
+		table.add(truthTable).bottom().pad(10);
 	}
 
 	@Override
