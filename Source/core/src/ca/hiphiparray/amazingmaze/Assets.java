@@ -82,30 +82,16 @@ public class Assets implements Disposable {
 
 	/** The regular monospace font. */
 	protected static final String MONO_REGULAR = "LiberationMono-Regular";
-	/** The bold monospace font. */
-	protected static final String MONO_BOLD = "LiberationMono-Bold";
-	/** The italic monospace font. */
-	protected static final String MONO_ITALIC = "LiberationMono-Italic";
-	/** The bold italic monospace font. */
-	protected static final String MONO_BOLD_ITALIC = "LiberationMono-BoldItalic";
 
 	/** The regular sans font. */
 	protected static final String SANS_REGULAR = "LiberationSans-Regular";
 	/** The bold sans font. */
 	protected static final String SANS_BOLD = "LiberationSans-Bold";
-	/** The italic sans font. */
-	protected static final String SANS_ITALIC = "LiberationSans-Italic";
-	/** The bold italic sans font. */
-	protected static final String SANS_BOLD_ITALIC = "LiberationSans-BoldItalic";
 
 	/** The regular serif font. */
 	protected static final String SERIF_REGULAR = "LiberationSerif-Regular";
 	/** The bold serif font. */
 	protected static final String SERIF_BOLD = "LiberationSerif-Bold";
-	/** The italic serif font. */
-	protected static final String SERIF_ITALIC = "LiberationSerif-Italic";
-	/** The bold italic serif font. */
-	protected static final String SERIF_BOLD_ITALIC = "LiberationSerif-BoldItalic";
 
 	/** The font size for small text. */
 	protected static final int SMALL_FONT_SIZE = 32;

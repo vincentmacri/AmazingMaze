@@ -29,7 +29,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author Chloe Nguyen
  * @since 0.1
  * <br>
- * Time (Chloe): 15 mins
+ * Time (Chloe): 15 minutes
+ * <br>
+ * Time (Vincent): 30 minutes
  */
 public class AmazingMazeGame extends Game {
 
