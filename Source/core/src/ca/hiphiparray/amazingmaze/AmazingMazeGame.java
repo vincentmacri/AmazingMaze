@@ -68,7 +68,7 @@ public class AmazingMazeGame extends Game {
 
 		settingsScreen.setSourceScreen(menuScreen);
 
-		this.setScreen(menuScreen);
+		this.setScreen(new SplashScreen(this));
 	}
 
 	@Override
